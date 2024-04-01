@@ -1,0 +1,14 @@
+.category{
+    padding:8px 0px;
+    .categoryItem{
+        padding:8px 16px;
+        color:var(--sub-color-400);
+        font-weight: 500;
+        font-size: 0.95rem;
+        border-bottom: 2px solid transparent;
+        &:hover{
+            border-color:var(--primary-color-800);
+            color:var(--sub-color-800);
+        }
+    }
+}

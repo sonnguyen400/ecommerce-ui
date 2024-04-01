@@ -1,24 +1,43 @@
-import logo from './logo.svg';
+import { Routes ,Route} from 'react-router-dom';
+import { publicRouter } from './routers/routers';
+import { DefaultLayout } from './layout/default';
+import { Fragment, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './App.css';
+import Loader from './components/loader/Loader';
+import { AppLoader } from './context/loader';
 
 function App() {
-  return (
+    let [loaderContent,setLoaderContent]=useState("");
+    return (
+        <>
+        
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        {loaderContent!==""?<Loader render={loaderContent}/>:null}
+        
+        <AppLoader.Provider value={setLoaderContent}>
+            <Routes>
+                {publicRouter.map((page, index) => {
+                    let Layout = (page.layout === undefined ? DefaultLayout : page.layout) || Fragment;
+                    let Page = page.component;
+                    return (
+                        <Route
+                            key={index}
+                            path={page.path || '/'}
+                            element={
+                                <Layout>
+                                    <Page />
+                                </Layout>
+                            }
+                        />
+                    );
+                })}
+            </Routes>
+        </AppLoader.Provider>
+       
     </div>
+    </>
   );
 }
 

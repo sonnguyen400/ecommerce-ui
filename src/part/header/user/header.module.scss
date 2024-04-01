@@ -1,0 +1,12 @@
+.header{
+    padding:8px 0px;
+    .avatar{
+        width: 40px;
+        aspect-ratio: 1/1;
+        img{
+            width: 100%;
+            padding:2px;
+            border:1px solid blue;
+        }
+    }
+}

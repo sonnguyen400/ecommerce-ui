@@ -1,0 +1,33 @@
+.container{
+    .searchbar{
+        width: fit-content;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+
+        background-color: var(--primary-color-100);
+        &:focus-within{
+            background-color: var(--primary-color-200);
+        }
+        input{
+            border: none;
+            padding:8px 0px;
+            padding-left: 16px;
+            background-color: transparent;
+            color: var(--primary-color-800);
+            &:focus{
+                border:none;
+                outline: none;
+            }
+        }
+        .icon{
+            padding:8px 16px;
+            height: 100%;
+            border-end-end-radius: var(--bs-border-radius-pill);
+            border-start-end-radius: var(    --bs-border-radius-pill);
+            &:hover{
+                background-color: var(--primary-color-400);
+            }
+        }
+    }
+}

@@ -1,3 +1,19 @@
+@import "~@flaticon/flaticon-uicons/css/all/all";
+
+*{
+  --primary-color-800:#27374D;
+  --primary-color-600:#526D82;
+  --primary-color-400:#9DB2BF;
+  --primary-color-200:#DDE6ED;
+  --primary-color-100:#edf3f8;
+  --text-dark:#2C3333;
+  --text-light:white;
+  --sub-color-800:#223c43;
+  --sub-color-700:#304a51;
+  --sub-color-600:#395B64;
+  --sub-color-600:#41707c;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +21,22 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #edf1f4 !important;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+label{
+  width: 100%;
+  text-align: left;
+  font-size: small;
+  font-weight: 500;
+}
+.btn .icon{
+  margin-right: 8px;
+}
+.list-item{
+
 }
