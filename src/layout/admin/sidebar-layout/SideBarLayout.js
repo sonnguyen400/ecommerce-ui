@@ -13,9 +13,7 @@ function SidebarLayout({children}) {
                 <Col md={2}><Sidebar/></Col>
                 <Col md={10}>
                     <Card>
-                        <CardBody>
-                        {children}
-                        </CardBody>
+                    {children}
                     </Card>
                 </Col>
             </Row>

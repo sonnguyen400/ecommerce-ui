@@ -9,7 +9,6 @@ import VariationFormModal from "../../../part/product-item/modal";
 function AddProduct() {
     const loader=useContext(AppLoader);
     function submit(formdata) {  
-
         loader("Uploading product");
             APIBase.post("/api/v1/product",formdata)
                 .then((data)=>{
@@ -24,7 +23,7 @@ function AddProduct() {
                 })
     }
     return ( <Col>
-        <ProductAddForm submitHandler={submit}/>
+        <ProductAddForm  submitHandler={submit}/>
         
     </Col> );
 }

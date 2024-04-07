@@ -1,6 +1,8 @@
 import SidebarLayout from "../layout/admin/sidebar-layout/SideBarLayout.js";
 import HeadOnly from "../layout/headOnly/HeadOnly.js";
 import LoginPage from "../page/Login/LoginPage.js";
+import CategoryManage from "../page/categories_manage/CategoryManage.js";
+import CategoryDetail from "../page/category-detail/CategoryDetail.js";
 import AddProduct from "../page/product/add/AddProduct.js";
 import ProductDetail from "../page/product/detail/ProductDetail.js";
 import Home from "../page/user/home/Home.js";
@@ -15,6 +17,8 @@ export const publicRouter=[
     {'path':"/add",'component':ProductAdd,'layout':SidebarLayout},
     {'path':"/items",'component':VariationForm,'layout':SidebarLayout},
     {'path':"/admin/product",'component':ProductDetail,'layout':SidebarLayout},
+    {'path':"/admin/category",'component':CategoryManage,'layout':SidebarLayout},
+    {'path':"/admin/category/:id",'component':CategoryDetail,'layout':SidebarLayout},
     {'path':"/",'component':Home,'layout':HeadOnly},
     {'path':"/",'component':Home,'layout':HeadOnly},
     {'path':"/product",'component':Product,'layout':HeadOnly}

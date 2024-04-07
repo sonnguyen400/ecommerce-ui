@@ -32,35 +32,26 @@ function VariationForm({submitHandler,onCancel,product}) {
     const formik = useFormik({
         initialValues: {
             image: "",
-            variationOption:[]
+            options:[]
         },
         validationSchema: validateSchema,
         onSubmit: (values) => {
-            values.variationOption.forEach(variation_param=>{
-                var match=variations.find(variation=>variation.name.trim().toLowerCase()===variation_param.variation.name.trim().toLowerCase())
-                if(match) {
-                    variation_param.variation.id=match.id;
-                    variation_param.variation.name=match.name;
-                    var matchOption=match.options.find(option=>{
-                        return variation_param.value.trim().toLowerCase()===option.value.trim().toLowerCase()
-                    });
-                    if(matchOption) {
-                        variation_param.id=matchOption.id;
-                        variation_param.value=matchOption.value;
+            
+            values.options.forEach(variation_param=>{
+                Object.assign(variation_param,{
+                    "category":{
+                        "id":product.categoryId
                     }
-                }else{
-                    Object.assign(variation_param,{
-                        "category":{
-                            "id":product.categoryId
-                        }
-                    })
-                }
+                })
             })
-            submitHandler(values);
+            var payload=new FormData();
+                payload.append("image",values.image);
+                payload.append("productItem",new Blob([JSON.stringify(values)],{type: "application/json"}));
+            submitHandler(payload);
         },
     });
     function addMoreVariationInput(arrayHelpers){
-        let options=formik.values.variationOption;
+        let options=formik.values.options;
         let isDuplicate=false;
         for(let i=options.length-2;i>=0;i--){
             if(options[i].variation.name.trim().toLowerCase()===options[options.length-1].variation.name.trim().toLowerCase()){
@@ -120,19 +111,19 @@ function VariationForm({submitHandler,onCancel,product}) {
                         Variation
                     </h6>
                     <FieldArray
-                        name="variationOption"
+                        name="options"
                         render={(arrayHelpers) => (
                             <div>
-                                {formik.values.variationOption.map((option, index) => (
+                                {formik.values.options.map((option, index) => (
                                     <Row className="my-3" key={index}>
                                         <Col>
                                             <input
                                                 className="form-control"
                                                 type="text"
                                                 list="variation"
-                                                name={`variationOption[${index}].variation.name`}
-                                                value={formik.values.variationOption[index].variation.name}
-                                                onChange={e=>formik.setFieldValue(`variationOption[${index}]['variation']name`,e.target.value)}
+                                                name={`options[${index}].variation.name`}
+                                                value={formik.values.options[index].variation.name}
+                                                onChange={e=>formik.setFieldValue(`options[${index}]['variation']name`,e.target.value)}
                                             />
                                             <datalist id="variation">
                                                 {variations.map((variation,idx)=><option key={idx} value={variation.name}/>)}
@@ -140,15 +131,15 @@ function VariationForm({submitHandler,onCancel,product}) {
                                         </Col>
                                         <Col>
                                             <FormControl
-                                                name={`variationOption.${index}.value`}
-                                                value={formik.values.variationOption[index].value}
+                                                name={`options.${index}.value`}
+                                                value={formik.values.options[index].value}
                                                 onChange={formik.handleChange}
                                             />
                                             
                                         </Col>
 
                                         
-                                        {formik.errors.variationOption?<small className="text-danger">{formik.errors.variationOption}</small>:null}
+                                        {formik.errors.options?<small className="text-danger">{formik.errors.options}</small>:null}
                                         <Col>
 
                                             <Button

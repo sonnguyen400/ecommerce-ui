@@ -1,22 +1,31 @@
 import {Button, Modal, ModalBody, ModalFooter,ModalTitle, ModalHeader } from "react-bootstrap";
 import VariationForm from "./variation-form-modal";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import APIBase from "../../api/ApiBase";
-
-function VariationFormModal({show,setState,product}) {
+import { AppLoader } from "../../context/loader";
+function VariationFormModal({show,setShow,setState,product,setProduct}) {
+    const loader=useContext(AppLoader);
     const [variations,setVariations]=useState(null);
     function onSubmitHandler(data){
-        console.log(data);
-        var payload= new FormData();
-        payload.append("image",data.image);
-        payload.append("productItem",JSON.stringify(data));
-        console.log(JSON.stringify(data));
+        APIBase.post(`api/v1/product/${product.id}/item`,data)
+        .then((payload)=>{
+            setProduct(product=>{
+                product.productItems.push(payload.data);
+                return product;
+            });
+        }).error((err)=>{
+            loader("");
+        }).finally(()=>{
+            loader("");
+            setShow(false)
+        })
+
     }
     useEffect(()=>{
         APIBase.get(`api/v1/category/${product.category_id}/variation`)
     },[])
     return ( 
-        <Modal show={show} backdrop="static" keyboard={false} size='lg'>
+        <Modal onClose={()=>{show=false}} show={show} backdrop="static" keyboard={false} size='lg'>
         <ModalHeader closeButton>
             <ModalTitle>Modal heading</ModalTitle>
         </ModalHeader>

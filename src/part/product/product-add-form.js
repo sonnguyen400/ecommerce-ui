@@ -5,26 +5,23 @@ import * as Yup from "yup";
 import {
     Button,
     Container,
-    Row,
     Form,
     FormLabel,
     FormControl,
 } from "react-bootstrap";
 import { AppLoader } from "../../context/loader";
-import APIBase from "../../api/ApiBase";
 
-export default function ProductAddForm({submitHandler}) {
-    const [formState, setFormState] = useState(true);
-    const loader=useContext(AppLoader);
+export default function ProductAddForm({submitHandler,defaultCategory}) {
     const validateSchema = Yup.object().shape({
         name: Yup.string()
             .max(15, "Must be 15 characters or less")
             .required("Required"),
-        description: Yup.string().required(),
-    });
+        description: Yup.string().required()
+    })
     const formik = useFormik({
         initialValues: {
             name: "",
+            category:(defaultCategory&&defaultCategory.id)||1
         },
         validationSchema: validateSchema,
         onSubmit: (values) => {
@@ -88,12 +85,6 @@ export default function ProductAddForm({submitHandler}) {
                             as="select"
                             rows={10}
                             name="category"
-                            onBlur={(e) =>
-                                formik.setFieldValue(
-                                    "category",
-                                    e.target.options[e.target.selectedIndex].value
-                                )
-                            }
                             onChange={(e) =>
                                 formik.setFieldValue(
                                     "category",
@@ -102,7 +93,7 @@ export default function ProductAddForm({submitHandler}) {
                             }
                             value={formik.values.category}
                         >
-                            <option value={1}>Red</option>
+                            {defaultCategory&&<option value={defaultCategory?.id||null}>{defaultCategory.name||"default"}</option>}
                         </FormControl>
                         {formik.touched.category && formik.errors.category ? (
                             <small className="text-danger">{formik.errors.category}</small>
@@ -114,7 +105,7 @@ export default function ProductAddForm({submitHandler}) {
                     <Button
                         variant="primary"
                         type="submit"
-                        onClick={(values) => setFormState(values)}
+                        className="mt-3"
                     >
                         Submit
                     </Button>

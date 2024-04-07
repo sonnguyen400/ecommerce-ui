@@ -5,11 +5,11 @@ function RatingStars({ percent, className, ...props }) {
         <div className={clsx(style.ratingstars, className)} {...props}>
             <div className={style.process} style={{ width: `${percent}%` }}></div>
             <div className={style.bgblend}>
-                <i class="fi fi-sr-star star"></i>
-                <i class="fi fi-sr-star star"></i>
-                <i class="fi fi-sr-star star"></i>
-                <i class="fi fi-sr-star star"></i>
-                <i class="fi fi-sr-star star"></i>
+                <i className="fi fi-sr-star star"></i>
+                <i className="fi fi-sr-star star"></i>
+                <i className="fi fi-sr-star star"></i>
+                <i className="fi fi-sr-star star"></i>
+                <i className="fi fi-sr-star star"></i>
             </div>
         </div>
     );

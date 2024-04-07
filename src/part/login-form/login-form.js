@@ -14,7 +14,10 @@ function LoginForm() {
         .then(console.log)
     }
     function getUser(){
-        APIBase.get("auth/user").then(console.log)
+        APIBase.get("auth/user", { headers: { credentials: 'include'} }).then(console.log)
+    }
+    function logout(){
+        APIBase.post("/logout").catch(console.log).then(console.log)
     }
     const authObject=Yup.object().shape({
         username:Yup.string().required("Username can be blank"),
@@ -27,7 +30,7 @@ function LoginForm() {
             password:""
         },
         onSubmit:values=>{
-            APIBase.post("login",JSON.stringify(values)).then(
+            APIBase.post("login",JSON.stringify(values), {withCredentials: true , headers: { 'Content-Type': 'application/json' ,credentials: 'include'} }).then(
                 
             ).catch(error=>{
 
@@ -72,6 +75,7 @@ function LoginForm() {
             </Form>
             <Button onClick={refresh} > refresh</Button>
             <Button onClick={getUser} > user</Button>
+            <Button onClick={logout} > Logout</Button>
         </CardBody>
     </Card> );
 }
