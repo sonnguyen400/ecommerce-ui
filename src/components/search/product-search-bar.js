@@ -7,7 +7,7 @@ function ProductSearchBar() {
         <div className={clsx("rounded-pill",style.searchbar)}>
             <input/>
             <div className={style.icon}>
-            <i class="fi fi-rr-search"></i>
+            <i className="fi fi-rr-search"></i>
             </div>
         </div>
     </div> );

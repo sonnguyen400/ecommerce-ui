@@ -10,7 +10,7 @@ function CategoryBar() {
                 <Dropdown>
                     <DropdownToggle as={CustomToggle}>
                         <div className={clsx(globalStyle.listItem,style.categoryItem)}>
-                            <span className={globalStyle.icon}><i class="fi fi-rr-mobile-button"></i></span>
+                            <span className={globalStyle.icon}><i className="fi fi-rr-mobile-button"></i></span>
                             <span>Phone</span>
                         </div>
                     </DropdownToggle>
@@ -21,31 +21,31 @@ function CategoryBar() {
             </Col>
             <Col className={style.category}>
                 <div className={clsx(globalStyle.listItem,style.categoryItem)}>
-                    <span className={globalStyle.icon}><i class="fi fi-rr-laptop"></i></span>
+                    <span className={globalStyle.icon}><i className="fi fi-rr-laptop"></i></span>
                     <span>Laptop</span>
                 </div>
             </Col>
             <Col className={style.category}>
                 <div className={clsx(globalStyle.listItem,style.categoryItem)}>
-                    <span className={globalStyle.icon}><i class="fi fi-rr-sparkles"></i></span>
+                    <span className={globalStyle.icon}><i className="fi fi-rr-sparkles"></i></span>
                     <span>Accessories</span>
                 </div>
             </Col>
             <Col className={style.category}>
                 <div className={clsx(globalStyle.listItem,style.categoryItem)}>
-                    <span className={globalStyle.icon}><i class="fi fi-brands-photoshop-camera"></i></span>
+                    <span className={globalStyle.icon}><i className="fi fi-brands-photoshop-camera"></i></span>
                     <span>Software</span>
                 </div>
             </Col>
             <Col className={style.category}>
                 <div className={clsx(globalStyle.listItem,style.categoryItem)}>
-                    <span className={globalStyle.icon}><i class="fi fi-rr-speaker"></i></span>
+                    <span className={globalStyle.icon}><i className="fi fi-rr-speaker"></i></span>
                     <span>Speaker</span>
                 </div>
             </Col>
             <Col className={style.category}>
                 <div className={clsx(globalStyle.listItem,style.categoryItem)}>
-                    <span className={globalStyle.icon}><i class="fi fi-rr-desktop-wallpaper"></i></span>
+                    <span className={globalStyle.icon}><i className="fi fi-rr-desktop-wallpaper"></i></span>
                     <span>Display</span>
                 </div>
             </Col>

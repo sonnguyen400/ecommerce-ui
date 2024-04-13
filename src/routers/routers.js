@@ -1,6 +1,8 @@
 import SidebarLayout from "../layout/admin/sidebar-layout/SideBarLayout.js";
 import HeadOnly from "../layout/headOnly/HeadOnly.js";
 import LoginPage from "../page/Login/LoginPage.js";
+import CardPage from "../page/cart/Cart.js";
+import Card from "../page/cart/Cart.js";
 import CategoryManage from "../page/categories_manage/CategoryManage.js";
 import CategoryDetail from "../page/category-detail/CategoryDetail.js";
 import AddProduct from "../page/product/add/AddProduct.js";
@@ -20,6 +22,6 @@ export const publicRouter=[
     {'path':"/admin/category",'component':CategoryManage,'layout':SidebarLayout},
     {'path':"/admin/category/:id",'component':CategoryDetail,'layout':SidebarLayout},
     {'path':"/",'component':Home,'layout':HeadOnly},
-    {'path':"/",'component':Home,'layout':HeadOnly},
+    {'path':"/cart",'component':CardPage,'layout':HeadOnly},
     {'path':"/product",'component':Product,'layout':HeadOnly}
 ]

@@ -14,7 +14,7 @@ import { AppLoader } from "../../context/loader";
 export default function ProductAddForm({submitHandler,defaultCategory}) {
     const validateSchema = Yup.object().shape({
         name: Yup.string()
-            .max(15, "Must be 15 characters or less")
+            .max(45, "Must be 45 characters or less")
             .required("Required"),
         description: Yup.string().required()
     })

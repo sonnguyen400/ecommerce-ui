@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from "formik";
-import { Button, FormGroup,FormControl } from "react-bootstrap";
+import { Button, FormGroup,Row,Col } from "react-bootstrap";
 import * as Yup from 'yup';
-function CategoryForm() {
+function CategoryForm({parent,submitHandler}) {
     var initialValues={
         "name":""
     }
@@ -9,7 +9,7 @@ function CategoryForm() {
         "name":Yup.string().required("Required")
     })
     return ( 
-    <Formik initialValues={initialValues} validationSchema={validationSchema}>
+    <Formik onSubmit={submitHandler} initialValues={initialValues} validationSchema={validationSchema}>
         {({errors,touched})=>(
             <Form>
                 <FormGroup>
@@ -17,7 +17,10 @@ function CategoryForm() {
                     <Field name="name" className="form-control" />
                     {errors.name&&touched.name&&<h6 className="text-sm text-danger" style={{"display":"block"}} type="invalid"><small>{errors.name}</small></h6>}
                 </FormGroup>
-                <Button type="submit">Submit</Button>
+
+                <div className="d-flex justify-content-end">
+                    <Button type="submit" className="mt-3 ms-auto">Submit</Button>
+                </div>
             </Form>
         )}
     </Formik> );

@@ -6,6 +6,7 @@ import CategoryList from "../../part/category-list/CategoryList";
 import ProductListBigIcon from "../../part/product-list-bigicon/product-list-big-icon";
 import ProductAddForm from "../../part/product/product-add-form";
 import { AppLoader } from "../../context/loader";
+import CategoryAddModal from "../../part/category/modal";
 function CategoryDetail() {
     const loader=useContext(AppLoader);
     const [urlParams, setUrlParams] = useSearchParams();
@@ -13,6 +14,14 @@ function CategoryDetail() {
     const [data, setData] = useState(null);
     const [products,setProducts]=useState(null);
     const [productDiag,setProductDiag]=useState(false);
+    const [categoryDiag,setCategoryDiag]=useState(false);
+
+    function addNestedCategory(child){
+        setData(data=>{
+            data.children.push(child);
+            return data;
+        })
+    }
     useEffect(() => {
         if (id !== undefined) {
             try {
@@ -29,13 +38,18 @@ function CategoryDetail() {
 
         }
     }, [id])
-    function addProduct(data){
+    function addProduct(product){
         loader(" ");
-        APIBase.post("api/v1/product",data)
+        APIBase.post("api/v1/product",product)
             .then(console.log)
             .catch(console.log)
             .finally(()=>{
                 loader("");
+                setProductDiag(false);
+                setProducts(data=>{
+                    data.push(product);
+                    return data;
+                })
             })
     }
     return (data &&
@@ -53,7 +67,7 @@ function CategoryDetail() {
                         {products&&<ProductListBigIcon>{products}</ProductListBigIcon>}
                     </CardBody>
                     <Modal size="lg"  show={productDiag} onHide={()=>{setProductDiag(false)}}>
-                            <ModalHeader>Add new product</ModalHeader>
+                            <ModalHeader closeButton>Add new product</ModalHeader>
                             <ModalBody>
                                 <ProductAddForm submitHandler={addProduct} defaultCategory={data}/>
                             </ModalBody>
@@ -67,10 +81,11 @@ function CategoryDetail() {
                     </CardBody>
                 </Tab>
                 <Tab eventKey="NestedCategory" title="Nested Categories" >
-                    <Col className="py-3"><Button>Add Nested Category</Button></Col>
+                    <Col className="py-3" onClick={()=>setCategoryDiag(true)}><Button>Add Nested Category</Button></Col>
                     <CardBody>
                         {Array.isArray(data.children)&&<CategoryList>{data.children}</CategoryList>}
                     </CardBody>
+                    {data&&<CategoryAddModal state={categoryDiag} setState={setCategoryDiag} parent={data} addNestedCategory={addNestedCategory}/>}
                 </Tab>
             </Tabs>
             

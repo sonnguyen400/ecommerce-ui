@@ -40,3 +40,15 @@ label{
 .list-item{
 
 }
+[data-justify-col-end]{
+  margin-left:attr(data-justify-col-end);
+}
+.inherit-link{
+    text-decoration: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+.inherit-link:hover{
+    color: var(--primary-color-800);
+    text-decoration:underline;
+}
