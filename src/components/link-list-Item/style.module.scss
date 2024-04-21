@@ -1,0 +1,29 @@
+.item{
+    font-weight:600;
+    color: var(--primary-color-800);
+    &:hover{
+        background-color: var(--primary-color-200);
+    }
+    .link{
+        display: flex;
+        align-items: center;
+        padding:8px;
+        .text{
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 5px;
+            text-wrap:nowrap;
+            font-size: 1rem;
+        }
+        .icon{
+            padding-top: 3px;
+            justify-self: end;
+            font-weight: 600;
+            &.iconMain{
+                padding-right: 10px;
+            }
+        }
+    }
+    
+}

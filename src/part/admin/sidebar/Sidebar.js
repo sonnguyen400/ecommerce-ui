@@ -46,6 +46,13 @@ function Sidebar({...props}) {
                 </div>
                 <span className={style.arrow}><i className="fi fi-rr-angle-small-right"></i></span>
             </Link>
+            <Link to="/admin/warehouse" className={style.item} tabIndex={1}>
+                <div className={style.line}>
+                    <span className={style.icon}><i class="fi fi-rr-warehouse-alt"></i></span>
+                    <span className={style.label}>Warehouse Manage</span>
+                </div>
+                <span className={style.arrow}><i className="fi fi-rr-angle-small-right"></i></span>
+            </Link>
             <Link to="/admin/product" className={style.item} tabIndex={1}>
                 <div className={style.line}>
                     <span className={style.icon}><i class="fi fi-rr-user-check"></i></span>

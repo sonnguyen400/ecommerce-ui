@@ -11,7 +11,7 @@
   --sub-color-800:#223c43;
   --sub-color-700:#304a51;
   --sub-color-600:#395B64;
-  --sub-color-600:#41707c;
+  --sub-color-400:#41707c;
 }
 
 body {
@@ -23,7 +23,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #edf1f4 !important;
 }
-
+a{
+  color:inherit !important;
+  text-decoration: inherit !important;
+  font:inherit !important;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -51,4 +55,18 @@ label{
 .inherit-link:hover{
     color: var(--primary-color-800);
     text-decoration:underline;
+}
+.border-primary-600{
+  border-color: var(--primary-color-600);
+}
+.border-primary-800{
+  border-color: var(--primary-color-800);
+}
+.card{
+  border: none !important;
+  box-shadow: #7c73c027 0px 0px 16px;
+  border-radius: 0.8rem;
+}
+.description{
+  color: var( --primary-color-600)
 }

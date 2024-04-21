@@ -9,7 +9,6 @@ import { AppLoader } from "../../context/loader";
 import CategoryAddModal from "../../part/category/modal";
 function CategoryDetail() {
     const loader=useContext(AppLoader);
-    const [urlParams, setUrlParams] = useSearchParams();
     const { id } = useParams();
     const [data, setData] = useState(null);
     const [products,setProducts]=useState(null);
