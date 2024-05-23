@@ -15,8 +15,9 @@ function Home() {
         <UserCarousel/>
         <div className="mt-5">
             <Row className="gx-1">
-                {products&&products.map(product=><Col className="p-1" >
-                    <ProductCard>{product}</ProductCard>
+                {products&&products.map((product,index)=>
+                <Col  key={index} className="p-1" >
+                    <ProductCard >{product}</ProductCard>
                 </Col>)}
             </Row>
         </div>

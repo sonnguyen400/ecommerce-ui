@@ -5,10 +5,10 @@ import APIBase from "../../api/ApiBase";
 import CategoryList from "../../part/category-list/CategoryList";
 import ProductListBigIcon from "../../part/product-list-bigicon/product-list-big-icon";
 import ProductAddForm from "../../part/product/product-add-form";
-import { AppLoader } from "../../context/loader";
+import { GlobalContext } from "../../context";
 import CategoryAddModal from "../../part/category/modal";
 function CategoryDetail() {
-    const loader=useContext(AppLoader);
+    const loader=useContext(GlobalContext);
     const { id } = useParams();
     const [data, setData] = useState(null);
     const [products,setProducts]=useState(null);

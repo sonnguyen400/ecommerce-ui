@@ -1,8 +1,9 @@
 $thick:5px;
-$color:red;
+$color:#392fc6;
 .loader{
     position: absolute;
     top: 0px;
+    z-index: 99999;
     left: 0px;
     width: 100%;
     .bar{

@@ -1,0 +1,16 @@
+.loginWith{
+    display: flex;
+    flex-direction: row;
+    padding-top:16px;
+    padding-bottom: 16px;
+    padding-left:15%;
+    padding-right: 16px;
+    >div{
+        padding:0px 8px;
+        width: 25%;
+        img{
+            width: 100%;
+            max-width: 3rem;
+        }
+    }
+}

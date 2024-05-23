@@ -4,6 +4,7 @@ import SelectVariation from '../../components/select-variaion/SelectVariaton';
 import CheckRadio from '../../components/input-radio/CheckRadio';
 import clsx from 'clsx';
 import style from './style.module.scss';
+import { memo } from 'react';
 function ProductItemSelect({ productItems, onChange }) {
     const [status, setStatus] = useState();
     const variations = useMemo(() => {
@@ -49,16 +50,18 @@ function ProductItemSelect({ productItems, onChange }) {
         if (onChange) {
             let item = productItems.find(item => {
                 return item.options.every(option => {
-                    return productItem.options.some(option_ => option_.value == option.value);
+                    return productItem.options.some(option_ => option_.value === option.value);
                 })
             });
             if (!item) setStatus("Unavailable");
-            else {
+            else if( item.warehouses) {
                 var qty = item.warehouses.reduce((pre, warehouseItem) => {
                     if (warehouseItem && warehouseItem.qty) return pre + warehouseItem.qty;
                     return pre;
                 }, 0)
                 setStatus(qty);
+            }else{
+                setStatus(0)
             }
             onChange(item);
         }
@@ -71,4 +74,4 @@ function ProductItemSelect({ productItems, onChange }) {
     </Col>);
 }
 
-export default ProductItemSelect;
+export default memo(ProductItemSelect);

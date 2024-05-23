@@ -1,83 +1,136 @@
 import Form from "react-bootstrap/Form";
-import  Card from "react-bootstrap/Card";
-import  CardBody from "react-bootstrap/CardBody";
-import { FormControl, FormGroup, FormLabel,Button,Stack } from "react-bootstrap";
+import { Alert, Col, FormLabel, Row } from "react-bootstrap";
 import { useFormik } from "formik";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 import APIBase from "../../api/ApiBase";
-import axios from "axios";
-import { API_CONTEXT } from "../../api/constant";
-function LoginForm() {
-    function refresh(){
-        APIBase.get("refresh")
-        .catch(console.log)
-        .then(console.log)
-    }
-    function getUser(){
-        APIBase.get("auth/user", { headers: { credentials: 'include'} }).then(console.log)
-    }
-    function logout(){
-        APIBase.post("/logout").catch(console.log).then(console.log)
-    }
-    const authObject=Yup.object().shape({
-        username:Yup.string().required("Username can be blank"),
-        password:Yup.string().min(4,"Password is too short").required("Required")
-    })
-    const formik=useFormik({
-        validateOnBlur:true,
-        initialValues:{
-            username:"",
-            password:""
-        },
-        onSubmit:values=>{
-            APIBase.post("login",JSON.stringify(values), {withCredentials: true , headers: { 'Content-Type': 'application/json' ,credentials: 'include'} }).then(
-                
-            ).catch(error=>{
+import clsx from "clsx";
+import { Error, Input, Button } from "../../components/form-component";
+import google from "../../assets/image/google.png";
+import facebook from "../../assets/image/facebook.png";
+import apple from "../../assets/image/apple.png";
+import github from "../../assets/image/github.png";
+import style from "./style.module.scss";
+import { Link } from "react-router-dom";
+import { Description } from "../../components/description";
+import { useContext, useState } from "react";
+import { GlobalContext } from "../../context";
+import { redirect } from "react-router-dom";
 
-            }).then((value)=>{
-                
-            });
-        },
-        validationSchema:authObject
-
+function LoginForm({ className, success }) {
+    const globalContext = useContext(GlobalContext);
+    const [loginMessage, setLoginMessage] = useState(undefined);
+    function refresh() {
+        APIBase.get("refresh").catch(console.log).then(console.log);
+    }
+    function getUser() {
+        return APIBase.get("auth/user", {
+            headers: { credentials: "include" },
+        });
+    }
+    function logout() {
+        APIBase.post("/logout").catch(console.log).then(console.log);
+    }
+    const authObject = Yup.object().shape({
+        username: Yup.string().required("Username can be blank"),
+        password: Yup.string()
+            .min(6, "Password is too short")
+            .required("Required"),
     });
-    return ( 
-    <Card>
-        <CardBody>
+    const formik = useFormik({
+        validateOnBlur: true,
+        initialValues: {
+            username: "",
+            password: "",
+        },
+        onSubmit: (values) => {
+            globalContext.loader("");
+            APIBase.post("login", JSON.stringify(values), {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    credentials: "include",
+                },
+            })
+                .then(() => getUser())
+                .then((payload) => payload.data)
+                .then((data) => {
+                    globalContext.authentication = data;
+                    success();
+                })
+                .catch((error) => {
+                    setLoginMessage("Error");
+                })
+                .finally(() => {
+                    globalContext.loader(false);
+                });
+        },
+        validationSchema: authObject,
+    });
+    return (
+        <div className={clsx("w-100", className)}>
             <Form noValidate onSubmit={formik.handleSubmit}>
-                <Form.Group>
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        placeholder="Username" 
-                        name="username" 
-                        onChange={formik.handleChange} 
-                        value={formik.values.username} 
-                        isInvalid={formik.touched.username&&formik.errors.username}
-                    ></Form.Control>
-                    <Form.Control.Feedback type="invalid">{formik.errors.username}</Form.Control.Feedback>
-                </Form.Group>
-                <FormGroup>
+                {loginMessage && <Error>{loginMessage}</Error>}
+                <div>
+                    <FormLabel>Username</FormLabel>
+                    <Input
+                        danger={formik.errors.username}
+                        type="text"
+                        placeholder="Username"
+                        name="username"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.username}
+                    ></Input>
+                    {formik.errors.username && (
+                        <Error>{formik.errors.username}</Error>
+                    )}
+                </div>
+                <div>
                     <FormLabel>Password</FormLabel>
-                    <FormControl 
-                        type="password" 
-                        placeholder="Password" 
-                        name="password" 
-                        onChange={formik.handleChange} 
+                    <Input
+                        danger={formik.errors.password}
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                         value={formik.values.password}
-                        isInvalid={formik.touched.username&&formik.errors.password}
-                    ></FormControl>
-                    <FormControl.Feedback type="invalid">{formik.errors.password}</FormControl.Feedback>
-                </FormGroup>
-                <Stack className="my-3">
+                    ></Input>
+                    {formik.errors.password && (
+                        <Error>{formik.errors.password}</Error>
+                    )}
+                </div>
+                <div className="pt-3 w-full d-flex flex-row justify-content-end">
                     <Button type="submit">Login</Button>
-                </Stack>
+                </div>
+                <div className="pt-5">
+                    <Description>Login with</Description>
+                </div>
+                <div className={style.loginWith}>
+                    <div>
+                        <img src={google} alt="Login with google" />
+                    </div>
+                    <div>
+                        <img src={facebook} alt="Login with facebook" />
+                    </div>
+                    <div>
+                        <img src={github} alt="Login with github" />
+                    </div>
+                    <div>
+                        <img src={apple} alt="Login with apple" />
+                    </div>
+                </div>
+                <Description className="">
+                    Don't have an account yet? <Link>Register</Link>
+                </Description>
             </Form>
-            <Button onClick={refresh} > refresh</Button>
-            <Button onClick={getUser} > user</Button>
-            <Button onClick={logout} > Logout</Button>
-        </CardBody>
-    </Card> );
+            <Button onClick={refresh}> refresh</Button>
+            <Button onClick={logout}> Logout</Button>
+            {/* 
+                    <Button onClick={getUser}> user</Button>
+                     */}
+        </div>
+    );
 }
 
 export default LoginForm;

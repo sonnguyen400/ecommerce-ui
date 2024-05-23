@@ -4,7 +4,6 @@ import RatingStars from "../rating-start/RatingStars";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 function ProductCard({children,...props}) {
-    console.log(children)
     return ( 
         <Card {...props} className={clsx(style.productCard)}>
             <Link to={`/product?id=${children.id}`}>

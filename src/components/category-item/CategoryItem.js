@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import APIBase from "../../api/ApiBase";
-import { AppLoader } from "../../context/loader";
+import { AppLoader } from "../../context";
 import { Card, CardBody, CardHeader, CardLink, CardSubtitle, ListGroupItem } from "react-bootstrap";
 import { Link } from "react-router-dom";
 

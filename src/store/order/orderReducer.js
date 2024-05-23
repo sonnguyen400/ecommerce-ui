@@ -9,8 +9,7 @@ export const orderSlice = createSlice({
             return state;
         },
         removeItem: (state, action) => {
-            return state.filter(item => item.id !== action.payload.id)
-
-        }
-    }
-})
+            return state.filter((item) => item.id !== action.payload.id);
+        },
+    },
+});

@@ -6,34 +6,57 @@ APIBase.get("api/v1/cart")
 .then(data=>{
     cart=data;
 }).catch(console.log)
-export const postNewCartItem=createAsyncThunk(
-    'cart/addItem',
+
+export const addCartItem=createAsyncThunk(
+    'cart/addNewItem',
     async (data,{rejectWithValue})=>{
-        try{
-            const response=await APIBase.post("api/v1/cart",data);
-            return response.data;
-        }catch(err){
-            console.log(err)
-        }
+        const response=await APIBase.post("api/v1/cart",data);
+        return response.data;
+    }
+)
+export const deleteCartItem=createAsyncThunk(
+    'cart/deleteById',
+    async(data,{rejectWithValue})=>{
+        const response=await APIBase.delete(`api/v1/cart/${data}`);
+        return response.data;
+    }
+)
+export const updateCartItem=createAsyncThunk(
+    'cart/updateQty',
+    async(data,{rejectWithValue})=>{
+        const response=await APIBase.put(`api/v1/cart/${data.id}`,data);
+        return response.data;
     }
 )
 export const cartSlide=createSlice({
     name:"cart",
-    initialState:cart&&[],
+    initialState:[],
     reducers:{
-        deleteItem:(state,action)=>{
-            APIBase.delete(`api/v1/cart/${action.payload.id}`)
-            .then(console.log)
+        addAll:(state,action)=>{
+            state=[...action.payload]
+            return state;
+        },
+        findAll:(state,action)=>{
+            return state;
         }
     },
     extraReducers:(builder)=>{
-        
         builder
-        .addCase(postNewCartItem.pending,(state,action)=>{
-            console.log("pending");
+        .addCase(addCartItem.fulfilled,(state,action)=>{
+            return [...state,action.payload]
         })
-        .addCase(postNewCartItem.fulfilled,(state,action)=>{
-            state.push(action.payload);
+        .addCase(deleteCartItem.fulfilled,(state,action)=>{
+            return state.filter(item=>item.id!==action.payload)
         })
+        .addCase(updateCartItem.fulfilled,(state,action)=>{
+            for(let i=0;i<state.length;i++){
+                if(state[i].id===action.payload.id){
+                    state[i]=action.payload;
+                }
+            }
+            return state;
+        })
+        
     }
 })
+export const {addAll}=cartSlide.actions

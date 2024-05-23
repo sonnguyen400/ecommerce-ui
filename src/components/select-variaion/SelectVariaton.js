@@ -19,11 +19,11 @@ function SelectVariation({onChange,variation}) {
     return ( 
     <Col>
         <label>{variation.name}</label>
-        <Row ref={inputGroup} className={clsx("gx-2",style.inputGroup)}>
+        <div ref={inputGroup} className={clsx("gx-2",style.inputGroup)}>
             {variation.options.map((option,index)=>{
-                return <div key={variation.name+index} className={clsx(style.option)}><CheckRadio onChange={(e)=>{change(e)}} value={option.value} name={variation.name}>{option.value}</CheckRadio></div>
+                    return <CheckRadio className={clsx(style.option)} key={variation.name+index} onChange={(e)=>{change(e)}} value={option.value} name={variation.name}>{option.value}</CheckRadio>
             })}
-        </Row>
+        </div>
     </Col> );
 }
 

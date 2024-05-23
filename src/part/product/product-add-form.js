@@ -9,7 +9,7 @@ import {
     FormLabel,
     FormControl,
 } from "react-bootstrap";
-import { AppLoader } from "../../context/loader";
+import { AppLoader } from "../../context";
 
 export default function ProductAddForm({submitHandler,defaultCategory}) {
     const validateSchema = Yup.object().shape({

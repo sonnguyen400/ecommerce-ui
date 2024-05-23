@@ -5,11 +5,15 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import APIBase from "../../../api/ApiBase";
 import ProductItemSelect from "../../../part/product-item-selection/ProductItemSelect";
-import { cartSlide, postNewCartItem } from "../../../store/cart/cartReducer";
 import { useDispatch } from "react-redux";
+import InputNumber from "../../../components/input-number/InputNumber";
+import { useRef } from "react";
+import { useMemo } from "react";
+import { addCartItem } from "../../../store/cart/cartReducer";
 
 function Product() {
     const [urlParams, setUrlParams] = useSearchParams();
+    const [qty,setQty]=useState(1);
     const [product, setProduct] = useState(null);
     const dispatch = useDispatch();
     useEffect(() => {
@@ -19,28 +23,26 @@ function Product() {
                 return payload.data;
             }).catch(err => err)
     }, [])
+    
     const [selectedItem, setSelectedItem] = useState(null);
     function addCard() {
         let cardItem = {
-            productItem: {
-                id: selectedItem.id
+            productItem:{
+                id:selectedItem.id
             },
-            qty: 1
+            qty: qty
         }
-        dispatch(postNewCartItem(cardItem))
-
+        dispatch(addCartItem(cardItem));
     }
+    
     return (product &&
-        <Row>
+        <Row >
             <Col xl={4}>
                 <Card className={style.card}>
                     <CardBody>
                         <Col>
                             <div className={style.productImage}>
                                 <Image className="w-100 h-100 " src={product.productImage} alt="" />
-                            </div>
-                            <div>
-                                <Row></Row>
                             </div>
                         </Col>
 
@@ -59,12 +61,15 @@ function Product() {
                             {product.name}
                         </CardTitle>
                         <h5 className={style.price}>56728</h5>
-                        <Col className={style.options}>
-                            <Row> </Row>
-                        </Col>
-                        <ProductItemSelect onChange={setSelectedItem} productItems={product.productItems} />
-                        <Button onClick={addCard}>Add Cart</Button>
-                        <Button>Order Now</Button>
+                        <div className="d-flex flex-column">
+                            <ProductItemSelect onChange={setSelectedItem} productItems={product.productItems} />
+                            <InputNumber value={qty} className="py-2" type="number" onChange={setQty}/>
+                        </div>
+                        
+                        <div className="d-flex flex-column w-100">
+                            <Button className="mt-2" onClick={addCard}>Add Cart</Button>
+                            <Button className="mt-2">Order Now</Button>
+                        </div>
                     </CardBody>
                 </Card>
 

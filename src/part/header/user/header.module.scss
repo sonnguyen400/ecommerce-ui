@@ -6,7 +6,6 @@
         img{
             width: 100%;
             padding:2px;
-            border:1px solid blue;
         }
     }
     .link{
@@ -14,4 +13,37 @@
         color:inherit;
         padding:0 3rem;
     }
+    .dropMenu{
+        border-radius: 0.34rem;
+        background-color: white;
+        
+        .menuItem{
+            min-width: 18rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            &:hover{
+                background-color: rgba(0, 0, 0, 0.057);
+            }
+            span:first-child{
+                padding-right: 5px;
+                padding-top:2px;
+            }
+            &:first-child{
+                border-top-left-radius: 0.34rem;
+                border-top-right-radius: 0.34rem;
+            }
+            &:last-child{
+                border-bottom-left-radius: 0.34rem;
+                border-bottom-right-radius: 0.34rem;
+            }
+        }
+        .seperate{
+            border:1px solid var(--primary-color-600);
+            width: 100%;
+        }
+
+    }
+    
 }

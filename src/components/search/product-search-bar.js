@@ -1,6 +1,7 @@
 import { Form, FormControl } from "react-bootstrap";
 import style from './style.module.scss';
 import clsx from "clsx";
+import { memo } from "react";
 function ProductSearchBar() {
     return ( 
     <div className={clsx(style.container)}>
@@ -13,4 +14,4 @@ function ProductSearchBar() {
     </div> );
 }
 
-export default ProductSearchBar;
+export default memo(ProductSearchBar);

@@ -7,11 +7,16 @@
   --primary-color-200:#DDE6ED;
   --primary-color-100:#edf3f8;
   --text-dark:#2C3333;
+  --text-dark-200:#49545a;
+  --text-dark-400:#373c3f;
   --text-light:white;
   --sub-color-800:#223c43;
   --sub-color-700:#304a51;
   --sub-color-600:#395B64;
   --sub-color-400:#41707c;
+  --light-color-1:#512eff;
+  --danger-color:#ff0000bf;
+  --base-radius:0.2rem;
 }
 
 body {
@@ -69,4 +74,12 @@ label{
 }
 .description{
   color: var( --primary-color-600)
+}
+@media (max-width:512px) {
+  .col-xs-0{
+    display: none;
+  }
+  .h-xs-full{
+    height: 100%;
+  }
 }

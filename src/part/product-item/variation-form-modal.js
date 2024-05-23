@@ -14,12 +14,12 @@ import {
     Toast,
     ToastContainer
 } from "react-bootstrap";
-import { AppLoader } from "../../context/loader";
+import { GlobalContext } from "../../context";
 import APIBase from "../../api/ApiBase";
 function VariationForm({submitHandler,onCancel,product}) {
     const [formState, setFormState] = useState(true);
     const [variations,setVariations]=useState({});
-    const loader=useContext(AppLoader);
+    const globalContext=useContext(GlobalContext);
     const [toastContent,setToast]=useState("");
     
     useEffect(()=>{

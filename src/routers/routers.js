@@ -22,8 +22,10 @@ import Address from "../page/user/address/Address.js";
 import AddressAdd from "../page/user/address-add/AddressAdd.js";
 import Payment from "../page/user/payment-methods/PaymentMethods.js";
 import PaymentMethods from "../page/user/payment-methods/PaymentMethods.js";
+import Register from "../page/register/Register.js";
 export const publicRouter = [
     { 'path': "/login", 'component': LoginPage },
+    { 'path': "/register", 'component': Register },
     { 'path': "/add", 'component': ProductAdd, 'layout': SidebarLayout },
     { 'path': "/items", 'component': VariationForm, 'layout': SidebarLayout },
     { 'path': "/", 'component': Home, 'layout': HeadOnly },

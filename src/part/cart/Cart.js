@@ -2,33 +2,35 @@ import { useEffect, useMemo, useState } from "react";
 import OrderItem from "../../components/order-item/OrderItem";
 import { Row, Col, Card, CardBody, ListGroup, Button, CardTitle } from 'react-bootstrap';
 import APIBase from "../../api/ApiBase";
-import { orderSlice } from "../../store/order/orderReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { orderSelector } from "../../store/order/orderSelector";
 import { Link } from "react-router-dom";
+import { addAll } from "../../store/cart/cartReducer";
+import axios, { Axios } from "axios";
 function Cart() {
-    const [cartItems, setCartItems] = useState(undefined);
-    const orderItems = useSelector(state => { return state.order });
+    const ordersState = useSelector(state => { return state.order });
+    const cartItems=useSelector(state=>state.cart);
+    const [loading,setLoading]=useState(true);
     const dispatch = useDispatch();
     const total = useMemo(() => {
-        return orderItems.reduce((pre, cartItem) => {
+        return ordersState.reduce((pre, cartItem) => {
             return pre + cartItem.qty * cartItem.productItem.price;
         }, 0)
-    }, [orderItems])
-    useEffect(() => {
-        APIBase.get("api/v1/cart").then(payload => {
-            setCartItems(payload.data)
-            return payload.data;
-        }).catch(console.log)
-    }, [])
-
+    }, [ordersState])
+    useEffect(()=>{
+        APIBase.get("api/v1/cart")
+            .then(payload=>{
+                dispatch(addAll(payload.data));
+                setLoading(false);
+            })
+            .catch(console.error)
+    },[dispatch])
     return (<Row className="mt-5">
         <Col sm={8}>
             <Card>
                 <CardBody>
                     <Card.Title>Cart</Card.Title>
                     <ListGroup className="list-group-flush">
-                        {cartItems && cartItems.map((item, key) => <ListGroup.Item key={key}><OrderItem data={item} /></ListGroup.Item>)}
+                        {!loading&&cartItems.map((item, key) => <ListGroup.Item key={key}><OrderItem data={item} /></ListGroup.Item>)}
                     </ListGroup>
                 </CardBody>
             </Card>
@@ -37,7 +39,10 @@ function Cart() {
             <Card>
                 <CardBody>
                     <CardTitle className="opacity-75">Total</CardTitle>
-                    <h4>{total}</h4>
+                    <h4>{ordersState.reduce((pre,item)=>{
+                        var cartItem=cartItems.find(cartItem=>item.id===cartItem.id)
+                        return pre+cartItem.qty*cartItem.productItem.price;
+                    },0)}</h4>
                     <Link to={`/order`}><Button>Purchase</Button></Link>
                 </CardBody>
             </Card>

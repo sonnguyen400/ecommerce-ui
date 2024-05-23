@@ -1,31 +1,28 @@
-import { Row,Col, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import ProductAddForm from "../../../part/product/product-add-form";
 import ProductItemForm from "../../../part/product/product-item-form";
 import { useContext, useRef, useState } from "react";
 import clsx from "clsx";
 import APIBase from "../../../api/ApiBase";
-import { AppLoader } from "../../../context/loader";
-import VariationFormModal from "../../../part/product-item/modal";
+import { GlobalContext } from "../../../context";
 function AddProduct() {
-    const loader=useContext(AppLoader);
-    function submit(formdata) {  
-        loader("Uploading product");
-            APIBase.post("/api/v1/product",formdata)
-                .then((data)=>{
-                    loader("");
-                    alert("ok");
-                })
-                .errors(()=>{
-                    loader("");
-                })
-                .finally(()=>{
-                    loader("")
-                })
+    const globalContext = useContext(GlobalContext);
+    function submit(formdata) {
+        globalContext.loader("Uploading product");
+        APIBase.post("/api/v1/product", formdata)
+            .then((data) => {
+                alert("ok");
+            })
+            .errors(() => {
+            })
+            .finally(() => {
+                globalContext(false);
+            })
     }
-    return ( <Col>
-        <ProductAddForm  submitHandler={submit}/>
-        
-    </Col> );
+    return (<Col>
+        <ProductAddForm submitHandler={submit} />
+
+    </Col>);
 }
 
 export default AddProduct;

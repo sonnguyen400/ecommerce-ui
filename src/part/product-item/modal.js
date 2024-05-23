@@ -2,25 +2,23 @@ import {Button, Modal, ModalBody, ModalFooter,ModalTitle, ModalHeader } from "re
 import VariationForm from "./variation-form-modal";
 import { useContext, useEffect, useState } from "react";
 import APIBase from "../../api/ApiBase";
-import { AppLoader } from "../../context/loader";
+import { GlobalContext } from "../../context";
 function VariationFormModal({show,setShow,setState,product,setProduct}) {
-    const loader=useContext(AppLoader);
+    const globalContext=useContext(GlobalContext);
     const [variations,setVariations]=useState(null);
     function onSubmitHandler(data){
-        loader("   ");
+        globalContext.loader("   ");
         APIBase.post(`api/v1/product/${product.id}/item`,data)
         .then((payload)=>{
             setProduct(product=>{
                 product.productItems.push(payload.data);
                 return product;
             });
-            loader("");
             return payload.data;
         }).error((err)=>{
-            loader("");
             return err;
         }).finally(()=>{
-            loader("");
+            globalContext.loader(false);
             setShow(false)
         })
 

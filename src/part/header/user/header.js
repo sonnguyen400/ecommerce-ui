@@ -1,58 +1,117 @@
-import { Container, Row, Col, Dropdown, DropdownItem } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, ListGroupItem } from "react-bootstrap";
 import ProductSearchBar from "../../../components/search/product-search-bar";
-import image from '../../../assets/image/image.png';
-import { React } from "react";
-import style from './header.module.scss';
-import globalStyle from '../../../assets/style/base.module.scss';
-import CustomToggle from "../../../components/custom-dropdown-toggle/DropdowToggle";
+import image from "../../../assets/image/image.png";
+import { React, useContext, useEffect } from "react";
+import style from "./header.module.scss";
 import { Link } from "react-router-dom";
+import { memo } from "react";
+import Tippy from "@tippyjs/react/headless";
+import { GlobalContext } from "../../../context";
+import { Description } from "../../../components/description";
+import clsx from "clsx";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser, userSlide } from "../../../store/user/userSlide";
+import Switch from "../../../components/swich-button";
+import DarkModeToggle from "../../dark-mode-toggle";
 function Header() {
-    return (<Container fluid>
-        <Row className={style.header}>
-            <Col xl={2}>
-            </Col>
-            <Col xl={4}>
-                <ProductSearchBar />
-            </Col>
-            <Col>
-                <div className="d-flex flex-row align-items-center justify-content-end">
-                    <Link to={"/cart"} className={style.link}><i className="fi fi-rr-shopping-bag"></i></Link>
-                    <div className={style.avatar}>
-                        <img className="rounded-circle" src={image} alt=""></img>
+    const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchUser());
+    }, []);
+    return (
+        <Container fluid>
+            <Row className={style.header}>
+                <Col xl={2}>
+                    <Link to="/">
+                        <h2>Logo</h2>
+                    </Link>
+                </Col>
+                <Col xl={4}>
+                    <ProductSearchBar />
+                </Col>
+                <Col>
+                    <div className="d-flex flex-row align-items-center justify-content-end">
+                        <Link to={"/cart"} className={style.link}>
+                            <i className="fi fi-rr-shopping-bag"></i>
+                        </Link>
+                        <Tippy
+                            interactive
+                            render={(attrs) => (
+                                <div tabIndex={-1} {...attrs}>
+                                    <div className={clsx(style.dropMenu)}>
+                                        <div className="list-group-flush">
+                                            {user ? (
+                                                <div className={style.menuItem}>
+                                                    <span>
+                                                        <i className="fi fi-rr-user"></i>
+                                                    </span>
+                                                    <Description>
+                                                        {`${user.lastname} ${user.firstname}`}
+                                                    </Description>
+                                                </div>
+                                            ) : (
+                                                <Link
+                                                    to="/login"
+                                                    className={style.menuItem}
+                                                >
+                                                    <span>
+                                                        <i className="fi fi-rr-user"></i>
+                                                    </span>
+                                                    <Description>
+                                                        Đăng nhập
+                                                    </Description>
+                                                </Link>
+                                            )}
+                                            <div className={style.menuItem}>
+                                                <span>
+                                                    <i className="fi fi-rr-moon-stars"></i>
+                                                </span>
+                                                <Description>
+                                                    Dark mode
+                                                </Description>
+                                                <div className="d-flex flex-grow-1 justify-content-end">
+                                                    <DarkModeToggle />
+                                                </div>
+                                            </div>
+                                            {user &&
+                                                <>
+                                                    <div
+                                                        className={style.seperate}
+                                                    ></div>
+                                                    <div className={style.menuItem}>
+                                                        <span>
+                                                            <i className="fi fi-rs-sign-out-alt"></i>
+                                                        </span>
+                                                        <Description>
+                                                            Logout
+                                                        </Description>
+                                                    </div>
+                                                </>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        >
+                            <Link to="/user">
+                                <div className={style.avatar}>
+                                    <img
+                                        className="rounded-circle"
+                                        src={image}
+                                        alt=""
+                                    ></img>
+                                </div>
+                            </Link>
+                        </Tippy>
                     </div>
-                </div>
-                {/* <DropdownItem>
-                    <Dropdown.Toggle as={CustomToggle}>
-                        
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="list">
-                        <DropdownItem href="#">
-                            <div className={globalStyle.listItem}>
-                                <span className={globalStyle.icon}><i className"fi fi-rr-user"></i></span>
-                                <span>Nguyễn Hoàng Sơn</span>
-                            </div>
-                        </DropdownItem>
-                        <DropdownItem href="#">
-                            <div className={globalStyle.listItem}>
-                                <span className={globalStyle.icon}><i className="fi fi-rr-settings"></i></span>
-                                <span>Setting</span>
-                            </div>
-                        </DropdownItem>
-                        <Dropdown.Divider />
-                        <DropdownItem href="#">
-                            <div className={globalStyle.listItem}>
-                                <span className={globalStyle.icon}><i className="fi fi-rr-sign-out-alt"></i></span>
-                                <span>Sign out</span>
-                            </div>
-                        </DropdownItem>
-                    </Dropdown.Menu>
-                </DropdownItem> */}
-            </Col>
-            <Col xl={1} className="d-flex align-items-center">
-                <i className="fi fi-rr-menu-burger"></i>
-            </Col>
-        </Row>
-    </Container>);
+                </Col>
+                <Col xl={1} className="d-flex align-items-center">
+                    <i className="fi fi-rr-menu-burger"></i>
+                </Col>
+            </Row>
+        </Container>
+    );
 }
 
-export default Header;
+export default memo(Header);
