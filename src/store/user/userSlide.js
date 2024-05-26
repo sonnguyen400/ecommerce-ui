@@ -25,7 +25,7 @@ export const userSlide = createSlice({
                 return state;
             })
             .addCase(logoutUser.fulfilled, (state, action) => {
-                state = undefined;
+                state = null;
                 return state;
             });
     },

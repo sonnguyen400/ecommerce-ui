@@ -1,12 +1,9 @@
 import { Card, CardBody, Col } from "react-bootstrap";
-import SelectAddress from "../../../part/select-address/SelectAddress";
-
+import SelectAddress from '../../../part/select-address/SelectAddress.js';
 function Order() {
     return (<Card>
         <CardBody>
-            <Col>
-                <SelectAddress />
-            </Col>
+            <SelectAddress />
         </CardBody>
     </Card>);
 }

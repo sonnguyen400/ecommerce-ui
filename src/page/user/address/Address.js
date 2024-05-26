@@ -5,13 +5,27 @@ import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import APIBase from "../../../api/ApiBase";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findAllByUserId, setDefaultUserAddress } from "../../../store/address/addressSlide";
 function Address() {
+    const address = useSelector(state => state.userAddress);
+    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
     const selectDefaultAddress = useRef();
     const [editable, setEditable] = useState(false);
     function onChange(e) {
-        let checked = selectDefaultAddress.current.querySelector("input[type='radio'][name='address']:checked");
+        // let checked = selectDefaultAddress.current.querySelector("input[type='radio'][name='address']:checked");
+        if (e.target.checked) {
+            dispatch(setDefaultUserAddress({
+                userId: user.id,
+                addressId: e.target.value
+            }))
+        }
     }
     useEffect(() => {
+        if (user !== null && user.id !== undefined) {
+            dispatch(findAllByUserId({ userId: user.id }));
+        }
         const elements = selectDefaultAddress.current.querySelectorAll("input[type='radio'][name='address']");
         for (var element of elements) {
             element.addEventListener("change", onChange);
@@ -21,7 +35,7 @@ function Address() {
                 element.removeEventListener("change", onChange);
             }
         }
-    }, []);
+    }, [user]);
     return (<Card>
         <CardBody>
             <div className="d-flex flex-row">
@@ -29,14 +43,16 @@ function Address() {
                 <button onClick={() => { setEditable(false) }} className={clsx(style.disableEdit, { "d-none": !editable })}>Save</button>
             </div>
             <ListGroup variant="flush" ref={selectDefaultAddress}>
-                <ListGroupItem variant="flush" className={style.addressTag}>
-                    <input type="radio" value={1} name="address" />
-                    <div className={clsx(style.address)}>
-                        <AddressTag />
-                        <button className={clsx("text-danger", style.deleteBtn, { "d-none": !editable })}><i className="fi fi-sr-minus-circle"></i></button>
-                    </div>
-                </ListGroupItem>
-
+                {
+                    address && address.map((item, index) =>
+                    (<ListGroupItem key={index} variant="flush" className={style.addressTag}>
+                        <input type="radio" checked={item.isDefault} onChange={onChange} value={item.id.addressId} name="address" />
+                        <div className={clsx(style.address)}>
+                            <AddressTag data={item.address} />
+                            <button className={clsx("text-danger", style.deleteBtn, { "d-none": !editable })}><i className="fi fi-sr-minus-circle"></i></button>
+                        </div>
+                    </ListGroupItem>))
+                }
             </ListGroup>
             <Link to="/user/address/add" className="p-3">
                 <button className={clsx(style.addAddressButton)}>

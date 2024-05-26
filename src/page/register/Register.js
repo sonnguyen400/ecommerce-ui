@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context";
 import styled from "styled-components";
 const MiddleDiv = styled.div`
-    position: absolute;
-    top: 50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+    width: 100%;
+    height: 100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 `
 function Register() {
     const [error, setError] = useState(false);
@@ -24,24 +25,25 @@ function Register() {
                 setTimeout(() => {
                     navigate("/login")
                     globalContext.loader(false);
-
                 }, 3000)
             })
             .catch(e => {
-                console.log(e);
-                setError("Error while loading")
+                setError(e);
+                globalContext.loader(false);
             });
     }
     return (
         <Container fluid>
-            <MiddleDiv className="col col-sm-1 col-md-6 col-lg-4">
-                <Card className="col">
-                    <CardBody>
-                        <h2 className="pb-4 text-center">Register</h2>
-                        {error && <Error>{error}</Error>}
-                        <RegisterForm onSubmit={onSubmit} />
-                    </CardBody>
-                </Card>
+            <MiddleDiv>
+                <Col lg={5} md={6}>
+                    <Card>
+                        <CardBody>
+                            <h2 className="pb-4 text-center">Register</h2>
+                            {error && <Error>{error}</Error>}
+                            <RegisterForm onSubmit={onSubmit} />
+                        </CardBody>
+                    </Card>
+                </Col>
             </MiddleDiv>
         </Container>
     );

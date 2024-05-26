@@ -1,8 +1,8 @@
 import axios from "axios";
-const APIBase=axios.create({
-    baseURL:"http://localhost:8085/",
+const APIBase = axios.create({
+    baseURL: "http://localhost:8085/",
     withCredentials: true,
-    headers:{
+    headers: {
         credentials: 'include'
     }
 })

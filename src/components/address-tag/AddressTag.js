@@ -1,14 +1,14 @@
 import { Row, Col } from 'react-bootstrap';
 import style from './style.module.scss';
 import clsx from 'clsx';
-function AddressTag({ className, props }) {
+function AddressTag({ data, className, props }) {
     return (<Row {...props} className={className}>
         <Col>
             <div className={clsx(style.address)}>
-                4e56789
+                {data.city}
             </div>
             <div className={clsx(style.addressLine)}>
-                fugyihuojfghuj
+                {data.addressLine1}
             </div>
         </Col>
     </Row>);

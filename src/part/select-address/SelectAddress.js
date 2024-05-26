@@ -1,30 +1,24 @@
-import { Card, CardBody, Col, DropdownItem, ListGroup, ListGroupItem, Nav, NavDropdown, Row } from "react-bootstrap";
-import style from './style.module.scss';
+import { useDispatch, useSelector } from "react-redux";
+import SelectCustom from "../../components/select-custom/SelectCustom";
+import { useEffect } from "react";
+import { findAllByUserId } from "../../store/address/addressSlide";
 import AddressTag from "../../components/address-tag/AddressTag";
-import clsx from "clsx";
-function SelectAddress() {
-    return (
-        <div className={clsx(style.dropdown)}>
-            <div className="d-flex flex-row align-items-center">
-                <AddressTag sm={1} className="flex-grow-1" />
-                <i className="fi fi-rr-caret-down"></i>
-            </div>
-            <input type="hidden" />
-            <div className={clsx(style.menu)}>
-                <Card>
-                    <CardBody>
-                        <ListGroup variant="flush">
-                            <ListGroupItem className={clsx(style.item)}><AddressTag /></ListGroupItem>
-                            <ListGroupItem className={clsx(style.item)}><AddressTag /></ListGroupItem>
-                            <ListGroupItem className={clsx(style.item)}><AddressTag /></ListGroupItem>
-                            <ListGroupItem className={clsx(style.item)}><AddressTag /></ListGroupItem>
 
-                        </ListGroup>
-                    </CardBody>
-                </Card>
-            </div>
-        </div>
-    );
+function SelectAddress() {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
+    const address = useSelector(state => state.userAddress);
+    useEffect(() => {
+        if (address.length === 0) {
+            if (user && user.id) dispatch(findAllByUserId({
+                userId: user.id
+            }))
+        }
+        console.log(address)
+    }, [dispatch, user, address])
+    return (<SelectCustom>
+        {address && address.map((item, index) => <SelectCustom.Option key={index}><AddressTag data={item.address} /></SelectCustom.Option>)}
+    </SelectCustom>);
 }
 
 export default SelectAddress;

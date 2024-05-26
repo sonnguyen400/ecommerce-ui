@@ -21,14 +21,18 @@ class LinkListItem extends React.Component {
             return (<span className={clsx(style.text)}>{this.props.children}</span>);
         }
     }
+    static Content = class extends React.Component {
+        render() {
+            return (<span className={clsx(style.content)}>{this.props.children}</span>);
+        }
+    }
     render() {
         return (<ListGroupItem className={clsx(style.item, this.props.className)}>
             <Link to={this.props.to} className={clsx(style.link)}>
                 {this.props.children}
-
-                <span className={clsx(style.icon)}>
+                {this.props.children.length < 3 && <span className={clsx(style.icon)}>
                     <i className="fi fi-rr-angle-small-right"></i>
-                </span>
+                </span>}
             </Link>
         </ListGroupItem>)
     }

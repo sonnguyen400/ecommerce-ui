@@ -24,6 +24,15 @@
                 padding-right: 10px;
             }
         }
+        .content{
+            color: var(--primary-color-600);
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 5px;
+            text-wrap:nowrap;
+            font-size: 1rem;
+        }
     }
     
 }

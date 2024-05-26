@@ -121,7 +121,7 @@ function LoginForm({ className, success }) {
                     </div>
                 </div>
                 <Description className="">
-                    Don't have an account yet? <Link>Register</Link>
+                    Don't have an account yet? <Link to='/register'>Register</Link>
                 </Description>
             </Form>
             <Button onClick={refresh}> refresh</Button>
