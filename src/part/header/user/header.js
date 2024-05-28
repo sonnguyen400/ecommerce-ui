@@ -3,7 +3,7 @@ import ProductSearchBar from "../../../components/search/product-search-bar";
 import image from "../../../assets/image/image.png";
 import { React, useContext, useEffect } from "react";
 import style from "./header.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { memo } from "react";
 import Tippy from "@tippyjs/react/headless";
 import { GlobalContext } from "../../../context";
@@ -13,12 +13,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, userSlide } from "../../../store/user/userSlide";
 import Switch from "../../../components/swich-button";
 import DarkModeToggle from "../../dark-mode-toggle";
+import APIBase from "../../../api/ApiBase";
 function Header() {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     useEffect(() => {
         dispatch(fetchUser());
     }, []);
+    function logout() {
+        APIBase.post("/logout").then(() => {
+            navigate("/login");
+        }).catch(err => {
+            console.debug(err);
+        })
+    }
     return (
         <Container fluid>
             <Row className={style.header}>
@@ -79,7 +88,7 @@ function Header() {
                                                     <div
                                                         className={style.seperate}
                                                     ></div>
-                                                    <div className={style.menuItem}>
+                                                    <div className={style.menuItem} onClick={logout}>
                                                         <span>
                                                             <i className="fi fi-rs-sign-out-alt"></i>
                                                         </span>

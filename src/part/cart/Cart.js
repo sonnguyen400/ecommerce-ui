@@ -3,19 +3,15 @@ import OrderItem from "../../components/order-item/OrderItem";
 import { Row, Col, Card, CardBody, ListGroup, Button, CardTitle } from 'react-bootstrap';
 import APIBase from "../../api/ApiBase";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { addAll } from "../../store/cart/cartReducer";
-import axios, { Axios } from "axios";
+import { orderLine } from "../../store/orderline/orderLine";
 function Cart() {
     const ordersState = useSelector(state => { return state.order });
     const cartItems = useSelector(state => state.cart);
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
-    const total = useMemo(() => {
-        return ordersState.reduce((pre, cartItem) => {
-            return pre + cartItem.qty * cartItem.productItem.price;
-        }, 0)
-    }, [ordersState])
+    const navigate = useNavigate();
     useEffect(() => {
         APIBase.get("api/v1/cart")
             .then(payload => {
@@ -24,6 +20,10 @@ function Cart() {
             })
             .catch(console.error)
     }, [dispatch])
+    function order() {
+        dispatch(orderLine.actions.addAll(ordersState));
+        navigate("/order");
+    }
     return (<Row className="mt-5">
         <Col sm={8}>
             <Card>
@@ -43,7 +43,7 @@ function Cart() {
                         var cartItem = cartItems.find(cartItem => item.id === cartItem.id)
                         return pre + cartItem.qty * cartItem.productItem.price;
                     }, 0)}</h4>
-                    <Link to={`/order`}><Button>Purchase</Button></Link>
+                    <Button onClick={order}>Purchase</Button>
                 </CardBody>
             </Card>
         </Col>
