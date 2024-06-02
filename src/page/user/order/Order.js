@@ -57,7 +57,9 @@ function Order() {
     }
     function buildOrder() {
         var orderLinesInfor = orderLines.map(line => ({
-            productItemId: line.productItem.id,
+            productItem: {
+                id: line.productItem.id
+            },
             qty: line.qty,
             total: line.productItem.price * line.qty
         }))
