@@ -1,7 +1,8 @@
-import { useFormik } from "formik";
-import { Button, Col, Form, FormControl, FormGroup, FormLabel, Row } from "react-bootstrap";
+import { Field, useFormik } from "formik";
+import { Button, Col, Form, Input, Row } from "antd";
 import * as Yup from 'yup';
 import { Error } from '../../components/form-component';
+import FormItemInput from "antd/es/form/FormItemInput";
 function AddressForm({ onSubmit }) {
     const validateSchema = Yup.object({
         city: Yup.string().required(),
@@ -25,49 +26,49 @@ function AddressForm({ onSubmit }) {
     })
     return (<Form onSubmit={formik.handleSubmit}>
         <Col>
-            <FormGroup>
-                <FormLabel>Building</FormLabel>
-                <FormControl name="building" onChange={formik.handleChange} value={formik.values.building} />
-            </FormGroup>
+            <Form.Item>
+                <label>Building</label>
+                <FormItemInput name="building" onChange={formik.handleChange} value={formik.values.building} />
+            </Form.Item>
         </Col>
         <Row>
             <Col>
-                <FormGroup>
-                    <FormLabel>City</FormLabel>
+                <Form.Item>
+                    <label>City</label>
 
-                    <FormControl name="city" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.city} />
+                    <FormItemInput name="city" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.city} />
                     {formik.errors.city && <Error>{formik.errors.city}</Error>}
 
-                </FormGroup>
+                </Form.Item>
             </Col>
             <Col>
-                <FormGroup>
-                    <FormLabel>Postal Code</FormLabel>
-                    <FormControl name="postalCode" onChange={formik.handleChange} value={formik.values.postalCode} />
+                <Form.Item>
+                    <label>Postal Code</label>
+                    <input name="postalCode" onChange={formik.handleChange} value={formik.values.postalCode} />
                     {formik.errors.postalCode && <Error>{formik.errors.postalCode}</Error>}
-                </FormGroup>
+                </Form.Item>
             </Col>
         </Row>
-        <FormGroup>
-            <FormLabel>Region</FormLabel>
-            <FormControl name="region" onChange={formik.handleChange} value={formik.values.region} />
-        </FormGroup>
-        <FormGroup>
-            <FormLabel>Line 1</FormLabel>
-            <FormControl as="textarea" rows={3} name="addressLine1" onChange={formik.handleChange} value={formik.values.addressLine1} />
+        <Form.List>
+            <label>Region</label>
+            <Input name="region" onChange={formik.handleChange} value={formik.values.region} />
+        </Form.List>
+        <div>
+            <label>Line 1</label>
+            <Field as="textarea" rows={3} name="addressLine1" onChange={formik.handleChange} value={formik.values.addressLine1} />
             {formik.errors.addressLine1 && <Error>{formik.errors.addressLine1}</Error>}
-        </FormGroup>
-        <FormGroup>
-            <FormLabel>Line 2</FormLabel>
-            <FormControl as="textarea" rows={3} name="addressLine2" onChange={formik.handleChange} value={formik.values.addressLine2} />
-        </FormGroup>
-        <FormGroup>
-            <FormLabel>Country</FormLabel>
-            <FormControl value={formik.values.country.id} onChange={e => formik.setFieldValue("country.id", Number.parseInt(e.target.value))} as="select">
+        </div>
+        <div>
+            <label>Line 2</label>
+            <Field as="textarea" rows={3} name="addressLine2" onChange={formik.handleChange} value={formik.values.addressLine2} />
+        </div>
+        <div>
+            <label>Country</label>
+            <Field value={formik.values.country.id} onChange={e => formik.setFieldValue("country.id", Number.parseInt(e.target.value))} as="select">
                 <option value="1">Viet Nam</option>
                 <option value="2">America</option>
-            </FormControl>
-        </FormGroup>
+            </Field>
+        </div>
         <Button type="submit" className=" float-end mt-4">Submit</Button>
     </Form>);
 }

@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import APIBase from "../../api/ApiBase";
-import { AppLoader } from "../../context";
-import { Card, CardBody, CardHeader, CardLink, CardSubtitle, ListGroupItem } from "react-bootstrap";
+
+import { Card, List } from "antd";
 import { Link } from "react-router-dom";
 
-function CategoryItem({children}) {
-   
-    return ( <ListGroupItem>
-        <CardSubtitle><Link to={`/admin/category/${children.id}`}>{children.name}</Link></CardSubtitle>
-        <CardBody>{children.description}</CardBody>
-    </ListGroupItem>);
+function CategoryItem({ children }) {
+
+    return (<List.Item>
+        <Card title={<Link to={`/admin/category/${children.id}`}>{children.name}</Link>}>
+            {children.description}
+        </Card>
+
+    </List.Item>);
 }
 
 export default CategoryItem;

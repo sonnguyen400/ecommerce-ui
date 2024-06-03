@@ -1,4 +1,4 @@
-import { Card, CardBody, Col, Container } from "react-bootstrap";
+import { Card, Col } from "antd";
 import RegisterForm from "../../part/register-form";
 import APIBase from "../../api/ApiBase";
 import { useContext, useState } from "react";
@@ -33,19 +33,17 @@ function Register() {
             });
     }
     return (
-        <Container fluid>
+        <div fluid>
             <MiddleDiv>
-                <Col lg={5} md={6}>
+                <Col >
                     <Card>
-                        <CardBody>
-                            <h2 className="pb-4 text-center">Register</h2>
-                            {error && <Error>{error}</Error>}
-                            <RegisterForm onSubmit={onSubmit} />
-                        </CardBody>
+                        <h2 className="pb-4 text-center">Register</h2>
+                        {error && <Error>{error}</Error>}
+                        <RegisterForm onSubmit={onSubmit} />
                     </Card>
                 </Col>
             </MiddleDiv>
-        </Container>
+        </div>
     );
 }
 

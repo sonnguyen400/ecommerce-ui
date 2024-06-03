@@ -1,12 +1,12 @@
-import { FieldArray, Formik, Form, useFormik, Field } from "formik";
+import { FieldArray, Formik, useFormik, Field } from "formik";
 import { useRef } from "react";
-import { Col, Row, FormGroup, FormControl, Button,Dropdown } from "react-bootstrap";
+import { Col, Row, Form, Button } from "antd";
 import * as Yup from 'yup';
 import APIBase from "../../api/ApiBase";
 import clsx from "clsx";
 function ProductItemForm({ name, value, price, className, ...props }) {
     const initialValues = {
-        
+
         variation: [
             {
                 name: "",
@@ -38,30 +38,30 @@ function ProductItemForm({ name, value, price, className, ...props }) {
     return (
         <Col className={clsx(className)}>
             <Formik initialValues={initialValues} onSubmit={formSubmit}>
-                {({ values,setFieldValue }) =>
+                {({ values, setFieldValue }) =>
                     <Form ref={form} >
                         <Row>
                             <Col>
-                                <FormGroup>
-                                    <FormControl 
-                                        className="p-4" type="file" name="image" 
-                                        onChange={(e)=>setFieldValue("image",e.target.files[0])}
+                                <div>
+                                    <Form.Item
+                                        className="p-4" type="file" name="image"
+                                        onChange={(e) => setFieldValue("image", e.target.files[0])}
                                     />
                                     <label className="text-center">Variation Image</label>
-                                </FormGroup>
+                                </div>
                             </Col>
                             <Col>
-                                <FormGroup>
+                                <div>
                                     <label>Price</label>
                                     <Field className="form-control"
                                         type="text"
                                         name="price"
-                                        onChange={(e)=>setFieldValue("price",e.target.value)}
+                                        onChange={(e) => setFieldValue("price", e.target.value)}
                                     />
-                                </FormGroup>
+                                </div>
                             </Col>
                         </Row>
-        
+
                         <FieldArray name="variation">
                             {({ insert, remove, push }) => (
                                 <div>
@@ -69,28 +69,28 @@ function ProductItemForm({ name, value, price, className, ...props }) {
                                         <div key={idx} className="p-3 my-3 border-top border-bottom">
                                             <Row>
                                                 <Col>
-                                                    <FormControl as="select">
+                                                    <Form.Item as="select">
                                                         <option value={0}>Custom</option>
                                                         <option></option>
-                                                    </FormControl>
+                                                    </Form.Item>
                                                 </Col>
                                                 <Col>
-                                                    <FormGroup>
+                                                    <div>
                                                         <label>Variation</label>
                                                         <Field className="form-control"
                                                             type="text"
                                                             name={`variation.${idx}.name`}
                                                         />
-                                                    </FormGroup>
+                                                    </div>
                                                 </Col>
                                                 <Col>
-                                                    <FormGroup>
+                                                    <div>
                                                         <label>Value</label>
                                                         <Field className="form-control"
                                                             type="text"
                                                             name={`variation.${idx}.value`}
                                                         />
-                                                    </FormGroup>
+                                                    </div>
                                                 </Col>
                                             </Row>
                                         </div>

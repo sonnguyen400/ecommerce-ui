@@ -3,14 +3,10 @@ import { FieldArray, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 import {
     Button,
-    Container,
     Row,
     Form,
-    FormLabel,
-    FormControl,
     Col,
-    Toast,
-} from "react-bootstrap";
+} from "antd";
 import { GlobalContext } from "../../context";
 import APIBase from "../../api/ApiBase";
 function VariationForm({ submitHandler, onCancel, product }) {
@@ -61,15 +57,15 @@ function VariationForm({ submitHandler, onCancel, product }) {
     }
     return (
         <div>
-            <Container>
-                <Toast onClose={() => setToast("")} show={(!toastContent == "")} delay={3000} autohide >
+            <div>
+                {/* <Toast onClose={() => setToast("")} show={(!toastContent == "")} delay={3000} autohide >
                     <Toast.Header closeButton>
                         <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
                         <strong className="me-auto">Bootstrap</strong>
                         <small>11 mins ago</small>
                     </Toast.Header>
                     <Toast.Body>{toastContent}</Toast.Body>
-                </Toast>
+                </Toast> */}
                 <FormikProvider value={formik}>
                     <Form onSubmit={formik.handleSubmit}>
                         <h6 >
@@ -77,28 +73,28 @@ function VariationForm({ submitHandler, onCancel, product }) {
                         </h6>
                         <Row>
                             <Col>
-                                <Form.Group>
-                                    <FormLabel>Image</FormLabel>
-                                    <FormControl
+                                <div>
+                                    <label>Image</label>
+                                    <Form.Item
                                         type="file"
                                         name="image"
                                         onChange={(e) => {
                                             formik.setFieldValue("image", e.target.files[0]);
                                         }}
                                     />
-                                </Form.Group>
+                                </div>
                             </Col>
                             <Col>
-                                <Form.Group>
-                                    <FormLabel>Price</FormLabel>
-                                    <FormControl
+                                <div>
+                                    <label>Price</label>
+                                    <Form.Item
                                         name="price"
                                         type="number"
                                         min={1}
                                         onChange={e => { formik.setFieldValue("price", e.target.value) }}
                                         onBlur={e => { formik.setFieldValue("price", e.target.value) }}
                                     />
-                                </Form.Group>
+                                </div>
                             </Col>
                         </Row>
 
@@ -125,7 +121,7 @@ function VariationForm({ submitHandler, onCancel, product }) {
                                                 </datalist>
                                             </Col>
                                             <Col>
-                                                <FormControl
+                                                <Form.Item
                                                     name={`options.${index}.value`}
                                                     value={formik.values.options[index].value}
                                                     onChange={formik.handleChange}
@@ -184,7 +180,7 @@ function VariationForm({ submitHandler, onCancel, product }) {
                         </Row>
                     </Form>
                 </FormikProvider>
-            </Container>
+            </div>
         </div>
     );
 }

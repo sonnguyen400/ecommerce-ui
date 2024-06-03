@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Col } from 'react-bootstrap';
+import { Col } from 'antd';
 import SelectVariation from '../../components/select-variaion/SelectVariaton';
 import CheckRadio from '../../components/input-radio/CheckRadio';
 import clsx from 'clsx';
@@ -54,13 +54,13 @@ function ProductItemSelect({ productItems, onChange }) {
                 })
             });
             if (!item) setStatus("Unavailable");
-            else if( item.warehouses) {
+            else if (item.warehouses) {
                 var qty = item.warehouses.reduce((pre, warehouseItem) => {
                     if (warehouseItem && warehouseItem.qty) return pre + warehouseItem.qty;
                     return pre;
                 }, 0)
                 setStatus(qty);
-            }else{
+            } else {
                 setStatus(0)
             }
             onChange(item);

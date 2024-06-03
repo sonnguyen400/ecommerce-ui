@@ -1,5 +1,4 @@
-import { Row, Col, Image, ButtonGroup, Button, Figure, Placeholder } from 'react-bootstrap';
-import image from '../../assets/image/image.png';
+import { Row, Col, Image } from 'antd';
 import { Link } from 'react-router-dom';
 import style from './style.module.scss';
 import clsx from 'clsx';
@@ -7,9 +6,7 @@ import InputNumber from '../input-number/InputNumber';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderSlice } from '../../store/order/orderReducer';
-import SelectVariaton from '../select-variaion/SelectVariaton';
 import ProductItemSelect from '../../part/product-item-selection/ProductItemSelect';
-import { useEffect } from 'react';
 import APIBase from '../../api/ApiBase';
 import { memo } from 'react';
 import { deleteCartItem, updateCartItem } from '../../store/cart/cartReducer';
@@ -85,7 +82,7 @@ function OrderItem({ data, disabled }) {
                 {!disabled && <Col sm={1} className={clsx(style.deleteBtn)} onClick={deleteItem}><i className="fi fi-br-cross-small"></i></Col>}
             </Row>
             <Row className={clsx({ "d-none": state })}>
-                {product === undefined ? <Placeholder xs={6} /> : <ProductItemSelect onChange={updateProductItem} productItems={product.productItems} />}
+                {product === undefined ? <div /> : <ProductItemSelect onChange={updateProductItem} productItems={product.productItems} />}
             </Row>
         </Col>}
     </div>);

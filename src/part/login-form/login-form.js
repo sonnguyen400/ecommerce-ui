@@ -1,5 +1,4 @@
-import Form from "react-bootstrap/Form";
-import { Alert, Col, FormLabel, Row } from "react-bootstrap";
+
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import APIBase from "../../api/ApiBase";
@@ -14,7 +13,7 @@ import { Link } from "react-router-dom";
 import { Description } from "../../components/description";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../context";
-import { redirect } from "react-router-dom";
+import { Form } from "antd";
 
 function LoginForm({ className, success }) {
     const globalContext = useContext(GlobalContext);
@@ -71,7 +70,7 @@ function LoginForm({ className, success }) {
             <Form noValidate onSubmit={formik.handleSubmit}>
                 {loginMessage && <Error>{loginMessage}</Error>}
                 <div>
-                    <FormLabel>Username</FormLabel>
+                    <label>Username</label>
                     <Input
                         danger={formik.errors.username}
                         type="text"
@@ -86,7 +85,7 @@ function LoginForm({ className, success }) {
                     )}
                 </div>
                 <div>
-                    <FormLabel>Password</FormLabel>
+                    <label>Password</label>
                     <Input
                         danger={formik.errors.password}
                         type="password"

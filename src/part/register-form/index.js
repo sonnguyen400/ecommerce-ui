@@ -1,4 +1,4 @@
-import { Col, Form, Row } from "react-bootstrap";
+import { Col, Form, Row } from "antd";
 import { Button, Error, Input, Select } from "../../components/form-component";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -39,7 +39,7 @@ function RegisterForm({ onSubmit }) {
         <Form onSubmit={formik.handleSubmit}>
             <Row>
                 <Col>
-                    <Form.Group>
+                    <Form.Item>
                         <Form.Label>First name</Form.Label>
                         <Input
                             $danger={formik.touched.user && formik.errors.user && formik.errors.user.firstname}
@@ -50,10 +50,10 @@ function RegisterForm({ onSubmit }) {
                             value={formik.values.user.firstname}
                         />
                         <Error>{formik.errors.user && formik.errors.user.firstname}</Error>
-                    </Form.Group>
+                    </Form.Item>
                 </Col>
                 <Col>
-                    <Form.Group>
+                    <Form.Item>
                         <Form.Label>Last name</Form.Label>
                         <Input
                             $danger={formik.touched.user && formik.errors.user && formik.errors.user.lastname}
@@ -64,7 +64,7 @@ function RegisterForm({ onSubmit }) {
                             value={formik.values.user.lastname}
                         />
                         <Error>{formik.errors.user && formik.errors.user.lastname}</Error>
-                    </Form.Group>
+                    </Form.Item>
                 </Col>
             </Row>
             <Row>

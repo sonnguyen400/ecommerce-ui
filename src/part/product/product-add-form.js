@@ -1,17 +1,12 @@
-import React, { useContext, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
     Button,
-    Container,
     Form,
-    FormLabel,
-    FormControl,
-} from "react-bootstrap";
-import { AppLoader } from "../../context";
+} from "antd";
 
-export default function ProductAddForm({submitHandler,defaultCategory}) {
+export default function ProductAddForm({ submitHandler, defaultCategory }) {
     const validateSchema = Yup.object().shape({
         name: Yup.string()
             .max(45, "Must be 45 characters or less")
@@ -21,7 +16,7 @@ export default function ProductAddForm({submitHandler,defaultCategory}) {
     const formik = useFormik({
         initialValues: {
             name: "",
-            category:(defaultCategory&&defaultCategory.id)||1
+            category: (defaultCategory && defaultCategory.id) || 1
         },
         validationSchema: validateSchema,
         onSubmit: (values) => {
@@ -34,22 +29,22 @@ export default function ProductAddForm({submitHandler,defaultCategory}) {
     });
     return (
         <div>
-            <Container>
+            <div>
                 <Form onSubmit={formik.handleSubmit}>
-                    <Form.Group>
-                        <FormLabel>Image</FormLabel>
-                        <FormControl
+                    <div>
+                        <label>Image</label>
+                        <Form.Item
                             type="file"
                             name="image"
                             onChange={(e) => {
                                 formik.setFieldValue("image", e.target.files[0]);
                             }}
                         />
-                    </Form.Group>
+                    </div>
 
-                    <Form.Group>
-                        <FormLabel>Product's name</FormLabel>
-                        <FormControl
+                    <div>
+                        <label>Product's name</label>
+                        <Form.Item
                             name="name"
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
@@ -60,11 +55,11 @@ export default function ProductAddForm({submitHandler,defaultCategory}) {
                         ) : (
                             ""
                         )}
-                    </Form.Group>
+                    </div>
 
-                    <Form.Group>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl
+                    <div>
+                        <label>Description</label>
+                        <Form.Item
                             as="textarea"
                             rows={10}
                             name="description"
@@ -77,11 +72,11 @@ export default function ProductAddForm({submitHandler,defaultCategory}) {
                         ) : (
                             ""
                         )}
-                    </Form.Group>
+                    </div>
 
-                    <Form.Group>
-                        <FormLabel>category</FormLabel>
-                        <FormControl
+                    <div>
+                        <label>category</label>
+                        <Form.Item
                             as="select"
                             rows={10}
                             name="category"
@@ -93,14 +88,14 @@ export default function ProductAddForm({submitHandler,defaultCategory}) {
                             }
                             value={formik.values.category}
                         >
-                            {defaultCategory&&<option value={defaultCategory?.id||null}>{defaultCategory.name||"default"}</option>}
-                        </FormControl>
+                            {defaultCategory && <option value={defaultCategory?.id || null}>{defaultCategory.name || "default"}</option>}
+                        </Form.Item>
                         {formik.touched.category && formik.errors.category ? (
                             <small className="text-danger">{formik.errors.category}</small>
                         ) : (
                             ""
                         )}
-                    </Form.Group>
+                    </div>
 
                     <Button
                         variant="primary"
@@ -110,7 +105,7 @@ export default function ProductAddForm({submitHandler,defaultCategory}) {
                         Submit
                     </Button>
                 </Form>
-            </Container>
+            </div>
         </div>
     );
 }

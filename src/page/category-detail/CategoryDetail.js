@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { CardBody, Button, CardSubtitle, CardTitle, Col, Row, Tab, Tabs, Modal, ModalHeader, ModalBody, ListGroup, ModalDialog } from "react-bootstrap";
+import { Button, Card, Col, Tabs, Modal } from "antd";
 import { useParams, useSearchParams } from "react-router-dom";
 import APIBase from "../../api/ApiBase";
 import CategoryList from "../../part/category-list/CategoryList";
@@ -51,44 +51,40 @@ function CategoryDetail() {
                 })
             })
     }
+    const items = [{
+        key: 1,
+        label: "Products",
+        children: <>
+            <Col className="py-3"><Button onClick={() => { setProductDiag(true) }}>Add Product</Button></Col>
+            <Card title='Product List'>
+                {products && <ProductListBigIcon>{products}</ProductListBigIcon>}
+            </Card>
+            <Modal title="Add new product" size="lg" open={productDiag} onHide={() => { setProductDiag(false) }}>
+                <ProductAddForm submitHandler={addProduct} defaultCategory={data} />
+            </Modal>
+        </>
+    },
+    {
+        key: 2,
+        label: "Categories",
+        children: <>
+            <Col className="py-3" onClick={() => setCategoryDiag(true)}><Button>Add Nested Category</Button></Col>
+            <Card>
+                {Array.isArray(data.children) && <CategoryList>{data.children}</CategoryList>}
+            </Card>
+            {data && <CategoryAddModal state={categoryDiag} setState={setCategoryDiag} parent={data} addNestedCategory={addNestedCategory} />}</>
+    }
+    ]
     return (data &&
-        <CardBody>
-            <CardTitle>{data.name}</CardTitle>
-
+        <Card title={data.name}>
             <Tabs
                 defaultActiveKey={"Products"}
                 className="mt-5"
+                items={items}
             >
-                <Tab eventKey="Products" title="Products" >
-                    <Col className="py-3"><Button onClick={() => { setProductDiag(true) }}>Add Product</Button></Col>
-                    <CardBody>
-                        <CardSubtitle>Product List</CardSubtitle>
-                        {products && <ProductListBigIcon>{products}</ProductListBigIcon>}
-                    </CardBody>
-                    <Modal size="lg" show={productDiag} onHide={() => { setProductDiag(false) }}>
-                        <ModalHeader closeButton>Add new product</ModalHeader>
-                        <ModalBody>
-                            <ProductAddForm submitHandler={addProduct} defaultCategory={data} />
-                        </ModalBody>
-                    </Modal>
-                </Tab>
-                <Tab eventKey="Properties" title="Properties" >
-                    <CardBody>
-                        <ListGroup>
-                            {Array.isArray(data.variations) && data.variations.map((variation, index) => <ListGroup.Item key={index}>{variation.name}</ListGroup.Item>)}
-                        </ListGroup>
-                    </CardBody>
-                </Tab>
-                <Tab eventKey="NestedCategory" title="Nested Categories" >
-                    <Col className="py-3" onClick={() => setCategoryDiag(true)}><Button>Add Nested Category</Button></Col>
-                    <CardBody>
-                        {Array.isArray(data.children) && <CategoryList>{data.children}</CategoryList>}
-                    </CardBody>
-                    {data && <CategoryAddModal state={categoryDiag} setState={setCategoryDiag} parent={data} addNestedCategory={addNestedCategory} />}
-                </Tab>
             </Tabs>
 
-        </CardBody>);
+        </Card>);
 }
 
 export default CategoryDetail;

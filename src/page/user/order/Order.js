@@ -1,4 +1,4 @@
-import { Button, Card, Col, FormControl, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Input, List, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import OrderItem from "../../../components/order-item/OrderItem.js";
 import { useEffect, useMemo, useState } from "react";
@@ -99,11 +99,11 @@ function Order() {
                 <Card className="my-2">
                     <Card.Body>
                         <h6><span className="pt-1 px-2"><i className="fi fi-rr-marker"></i></span>Your order</h6>
-                        <ListGroup className="list-group-flush">
-                            {orderLines.map((item, index) => (<ListGroup.Item key={item}>
+                        <List className="list-group-flush">
+                            {orderLines.map((item, index) => (<List.Item key={item}>
                                 <OrderItem data={item} disabled />
-                            </ListGroup.Item>))}
-                        </ListGroup>
+                            </List.Item>))}
+                        </List>
                     </Card.Body>
                 </Card>
             </Col>
@@ -113,7 +113,7 @@ function Order() {
                     <Card.Body>
                         <h6><span className="pt-1 px-2"><i className="fi fi-rr-ticket"></i></span>Vouchers</h6>
                         <div className="d-flex flex-row w-100">
-                            <FormControl placeholder="Enter your voucher code" />
+                            <Input placeholder="Enter your voucher code" />
                             <Button variant="success" className="mx-1">Apply</Button>
                         </div>
                     </Card.Body>

@@ -1,4 +1,4 @@
-import { Card, CardBody } from "react-bootstrap";
+import { Card } from "antd";
 import AddressForm from "../../../part/address-form/AddressForm";
 import { useDispatch, useSelector } from "react-redux";
 import { postNewUserAddress } from "../../../store/address/addressSlide";
@@ -13,9 +13,7 @@ function AddressAdd() {
         }))
     }
     return (<Card>
-        <CardBody>
-            <AddressForm onSubmit={onSubmit} />
-        </CardBody>
+        <AddressForm onSubmit={onSubmit} />
     </Card>);
 }
 

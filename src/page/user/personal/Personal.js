@@ -1,4 +1,4 @@
-import { Col, Row, Card, Image, ListGroup } from "react-bootstrap";
+import { Col, Row, Card, Image, List } from "antd";
 import image from '../../../assets/image/image.png';
 import { useSelector } from "react-redux";
 import LinkListItem from "../../../components/link-list-Item/LinkListItem";
@@ -13,7 +13,7 @@ function Personal() {
                     <h3 className="text-center pt-4">{user ? `${user.lastname} ${user.firstname}` : <Link to="/login">Login</Link>}</h3>
                 </div>
 
-                {user && <ListGroup variant="flush">
+                {user && <List variant="flush">
                     <LinkListItem >
                         <LinkListItem.Icon><i className="fi fi-rr-envelope"></i></LinkListItem.Icon>
                         <LinkListItem.Text>Email</LinkListItem.Text>
@@ -42,7 +42,7 @@ function Personal() {
                         <LinkListItem.Icon><i className="fi fi-sr-credit-card"></i></LinkListItem.Icon>
                         <LinkListItem.Text>Payment</LinkListItem.Text>
                     </LinkListItem>
-                </ListGroup>}
+                </List>}
             </Card>
         </Col>
         <Col lg={8} md={7}></Col>

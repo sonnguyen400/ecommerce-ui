@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalFooter, ModalTitle, ModalHeader } from "react-bootstrap";
+import { Modal } from "antd";
 import VariationForm from "./variation-form-modal";
 import { useContext, useEffect, useState } from "react";
 import APIBase from "../../api/ApiBase";
@@ -28,13 +28,8 @@ function VariationFormModal({ show, setShow, setState, product, setProduct }) {
         APIBase.get(`api/v1/category/${product.categoryId}/variation`)
     }, [])
     return (
-        <Modal onHide={() => { setShow(false) }} show={show} backdrop="static" keyboard={false} size='lg'>
-            <ModalHeader closeButton>
-                <ModalTitle>Add variation</ModalTitle>
-            </ModalHeader>
-            <ModalBody>
-                {product && <VariationForm product={product} submitHandler={onSubmitHandler} onCancel={() => { setState(false) }} />}
-            </ModalBody>
+        <Modal title="Add variation" onHide={() => { setShow(false) }} show={show} backdrop="static" keyboard={false} size='lg'>
+            {product && <VariationForm product={product} submitHandler={onSubmitHandler} onCancel={() => { setState(false) }} />}
         </Modal>);
 }
 

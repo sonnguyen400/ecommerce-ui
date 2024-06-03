@@ -1,4 +1,4 @@
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'antd';
 import style from './style.module.scss';
 import clsx from 'clsx';
 function AddressTag({ data, className, props }) {

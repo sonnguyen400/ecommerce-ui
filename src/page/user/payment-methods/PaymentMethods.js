@@ -1,4 +1,4 @@
-import { Card, CardBody, CardTitle, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import { Card, List } from "antd";
 import AddressTag from "../../../components/address-tag/AddressTag";
 import style from './style.module.scss';
 import clsx from "clsx";
@@ -22,32 +22,29 @@ function PaymentMethods() {
         //     }
         // }
     }, []);
-    return (<Card>
-        <CardBody>
-            <div className="d-flex flex-row">
-                <Col><CardTitle>Address</CardTitle></Col>
-                <button onClick={() => { setEditable(false) }} className={clsx(style.disableEdit, { "d-none": !editable })}>Save</button>
-            </div>
-            <ListGroup variant="flush" ref={selectDefaultAddress}>
-                <ListGroupItem variant="flush" className={style.addressTag}>
-                    <input type="radio" value={1} name="address" />
-                    <div className={clsx(style.address)}>
-                        <div>Paymenn method</div>
-                        <button className={clsx("text-danger", style.deleteBtn, { "d-none": !editable })}><i className="fi fi-sr-minus-circle"></i></button>
-                    </div>
-                </ListGroupItem>
+    return (<Card title="Address">
+        <div className="d-flex flex-row">
+            <button onClick={() => { setEditable(false) }} className={clsx(style.disableEdit, { "d-none": !editable })}>Save</button>
+        </div>
+        <List variant="flush" ref={selectDefaultAddress}>
+            <List.Item variant="flush" className={style.addressTag}>
+                <input type="radio" value={1} name="address" />
+                <div className={clsx(style.address)}>
+                    <div>Paymenn method</div>
+                    <button className={clsx("text-danger", style.deleteBtn, { "d-none": !editable })}><i className="fi fi-sr-minus-circle"></i></button>
+                </div>
+            </List.Item>
 
-            </ListGroup>
-            <Link to="/user/payment/add" className="p-3">
-                <button className={clsx(style.addAddressButton)}>
-                    <div className={clsx(style.content)}>
-                        <span className={clsx(style.icon)}>+</span>
-                        <span>Add Address</span>
-                    </div>
-                </button>
-            </Link>
-            <div className="d-flex justify-content-center w-100"><button onClick={() => { setEditable(true) }} className={clsx(style.editEnable, { "d-none": editable })}>Edit</button></div>
-        </CardBody>
+        </List>
+        <Link to="/user/payment/add" className="p-3">
+            <button className={clsx(style.addAddressButton)}>
+                <div className={clsx(style.content)}>
+                    <span className={clsx(style.icon)}>+</span>
+                    <span>Add Address</span>
+                </div>
+            </button>
+        </Link>
+        <div className="d-flex justify-content-center w-100"><button onClick={() => { setEditable(true) }} className={clsx(style.editEnable, { "d-none": editable })}>Edit</button></div>
 
 
     </Card>);

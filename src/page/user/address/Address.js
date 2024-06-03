@@ -1,4 +1,4 @@
-import { Card, CardBody, CardTitle, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import { Col, List, Card } from "antd";
 import AddressTag from "../../../components/address-tag/AddressTag";
 import style from './style.module.scss';
 import clsx from "clsx";
@@ -36,34 +36,31 @@ function Address() {
             }
         }
     }, [user]);
-    return (<Card>
-        <CardBody>
-            <div className="d-flex flex-row">
-                <Col><CardTitle>Address</CardTitle></Col>
-                <button onClick={() => { setEditable(false) }} className={clsx(style.disableEdit, { "d-none": !editable })}>Save</button>
-            </div>
-            <ListGroup variant="flush" ref={selectDefaultAddress}>
-                {
-                    address && address.map((item, index) =>
-                    (<ListGroupItem key={index} variant="flush" className={style.addressTag}>
-                        <input type="radio" checked={item.isDefault} onChange={onChange} value={item.id.addressId} name="address" />
-                        <div className={clsx(style.address)}>
-                            <AddressTag data={item.address} />
-                            <button className={clsx("text-danger", style.deleteBtn, { "d-none": !editable })}><i className="fi fi-sr-minus-circle"></i></button>
-                        </div>
-                    </ListGroupItem>))
-                }
-            </ListGroup>
-            <Link to="/user/address/add" className="p-3">
-                <button className={clsx(style.addAddressButton)}>
-                    <div className={clsx(style.content)}>
-                        <span className={clsx(style.icon)}>+</span>
-                        <span>Add Address</span>
+    return (<Card title="Address">
+        <div className="d-flex flex-row">
+            <button onClick={() => { setEditable(false) }} className={clsx(style.disableEdit, { "d-none": !editable })}>Save</button>
+        </div>
+        <List variant="flush" ref={selectDefaultAddress}>
+            {
+                address && address.map((item, index) =>
+                (<List.Item key={index} variant="flush" className={style.addressTag}>
+                    <input type="radio" checked={item.isDefault} onChange={onChange} value={item.id.addressId} name="address" />
+                    <div className={clsx(style.address)}>
+                        <AddressTag data={item.address} />
+                        <button className={clsx("text-danger", style.deleteBtn, { "d-none": !editable })}><i className="fi fi-sr-minus-circle"></i></button>
                     </div>
-                </button>
-            </Link>
-            <div className="d-flex justify-content-center w-100"><button onClick={() => { setEditable(true) }} className={clsx(style.editEnable, { "d-none": editable })}>Edit</button></div>
-        </CardBody>
+                </List.Item>))
+            }
+        </List>
+        <Link to="/user/address/add" className="p-3">
+            <button className={clsx(style.addAddressButton)}>
+                <div className={clsx(style.content)}>
+                    <span className={clsx(style.icon)}>+</span>
+                    <span>Add Address</span>
+                </div>
+            </button>
+        </Link>
+        <div className="d-flex justify-content-center w-100"><button onClick={() => { setEditable(true) }} className={clsx(style.editEnable, { "d-none": editable })}>Edit</button></div>
 
 
     </Card>);

@@ -1,26 +1,29 @@
-import { Tabs, Tab } from 'react-bootstrap';
+import { Tabs, Tab } from 'antd';
 import Cart from '../../../part/cart/Cart';
 import CartCancel from '../../../part/cart-cancel/CartCancel';
 import CartShipping from '../../../part/card-shipping/CardShipping';
 function CardPage() {
+    const items = [{
+        key: 1,
+        label: "Cart",
+        children: Cart
+    },
+    {
+        key: 2,
+        label: "Cancel",
+        children: Cart
+    },
+    {
+        key: 1,
+        label: "Delivering",
+        children: CartShipping
+    },
+    ]
     return (
         <Tabs
-            defaultActiveKey="cart"
-            fill
-            justify
-        >
-            <Tab eventKey="cart" title="Cart">
-                <Cart />
-            </Tab>
-            <Tab eventKey="cancel" title="Cancel">
-                <CartCancel />
-            </Tab>
-            <Tab eventKey="shipping" title="Shipping">
-                <CartShipping />
-            </Tab>
-
-
-        </Tabs>);
+            defaultActiveKey='1'
+            items={items}
+        />);
 }
 
 export default CardPage;

@@ -23,6 +23,7 @@ import AddressAdd from "../page/user/address-add/AddressAdd.js";
 import Payment from "../page/user/payment-methods/PaymentMethods.js";
 import PaymentMethods from "../page/user/payment-methods/PaymentMethods.js";
 import Register from "../page/register/Register.js";
+import OrderManage from "../page/order_manage/index.js";
 export const publicRouter = [
     { 'path': "/login", 'component': LoginPage },
     { 'path': "/register", 'component': Register },
@@ -41,7 +42,8 @@ export const publicRouter = [
     { 'path': "/admin/category", 'component': CategoryManage, 'layout': SidebarLayout },
     { 'path': "/admin/category/:id", 'component': CategoryDetail, 'layout': SidebarLayout },
     { 'path': "/admin/warehouse", 'component': WarehouseManage, 'layout': SidebarLayout },
-    { 'path': "/admin/warehouse/:id", 'component': WarehouseDetail, 'layout': SidebarLayout }
+    { 'path': "/admin/warehouse/:id", 'component': WarehouseDetail, 'layout': SidebarLayout },
+    { 'path': "/admin/order-manage", 'component': OrderManage, 'layout': SidebarLayout }
 
 
 ]

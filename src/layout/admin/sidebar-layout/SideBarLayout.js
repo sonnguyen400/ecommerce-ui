@@ -1,24 +1,24 @@
 import style from './style.module.scss';
 import Header from '../../../part/header/admin/header';
-import { Col,Row,Container, Card, CardBody } from 'react-bootstrap';
+import { Col, Row, Card } from 'antd';
 import Sidebar from '../../../part/admin/sidebar/Sidebar';
-function SidebarLayout({children}) {
-    return ( <>
-        <Container fluid className={style.header} id="header">
-            <Header/>
-        </Container>
+function SidebarLayout({ children }) {
+    return (<>
+        <div fluid className={style.header} id="header">
+            <Header />
+        </div>
 
-        <Container fluid className='mt-3'>
+        <div fluid className='mt-3'>
             <Row>
-                <Col md={2}><Sidebar/></Col>
+                <Col md={2}><Sidebar /></Col>
                 <Col md={10}>
                     <Card>
-                    {children}
+                        {children}
                     </Card>
                 </Col>
             </Row>
-        </Container>
-    </> );
+        </div>
+    </>);
 }
 
 export default SidebarLayout;

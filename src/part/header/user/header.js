@@ -1,19 +1,17 @@
-import { Container, Row, Col, ListGroup, ListGroupItem } from "react-bootstrap";
 import ProductSearchBar from "../../../components/search/product-search-bar";
 import image from "../../../assets/image/image.png";
-import { React, useContext, useEffect } from "react";
+import { React, useEffect } from "react";
 import style from "./header.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { memo } from "react";
 import Tippy from "@tippyjs/react/headless";
-import { GlobalContext } from "../../../context";
 import { Description } from "../../../components/description";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser, userSlide } from "../../../store/user/userSlide";
-import Switch from "../../../components/swich-button";
+import { fetchUser } from "../../../store/user/userSlide";
 import DarkModeToggle from "../../dark-mode-toggle";
 import APIBase from "../../../api/ApiBase";
+import { Col, Row } from "antd";
 function Header() {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
@@ -29,7 +27,7 @@ function Header() {
         })
     }
     return (
-        <Container fluid>
+        <div fluid>
             <Row className={style.header}>
                 <Col xl={2}>
                     <Link to="/">
@@ -119,7 +117,7 @@ function Header() {
                     <i className="fi fi-rr-menu-burger"></i>
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 }
 

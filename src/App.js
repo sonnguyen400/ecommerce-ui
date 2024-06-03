@@ -2,18 +2,17 @@ import { Routes, Route } from "react-router-dom";
 import { publicRouter } from "./routers/routers";
 import { DefaultLayout } from "./layout/default";
 import { Fragment, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./App.css";
 import Loader from "./components/loader/Loader";
 import { GlobalContext } from "./context";
 import { Role } from "./constant";
-
+import { Layout } from "antd";
 function App() {
     let [loaderContent, setLoaderContent] = useState(false);
     let [darkMode, setDarkmode] = useState(false);
     return (
-        <div className="App">
+        <Layout>
             {loaderContent === false ? null : <Loader render={loaderContent} />}
             <GlobalContext.Provider
                 value={{
@@ -47,7 +46,7 @@ function App() {
                     })}
                 </Routes>
             </GlobalContext.Provider>
-        </div>
+        </Layout>
     );
 }
 

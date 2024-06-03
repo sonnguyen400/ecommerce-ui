@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import style from './style.module.scss';
-import { ListGroupItem } from 'react-bootstrap';
 import clsx from 'clsx';
 import React from 'react';
+import { List } from 'antd';
 
 class LinkListItem extends React.Component {
     constructor({ to }) {
@@ -27,14 +27,14 @@ class LinkListItem extends React.Component {
         }
     }
     render() {
-        return (<ListGroupItem className={clsx(style.item, this.props.className)}>
+        return (<List.Item className={clsx(style.item, this.props.className)}>
             <Link to={this.props.to} className={clsx(style.link)}>
                 {this.props.children}
                 {this.props.children.length < 3 && <span className={clsx(style.icon)}>
                     <i className="fi fi-rr-angle-small-right"></i>
                 </span>}
             </Link>
-        </ListGroupItem>)
+        </List.Item>)
     }
 }
 export default LinkListItem;
