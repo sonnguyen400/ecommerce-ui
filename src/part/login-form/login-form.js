@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import APIBase from "../../api/ApiBase";
 import clsx from "clsx";
-import { Error, Input, Button } from "../../components/form-component";
+import { Error } from "../../components/form-component";
 import google from "../../assets/image/google.png";
 import facebook from "../../assets/image/facebook.png";
 import apple from "../../assets/image/apple.png";
@@ -13,7 +13,8 @@ import { Link } from "react-router-dom";
 import { Description } from "../../components/description";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../context";
-import { Form } from "antd";
+import { Col, Row, Input, Button } from "antd";
+import PrefixIcon from "../../components/input-prefix-icon/PrefixIcon";
 
 function LoginForm({ className, success }) {
     const globalContext = useContext(GlobalContext);
@@ -67,41 +68,43 @@ function LoginForm({ className, success }) {
     });
     return (
         <div className={clsx("w-100", className)}>
-            <Form noValidate onSubmit={formik.handleSubmit}>
+            <form noValidate onSubmit={formik.handleSubmit}>
                 {loginMessage && <Error>{loginMessage}</Error>}
-                <div>
-                    <label>Username</label>
-                    <Input
-                        danger={formik.errors.username}
-                        type="text"
-                        placeholder="Username"
-                        name="username"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.username}
-                    ></Input>
-                    {formik.errors.username && (
-                        <Error>{formik.errors.username}</Error>
-                    )}
-                </div>
-                <div>
-                    <label>Password</label>
-                    <Input
-                        danger={formik.errors.password}
-                        type="password"
-                        placeholder="Password"
-                        name="password"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.password}
-                    ></Input>
-                    {formik.errors.password && (
-                        <Error>{formik.errors.password}</Error>
-                    )}
-                </div>
-                <div className="pt-3 w-full d-flex flex-row justify-content-end">
-                    <Button type="submit">Login</Button>
-                </div>
+
+                <Row gutter={[0, 24]}>
+                    <Col span={24} >
+                        <Input
+                            prefix={<PrefixIcon><i className="fi fi-rr-user"></i></PrefixIcon>}
+                            size="large"
+                            status={(formik.errors.user && formik.errors.username) ? "error" : ""}
+                            type="text"
+                            name="username"
+                            placeholder="User Name"
+                            onChange={formik.handleChange}
+                            value={formik.values.username}
+                            onBlur={formik.handleBlur}
+                        />
+                        <Error>{formik.errors.username && formik.errors.username}</Error>
+                    </Col>
+                    <Col span={24} >
+                        <Input
+                            prefix={<PrefixIcon><i className="fi fi-rr-lock"></i></PrefixIcon>}
+                            size="large"
+                            status={(formik.errors.user && formik.errors.password) ? "error" : ""}
+                            type="text"
+                            name="password"
+                            placeholder="Password"
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                        />
+
+                        <Error>{formik.errors.password && formik.errors.password}</Error>
+                    </Col>
+                </Row>
+
+                <Row justify="end">
+                    <Col className={style.loginBtn}><Button htmlType="submit" type="primary">Login</Button></Col>
+                </Row>
                 <div className="pt-5">
                     <Description>Login with</Description>
                 </div>
@@ -122,8 +125,8 @@ function LoginForm({ className, success }) {
                 <Description className="">
                     Don't have an account yet? <Link to='/register'>Register</Link>
                 </Description>
-            </Form>
-            <Button onClick={refresh}> refresh</Button>
+            </form>
+            <Button type="primary" onClick={refresh}> refresh</Button>
             <Button onClick={logout}> Logout</Button>
             {/* 
                     <Button onClick={getUser}> user</Button>

@@ -7,6 +7,7 @@ import ProductListBigIcon from "../../part/product-list-bigicon/product-list-big
 import ProductAddForm from "../../part/product/product-add-form";
 import { GlobalContext } from "../../context";
 import CategoryAddModal from "../../part/category/modal";
+import TabPane from "antd/es/tabs/TabPane";
 function CategoryDetail() {
     const globalContext = useContext(GlobalContext);
     const { id } = useParams();
@@ -37,20 +38,7 @@ function CategoryDetail() {
 
         }
     }, [id])
-    function addProduct(product) {
-        globalContext.loader(" ");
-        APIBase.post("api/v1/product", product)
-            .then(console.log)
-            .catch(console.log)
-            .finally(() => {
-                globalContext.loader(false);
-                setProductDiag(false);
-                setProducts(data => {
-                    data.push(product);
-                    return data;
-                })
-            })
-    }
+
     const items = [{
         key: 1,
         label: "Products",
@@ -59,8 +47,8 @@ function CategoryDetail() {
             <Card title='Product List'>
                 {products && <ProductListBigIcon>{products}</ProductListBigIcon>}
             </Card>
-            <Modal title="Add new product" size="lg" open={productDiag} onHide={() => { setProductDiag(false) }}>
-                <ProductAddForm submitHandler={addProduct} defaultCategory={data} />
+            <Modal title="Add new product" size="lg" open={productDiag} onCancel={() => { setProductDiag(false) }} footer={null} >
+                <ProductAddForm defaultCategory={data} />
             </Modal>
         </>
     },
@@ -70,7 +58,7 @@ function CategoryDetail() {
         children: <>
             <Col className="py-3" onClick={() => setCategoryDiag(true)}><Button>Add Nested Category</Button></Col>
             <Card>
-                {Array.isArray(data.children) && <CategoryList>{data.children}</CategoryList>}
+                {data && Array.isArray(data.children) && <CategoryList items={data.children} />}
             </Card>
             {data && <CategoryAddModal state={categoryDiag} setState={setCategoryDiag} parent={data} addNestedCategory={addNestedCategory} />}</>
     }

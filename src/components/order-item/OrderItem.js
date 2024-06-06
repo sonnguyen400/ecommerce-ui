@@ -1,4 +1,4 @@
-import { Row, Col, Image } from 'antd';
+import { Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import style from './style.module.scss';
 import clsx from 'clsx';
@@ -57,35 +57,51 @@ function OrderItem({ data, disabled }) {
     }
 
     return (<div>
-        {data && <Col>
-            <Row className={clsx(style.orderItem, "align-items-center")}>
-                {!disabled && <Col sm={1}><input type='checkbox' checked={orderItems && orderItems.some(item => data.id === item.id)} onChange={selectItem} /></Col>}
-                <Col md={2}>
-                    <Image className='w-100 h-100 rounded' src={data.productItem.product_ && data.productItem.product_.productImage} />
-                </Col>
-                <Col>
-                    <Link to={`/product?id=${data.productItem.product_.id}`} className={clsx(style.productName)}>{data.productItem.product_7 && data.productItem.product_.name}</Link>
-                    <span className={clsx(style.price)}>{data.productItem && data.productItem.price}</span>
-                    <button className={clsx(style.optionBtn)} onClick={() => disabled ? null : changeVariation()}>
-                        <span>{data.productItem.options.map(option => option.value).join(" , ")}</span>
-                        <i className="fi fi-rr-angle-small-down"></i>
-                    </button>
-                    <div className='d-flex justify-content-between'>
-                        <InputNumber disabled={disabled} onChange={updateQty} value={data.qty} className={clsx(style.quantityChange)} min={1} />
-                        <div className={style.total}>
-                            <div className={style.label}>Total</div>
-                            <div className={style.value}>{data.qty * data.productItem.price}</div>
-                        </div>
-                    </div>
+        {data && <Row>
+            <Col span={24}>
+                <Row align="middle" gutter={12} className={clsx(style.orderItem)}>
+                    {!disabled && <Col span={1}><input type='checkbox' checked={orderItems && orderItems.some(item => data.id === item.id)} onChange={selectItem} /></Col>}
+                    <Col span={6} className={style.image}>
+                        <img src={data.productItem.product_ && data.productItem.product_.productImage} />
+                    </Col>
+                    <Col span={16} className={style.productDetail}>
+                        <Row>
+                            <Col span={24}>
+                                <Link to={`/product?id=${data.productItem.product_.id}`} className={clsx(style.productName)}>{data.productItem.product_ && data.productItem.product_.name}</Link>
+                            </Col>
+                            <Col span={24}>
+                                <span className={clsx(style.price)}>{data.productItem && data.productItem.price}</span>
+                            </Col>
+                            <Col span={24}>
+                                <button disabled={disabled} className={clsx(style.optionBtn)} onClick={() => changeVariation()}>
+                                    <span>{data.productItem.options.map(option => option.value).join(" , ")}</span>
+                                    <i className="fi fi-rr-angle-small-down"></i>
+                                </button>
+                            </Col>
+                            <Col span={24} >
+                                <Row justify="space-between">
+                                    <Col>
+                                        <InputNumber disabled={disabled} onChange={updateQty} value={data.qty} className={clsx(style.quantityChange)} min={1} />
+                                    </Col>
+                                    <Col className={style.total}>
+                                        <div className={style.label}>Total</div>
+                                        <div className={style.value}>{data.qty * data.productItem.price}</div>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
 
-                </Col>
-                {!disabled && <Col sm={1} className={clsx(style.deleteBtn)} onClick={deleteItem}><i className="fi fi-br-cross-small"></i></Col>}
-            </Row>
-            <Row className={clsx({ "d-none": state })}>
-                {product === undefined ? <div /> : <ProductItemSelect onChange={updateProductItem} productItems={product.productItems} />}
-            </Row>
-        </Col>}
-    </div>);
+                    </Col>
+                    {!disabled && <Col span={1} className={clsx(style.deleteBtn)} onClick={deleteItem}><i className="fi fi-br-cross-small"></i></Col>}
+                </Row>
+            </Col>
+            <Col span={state ? 24 : 0}>
+                <Row>
+                    {product === undefined ? <div /> : <ProductItemSelect onChange={updateProductItem} productItems={product.productItems} />}
+                </Row>
+            </Col>
+        </Row >}
+    </div >);
 }
 
 export default memo(OrderItem);

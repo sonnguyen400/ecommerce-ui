@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import APIBase from "../../api/ApiBase";
-import { act } from "react";
+import { notification } from "antd";
 export const findAllByUserId = createAsyncThunk(
     'user/address/findAllByUserId',
     async (data, { rejectWithValue }) => {
@@ -36,7 +36,18 @@ export const userAddress = createSlice({
         builder
             .addCase(deleteUserAddress.fulfilled, (state, action) => state.filter(item => item.id !== action.payload))
             .addCase(findAllByUserId.fulfilled, (state, action) => action.payload)
-            .addCase(postNewUserAddress.fulfilled, (state, action) => [...state, action.payload])
+            .addCase(postNewUserAddress.fulfilled, (state, action) => {
+                notification.success({
+                    message: "Success",
+                    description: ""
+                });
+                return [...state, action.payload]
+            })
+            .addCase(postNewUserAddress.rejected, (state, action) => {
+                notification.error({
+                    message: "Error"
+                });
+            })
             .addCase(setDefaultUserAddress.fulfilled, (state, action) => {
                 for (let i = 0; i < state.length; i++) {
                     if (state[i].id.addressId === action.payload.id.addressId) {

@@ -1,35 +1,42 @@
-import { Modal } from "antd";
+import { Modal, notification } from "antd";
 import VariationForm from "./variation-form-modal";
 import { useContext, useEffect, useState } from "react";
 import APIBase from "../../api/ApiBase";
 import { GlobalContext } from "../../context";
-function VariationFormModal({ show, setShow, setState, product, setProduct }) {
-    const globalContext = useContext(GlobalContext);
-    console.log(product)
+function VariationFormModal({ product, setProduct, ...props }) {
     const [variations, setVariations] = useState(null);
+    const [api, contextHolder] = notification.useNotification();
+    const [loading, setLoading] = useState(false);
     function onSubmitHandler(data) {
-        globalContext.loader("   ");
         APIBase.post(`api/v1/product/${product.id}/item`, data)
             .then((payload) => {
                 setProduct(product => {
                     product.productItems.push(payload.data);
                     return product;
                 });
+                notification.success({
+                    message: "Success",
+                    description: "Added Product Item",
+                    duration: 1
+                })
                 return payload.data;
             }).error((err) => {
-                console.log(err)
-            }).finally(() => {
-                globalContext.loader(false);
-                setShow(false)
+                notification.err({
+                    message: "Failure",
+                    description: "Failure when add new Product Item",
+                    duration: 1
+                })
             })
 
     }
     useEffect(() => {
-        APIBase.get(`api/v1/category/${product.categoryId}/variation`)
+        APIBase.get(`api/v1/variation`).then(payload => payload.data).then(data => {
+            setVariations(data);
+        })
     }, [])
     return (
-        <Modal title="Add variation" onHide={() => { setShow(false) }} show={show} backdrop="static" keyboard={false} size='lg'>
-            {product && <VariationForm product={product} submitHandler={onSubmitHandler} onCancel={() => { setState(false) }} />}
+        <Modal title="Add variation" {...props} width={800}>
+            {product && <VariationForm loading={loading} product={product} submitHandler={onSubmitHandler} />}
         </Modal>);
 }
 

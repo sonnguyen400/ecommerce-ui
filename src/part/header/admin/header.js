@@ -3,7 +3,7 @@ import { Col, Row } from "antd";
 import style from './style.module.scss';
 function Header() {
     return (
-        <div fluid>
+        <div>
             <Row className={clsx("mx-auto", style.header)}>
                 <Col xl={1}></Col>
                 <Col xl={2}></Col>

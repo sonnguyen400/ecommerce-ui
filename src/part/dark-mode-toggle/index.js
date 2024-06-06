@@ -1,5 +1,5 @@
 import { memo, useContext } from "react";
-import Switch from "../../components/swich-button";
+import { Switch } from "antd";
 import { GlobalContext } from "../../context";
 
 function DarkModeToggle() {
@@ -11,7 +11,7 @@ function DarkModeToggle() {
             globalState.darkmode.set(false);
         }
     }
-    return <Switch onChange={onChange} checked={globalState.darkmode.value} />;
+    return <Switch defaultChecked={globalState.darkmode.value} onChange={() => globalState.darkmode.set(value => !value)} />;
 }
 
 export default memo(DarkModeToggle);

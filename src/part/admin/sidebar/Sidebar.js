@@ -1,67 +1,33 @@
-import { Col } from "antd";
-import style from './style.module.scss';
-import clsx from "clsx";
+
 import { Link } from "react-router-dom";
+import { Menu } from "antd";
+import PrefixIcon from "../../../components/input-prefix-icon/PrefixIcon";
 function Sidebar({ ...props }) {
     return (
-        <Col {...props}>
-            <ul className={style.sidebar}>
-                <li className={style.item} tabIndex={1}>
-                    <div className={style.line}>
-                        <span className={style.icon}><i className="fi fi-rr-dashboard"></i></span>
-                        <span className={style.label}>Dashboard</span>
-                    </div>
-                    <span className={style.arrow}><i className="fi fi-rr-angle-small-right"></i></span>
-                </li>
-                <ul
-                    className={clsx(style.sidebar, style.expanded)}
-                >
+        <Menu>
+            <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-dashboard"></i></PrefixIcon>}>
+                Dashboard
+            </Menu.Item>
 
-                </ul>
-                <li className={style.item} tabIndex={1}>
-                    <div className={style.line}>
-                        <span className={style.icon}><i className="fi fi-rr-dashboard"></i></span>
-                        <span className={style.label}>Product</span>
-                    </div>
-                    <span className={style.arrow}><i className="fi fi-rr-angle-small-right"></i></span>
-                </li>
-                <Link to="/admin/category" className={style.item} tabIndex={1}>
-                    <div className={style.line}>
-                        <span className={style.icon}><i class="fi fi-rr-category-alt"></i></span>
-                        <span className={style.label}>Category Manage</span>
-                    </div>
-                    <span className={style.arrow}><i className="fi fi-rr-angle-small-right"></i></span>
+            <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-category-alt"></i></PrefixIcon>}>
+                <Link to="/admin/category">
+                    Category Management
                 </Link>
-                <Link to="/admin/order-manage" className={style.item} tabIndex={1}>
-                    <div className={style.line}>
-                        <span className={style.icon}><i class="fi fi-rr-to-do"></i></span>
-                        <span className={style.label}>Order Manage</span>
-                    </div>
-                    <span className={style.arrow}><i className="fi fi-rr-angle-small-right"></i></span>
-                </Link>
-                <Link to="/admin/product" className={style.item} tabIndex={1}>
-                    <div className={style.line}>
-                        <span className={style.icon}><i class="fi fi-rr-box-open-full"></i></span>
-                        <span className={style.label}>Product Manage</span>
-                    </div>
-                    <span className={style.arrow}><i className="fi fi-rr-angle-small-right"></i></span>
-                </Link>
-                <Link to="/admin/warehouse" className={style.item} tabIndex={1}>
-                    <div className={style.line}>
-                        <span className={style.icon}><i class="fi fi-rr-warehouse-alt"></i></span>
-                        <span className={style.label}>Warehouse Manage</span>
-                    </div>
-                    <span className={style.arrow}><i className="fi fi-rr-angle-small-right"></i></span>
-                </Link>
-                <Link to="/admin/product" className={style.item} tabIndex={1}>
-                    <div className={style.line}>
-                        <span className={style.icon}><i class="fi fi-rr-user-check"></i></span>
-                        <span className={style.label}>Account Manage</span>
-                    </div>
-                    <span className={style.arrow}><i className="fi fi-rr-angle-small-right"></i></span>
-                </Link>
-            </ul>
-        </Col>);
+            </Menu.Item>
+
+            <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-to-do"></i></PrefixIcon>}>
+                Order Management
+            </Menu.Item>
+            <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-box-open-full"></i></PrefixIcon>}>
+                Product Manage
+            </Menu.Item>
+            <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-warehouse-alt"></i></PrefixIcon>}>
+                Warehouse Manage
+            </Menu.Item>
+            <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-user-check"></i></PrefixIcon>}>
+                User Manage
+            </Menu.Item>
+        </Menu>);
 }
 
 export default Sidebar;

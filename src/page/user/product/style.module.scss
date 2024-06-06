@@ -1,13 +1,17 @@
-.card{
-    border:none !important;
-    background-color: white !important;
-    .productImage{
-        aspect-ratio: 1/1;
-        
-    }
+
+
+.productImage{
+    aspect-ratio: 1/1;
+    
 }
 .productDetail{
-    h5{
+    .price{
+        font-size: 1.5rem;
         color:rgb(255, 39, 39);
+    }
+    .price::after{
+        content: "đ";
+        font-size: smaller;
+        margin-left: 4px;
     }
 }

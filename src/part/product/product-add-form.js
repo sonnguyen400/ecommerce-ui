@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-    Button,
-    Form,
-} from "antd";
+import { Button, Input, Select, Row, Col, Upload, Space } from "antd";
+import { Error } from "../../components/form-component";
+import PrefixIcon from "../../components/input-prefix-icon/PrefixIcon";
+import { GlobalContext } from "../../context";
+import APIBase from "../../api/ApiBase";
+import { useNavigate } from "react-router-dom";
 
-export default function ProductAddForm({ submitHandler, defaultCategory }) {
+export default function ProductAddForm({ submitHandler, defaultCategory, trigger }) {
+    const globalContext = useContext(GlobalContext);
+    const navigate = useNavigate();
     const validateSchema = Yup.object().shape({
         name: Yup.string()
             .max(45, "Must be 45 characters or less")
@@ -24,88 +28,103 @@ export default function ProductAddForm({ submitHandler, defaultCategory }) {
             Object.keys(values).forEach((key) => {
                 formdata.append(key, values[key]);
             });
-            submitHandler(formdata);
+            addProduct(formdata);
         },
     });
+    function addProduct(product) {
+        globalContext.loader("")
+        APIBase.post("api/v1/product", product)
+            .then(payload => {
+                navigate(`/admin/product?id=${payload.data.id}`)
+            })
+            .catch((e) => {
+                console.log(e)
+
+            })
+            .finally(() => {
+                globalContext.loader(false);
+            })
+    }
+    trigger = formik.submitForm
     return (
         <div>
             <div>
-                <Form onSubmit={formik.handleSubmit}>
-                    <div>
-                        <label>Image</label>
-                        <Form.Item
-                            type="file"
-                            name="image"
-                            onChange={(e) => {
-                                formik.setFieldValue("image", e.target.files[0]);
-                            }}
-                        />
-                    </div>
+                <form onSubmit={formik.handleSubmit}>
+                    <Row gutter={[18, 32]}>
+                        <Col span={12}>
+                            <Row><label>Image</label></Row>
+                            <Upload action={null} name="image" onChange={({ fileList, file }) => { formik.setFieldValue("image", file.originFileObj) }} >
+                                <Button icon={<PrefixIcon><i className="fi fi-rr-inbox-out"></i></PrefixIcon>}>Click to Upload</Button>
+                            </Upload>
+                        </Col>
 
-                    <div>
-                        <label>Product's name</label>
-                        <Form.Item
-                            name="name"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.name}
-                        />
-                        {formik.touched.name && formik.errors.name ? (
-                            <small className="text-danger">{formik.errors.name}</small>
-                        ) : (
-                            ""
-                        )}
-                    </div>
+                        <Col span={12}>
+                            <label>Product's name</label>
+                            <Input
+                                name="name"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.name}
+                            />
+                            {formik.touched.name && formik.errors.name ? (
+                                <small className="text-danger">{formik.errors.name}</small>
+                            ) : (
+                                ""
+                            )}
+                        </Col>
 
-                    <div>
-                        <label>Description</label>
-                        <Form.Item
-                            as="textarea"
-                            rows={10}
-                            name="description"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.description}
-                        />
-                        {formik.touched.description && formik.errors.description ? (
-                            <small className="text-danger">{formik.errors.description}</small>
-                        ) : (
-                            ""
-                        )}
-                    </div>
+                        <Col span={24}>
+                            <label>Description</label>
+                            <Input.TextArea
+                                as="textarea"
+                                rows={10}
+                                name="description"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.description}
+                            />
+                            {formik.touched.description && formik.errors.description ? (
+                                <Error className="text-danger">{formik.errors.description}</Error>
+                            ) : <></>}
+                        </Col>
 
-                    <div>
-                        <label>category</label>
-                        <Form.Item
-                            as="select"
-                            rows={10}
-                            name="category"
-                            onChange={(e) =>
-                                formik.setFieldValue(
-                                    "category",
-                                    e.target.options[e.target.selectedIndex].value
-                                )
-                            }
-                            value={formik.values.category}
-                        >
-                            {defaultCategory && <option value={defaultCategory?.id || null}>{defaultCategory.name || "default"}</option>}
-                        </Form.Item>
-                        {formik.touched.category && formik.errors.category ? (
-                            <small className="text-danger">{formik.errors.category}</small>
-                        ) : (
-                            ""
-                        )}
-                    </div>
+                        <Col span={24}>
+                            <Row><label>Category</label></Row>
+                            <Select
+                                as="select"
+                                rows={10}
+                                name="category"
+                                onChange={(e) =>
+                                    formik.setFieldValue(
+                                        "category",
+                                        e.target.options[e.target.selectedIndex].value
+                                    )
+                                }
+                                value={formik.values.category}
+                            >
+                                {defaultCategory && <Select.Option value={defaultCategory?.id || null}>{defaultCategory.name || "default"}</Select.Option>}
+                            </Select>
+                            {formik.touched.category && formik.errors.category ? (
+                                <Error className="text-danger">{formik.errors.category}</Error>
+                            ) : ""}
+                        </Col>
 
-                    <Button
-                        variant="primary"
-                        type="submit"
-                        className="mt-3"
-                    >
-                        Submit
-                    </Button>
-                </Form>
+                        <Col span={24}>
+                            <Row justify="end" >
+                                <Space>
+                                    <Button
+                                        type="primary"
+                                        className="mt-3"
+                                        htmlType="submit"
+                                    >
+                                        Save
+                                    </Button>
+                                </Space>
+                            </Row>
+                        </Col>
+                    </Row>
+                </form>
             </div>
-        </div>
+        </div >
     );
 }

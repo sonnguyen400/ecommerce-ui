@@ -1,13 +1,17 @@
 .category{
-    padding:8px 0px;
+    padding:8px 16px;
+    position: sticky;
+    top:32px;
+    cursor: pointer;
     .categoryItem{
+        justify-content: center;
         padding:8px 16px;
         color:var(--sub-color-400);
         font-weight: 500;
         font-size: 0.95rem;
-        border-bottom: 2px solid transparent;
         &:hover{
-            border-color:var(--primary-color-800);
+            background-color: rgba(255, 125, 147, 0.071);
+            border-radius: var(--base-radius);
             color:var(--sub-color-800);
         }
     }

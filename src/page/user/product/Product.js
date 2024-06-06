@@ -1,4 +1,4 @@
-import { Col, Row, Card, Image, Button } from "antd";
+import { Col, Row, Card, Image, Button, Flex } from "antd";
 import style from './style.module.scss';
 import { useSearchParams } from "react-router-dom";
 import clsx from "clsx";
@@ -7,9 +7,8 @@ import APIBase from "../../../api/ApiBase";
 import ProductItemSelect from "../../../part/product-item-selection/ProductItemSelect";
 import { useDispatch } from "react-redux";
 import InputNumber from "../../../components/input-number/InputNumber";
-import { useRef } from "react";
-import { useMemo } from "react";
 import { addCartItem } from "../../../store/cart/cartReducer";
+import PrefixIcon from "../../../components/input-prefix-icon/PrefixIcon";
 
 function Product() {
     const [urlParams, setUrlParams] = useSearchParams();
@@ -36,13 +35,14 @@ function Product() {
     }
 
     return (product &&
-        <Row >
-            <Col xl={4}>
-                <Card className={style.card}>
+        <Row gutter={{ sm: 16, lg: 32 }}>
+            <Col span={10}>
+                <Card className={style.card}
+                    cover={<div className={style.productImage}>
+                        <Image className="w-100 h-100 " src={product.productImage} alt="" />
+                    </div>}
+                >
                     <Col>
-                        <div className={style.productImage}>
-                            <Image className="w-100 h-100 " src={product.productImage} alt="" />
-                        </div>
                     </Col>
                     <Row className="px-3">
                         {product.productItems.map((item, index) => {
@@ -51,19 +51,23 @@ function Product() {
                     </Row>
                 </Card>
             </Col>
-            <Col xl={8} >
-                <Card title={product.name} className={clsx(style.card, style.productDetail)}>
-
-                    <h5 className={style.price}>56728</h5>
-                    <div className="d-flex flex-column">
-                        <ProductItemSelect onChange={setSelectedItem} productItems={product.productItems} />
-                        <InputNumber value={qty} className="py-2" type="number" onChange={setQty} />
-                    </div>
-
-                    <div className="d-flex flex-column w-100">
-                        <Button className="mt-2" onClick={addCard}>Add Cart</Button>
-                        <Button className="mt-2">Order Now</Button>
-                    </div>
+            <Col span={14}>
+                <Card title={<span style={{ fontSize: "2rem", padding: "16px 0px", fontWeight: 400 }}>{product.name}</span>} className={clsx(style.productDetail)}>
+                    <Row gutter={[16, 16]}>
+                        <Col span={24}><span className={style.price}>56728</span></Col>
+                        <Col span={24}>
+                            <ProductItemSelect onChange={setSelectedItem} productItems={product.productItems} />
+                        </Col>
+                        <Col>
+                            <InputNumber value={qty} style={{ fontSize: "1rem" }} type="number" onChange={setQty} />
+                        </Col>
+                        <Col span={24}>
+                            <Flex gap={[16, 16]} justify="end">
+                                <Col><Button style={{ backgroundColor: "#333" }} shape="round" icon={<PrefixIcon style={{ color: "white" }}><i class="fi fi-rr-shopping-cart-add"></i></PrefixIcon>} className="mt-2" onClick={addCard} /></Col>
+                                <Col><Button type="primary" shape="round" className="mt-2">Order Now</Button></Col>
+                            </Flex>
+                        </Col>
+                    </Row>
                 </Card>
 
             </Col>

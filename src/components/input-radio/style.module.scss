@@ -6,7 +6,6 @@
     user-select: none;
     display: block;
     position: relative;
-  
     input {
         position: absolute;
         opacity: 0;
@@ -27,7 +26,8 @@
         padding:4px 8px;
         font-size: 0.78rem;
         font-weight:500;
-        border:1px solid rgba(68, 68, 129, 0.436);
+        border-radius: 0.3rem;
+        border:1px solid var(--primary-color-600);
     }
     .icon{
         position: absolute;

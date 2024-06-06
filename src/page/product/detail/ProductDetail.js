@@ -1,5 +1,5 @@
 import { useState, useEffect, useLayoutEffect } from "react";
-import { Button, Card, Col, Image, Row } from "antd";
+import { Button, Card, Col, Image, Row, Table } from "antd";
 import { Form, useSearchParams } from "react-router-dom";
 import APIBase from "../../../api/ApiBase";
 import VariationFormModal from "../../../part/product-item/modal";
@@ -8,7 +8,6 @@ import ProductItemView from "../../../part/product-item/productItemView";
 import clsx from "clsx";
 import style from './style.module.scss';
 function ProductDetail() {
-
     const [urlParams, setUrlParams] = useSearchParams();
     const [data, setData] = useState(null);
     const [variationForm, setVariationForm] = useState(false);
@@ -23,22 +22,26 @@ function ProductDetail() {
     }
     return (
         data && <Card title={data.name}>
-            <Col>
-                <Row className="p-3">
-                    <Col md={4} className="p-3">
-                        {data && <Image className="w-100" rounded src={data.productImage} />}
-                    </Col>
-                    <Col md={8} className="p-3">
-                        <div>
-                            <p>{data.description}</p>
-                        </div>
-                    </Col>
-                </Row>
-                <Row className="p-3 justify-content-between">
-                    <h4 className="col mb-0 d-inline-block">Variation</h4>
-                    <Col sm={4}><Button className="align-self-end" onClick={() => { setVariationForm(true) }}>Add variation</Button></Col>
-                </Row>
-                {data && <VariationFormModal setProduct={setData} product={data} show={variationForm} setShow={setVariationForm} setState={setVariationForm} />}
+            <Row gutter={24}>
+                <Col span={24}>
+                    <Row gutter={[24, 32]} className="p-3">
+                        <Col md={4} className="p-3">
+                            {data && <Image className="w-100" src={data.productImage} />}
+                        </Col>
+                        <Col md={8} className="p-3">
+                            <div>
+                                <p>{data.description}</p>
+                            </div>
+                        </Col>
+                    </Row>
+                </Col>
+                <Col span={24}>
+                    <Row justify="space-between">
+                        <h4>Variation</h4>
+                        <Col sm={4}><Button type="primary" className="align-self-end" onClick={() => { setVariationForm(true) }}>Add variation</Button></Col>
+                    </Row>
+                </Col>
+                {data && <VariationFormModal setProduct={setData} product={data} open={variationForm} footer={null} onCancel={() => { setVariationForm(false) }} />}
                 <table className={clsx(style.productItemTable)}>
                     <thead>
                         <tr>
@@ -46,13 +49,14 @@ function ProductDetail() {
                             <td>Properties</td>
                             <td>Value</td>
                             <td>Price</td>
+                            <td>Action</td>
                         </tr>
                     </thead>
                     <tbody>
-                        {data && Array.isArray(data.productItems) && data.productItems.map((item, index) => <ProductItemView key={index} productItem={item} />)}
+                        {data && Array.isArray(data.productItems) && data.productItems.map((item, index) => <ProductItemView setData={setData} key={index} productItem={item} />)}
                     </tbody>
                 </table>
-            </Col>
+            </Row>
         </Card>
     );
 }

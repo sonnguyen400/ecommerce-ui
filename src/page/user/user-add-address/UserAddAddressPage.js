@@ -12,7 +12,7 @@ function AddressAdd() {
             address: data
         }))
     }
-    return (<Card>
+    return (<Card title="Add new address">
         <AddressForm onSubmit={onSubmit} />
     </Card>);
 }

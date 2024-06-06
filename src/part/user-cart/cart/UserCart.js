@@ -1,12 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
-import OrderItem from "../../components/order-item/OrderItem";
+import { useEffect, useState } from "react";
+import OrderItem from "../../../components/order-item/OrderItem";
 import { Row, Col, Card, Button, List } from 'antd';
-import APIBase from "../../api/ApiBase";
+import APIBase from "../../../api/ApiBase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addAll } from "../../store/cart/cartReducer";
-import { orderLine } from "../../store/orderline/orderLine";
-function Cart() {
+import { addAll } from "../../../store/cart/cartReducer";
+import { orderLine } from "../../../store/orderline/orderLine";
+function UserCart() {
     const ordersState = useSelector(state => { return state.order });
     const cartItems = useSelector(state => state.cart);
     const [loading, setLoading] = useState(true);
@@ -24,15 +24,15 @@ function Cart() {
         dispatch(orderLine.actions.addAll(ordersState));
         navigate("/order");
     }
-    return (<Row className="mt-5">
-        <Col sm={8}>
-            <Card title="cart">
+    return (<Row gutter={[24, 24]}>
+        <Col span={24} md={{ span: 12 }} lg={{ span: 14 }}>
+            <Card title="Your Item">
                 <List className="list-group-flush">
                     {!loading && cartItems.map((item, key) => <List.Item key={key}><OrderItem data={item} /></List.Item>)}
                 </List>
             </Card>
         </Col>
-        <Col sm={4}>
+        <Col span={24} md={{ span: 12 }} lg={{ span: 10 }}>
             <Card title="Total">
                 <h4>{ordersState.reduce((pre, item) => {
                     var cartItem = cartItems.find(cartItem => item.id === cartItem.id)
@@ -44,4 +44,4 @@ function Cart() {
     </Row>);
 }
 
-export default Cart;
+export default UserCart;

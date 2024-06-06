@@ -1,4 +1,4 @@
-import { Card, Col } from "antd";
+import { Card, Col, Row } from "antd";
 import RegisterForm from "../../part/register-form";
 import APIBase from "../../api/ApiBase";
 import { useContext, useState } from "react";
@@ -33,17 +33,15 @@ function Register() {
             });
     }
     return (
-        <div fluid>
-            <MiddleDiv>
-                <Col >
-                    <Card>
-                        <h2 className="pb-4 text-center">Register</h2>
-                        {error && <Error>{error}</Error>}
-                        <RegisterForm onSubmit={onSubmit} />
-                    </Card>
-                </Col>
-            </MiddleDiv>
-        </div>
+        <Row justify={"center"}>
+            <Col span={24} md={16} lg={{ span: 10 }}>
+                <Card>
+                    <h2 className="pb-4 text-center">Register</h2>
+                    {error && <Error>{error}</Error>}
+                    <RegisterForm onSubmit={onSubmit} />
+                </Card>
+            </Col>
+        </Row>
     );
 }
 

@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../context";
 import APIBase from "../../api/ApiBase";
-import CategoryItem from "../../components/category-item/CategoryItem";
 import { Card } from "antd";
+import CategoryList from "../../part/category-list/CategoryList";
 function CategoryManage() {
     const globalContext = useContext(GlobalContext);
     const [data, setData] = useState(null);
@@ -19,7 +19,7 @@ function CategoryManage() {
             );
     }, [])
     return (<Card>
-        {data && data.children.map(child => <CategoryItem>{child}</CategoryItem>)}
+        {data && <CategoryList items={data.children} />}
     </Card>);
 }
 

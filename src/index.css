@@ -1,8 +1,8 @@
 @import "~@flaticon/flaticon-uicons/css/all/all";
 
 *{
-  --primary-color-800:#27374D;
-  --primary-color-600:#526D82;
+  --primary-color-800:rgba(70, 70, 124, 0.855);
+  --primary-color-600:rgba(68, 68, 129, 0.436);
   --primary-color-400:#9DB2BF;
   --primary-color-200:#DDE6ED;
   --primary-color-100:#edf3f8;
@@ -16,7 +16,7 @@
   --sub-color-400:#41707c;
   --light-color-1:#512eff;
   --danger-color:#ff0000bf;
-  --base-radius:0.2rem;
+  --base-radius:0.5rem;
 }
 
 body {
@@ -41,7 +41,6 @@ label{
   width: 100%;
   text-align: left;
   font-size: small;
-  font-weight: 500;
 }
 .btn .icon{
   margin-right: 8px;

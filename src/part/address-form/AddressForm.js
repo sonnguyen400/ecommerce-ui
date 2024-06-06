@@ -1,8 +1,7 @@
-import { Field, useFormik } from "formik";
-import { Button, Col, Form, Input, Row } from "antd";
+import { useFormik } from "formik";
+import { Button, Col, Input, Row, Select } from "antd";
 import * as Yup from 'yup';
 import { Error } from '../../components/form-component';
-import FormItemInput from "antd/es/form/FormItemInput";
 function AddressForm({ onSubmit }) {
     const validateSchema = Yup.object({
         city: Yup.string().required(),
@@ -24,53 +23,51 @@ function AddressForm({ onSubmit }) {
             }
         }
     })
-    return (<Form onSubmit={formik.handleSubmit}>
-        <Col>
-            <Form.Item>
-                <label>Building</label>
-                <FormItemInput name="building" onChange={formik.handleChange} value={formik.values.building} />
-            </Form.Item>
-        </Col>
-        <Row>
-            <Col>
-                <Form.Item>
-                    <label>City</label>
+    return (<form onSubmit={formik.handleSubmit}>
 
-                    <FormItemInput name="city" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.city} />
-                    {formik.errors.city && <Error>{formik.errors.city}</Error>}
-
-                </Form.Item>
+        <Row gutter={24}>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <Row> <label>Country</label></Row>
+                <Row>
+                    <Select style={{ width: "100%" }} value={formik.values.country.id} onChange={value => formik.setFieldValue("country.id", Number.parseInt(value))}>
+                        <Select.Option label="Viet Nam" value="1" />
+                        <Select.Option value="2">America</Select.Option>
+                    </Select>
+                </Row>
             </Col>
-            <Col>
-                <Form.Item>
-                    <label>Postal Code</label>
-                    <input name="postalCode" onChange={formik.handleChange} value={formik.values.postalCode} />
-                    {formik.errors.postalCode && <Error>{formik.errors.postalCode}</Error>}
-                </Form.Item>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <label>Building</label>
+                <Input name="building" onChange={formik.handleChange} value={formik.values.building} />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <label>City</label>
+                <Input status={formik.errors.city && "error"} name="city" onBlur={formik.handleBlur} onChange={formik.handleChange} value={formik.values.city} />
+                {formik.errors.city && <Error>{formik.errors.city}</Error>}
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <label>Postal Code</label>
+                <Input status={formik.errors.postalCode && "error"} name="postalCode" onChange={formik.handleChange} value={formik.values.postalCode} />
+                {formik.errors.postalCode && <Error>{formik.errors.postalCode}</Error>}
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <label>Region</label>
+                <Input name="region" onChange={formik.handleChange} value={formik.values.region} />
+            </Col>
+            <Col span={24}>
+                <label>Line 1</label>
+                <Input.TextArea as="textarea" status={formik.errors.addressLine1 && "error"} rows={3} name="addressLine1" onChange={formik.handleChange} value={formik.values.addressLine1} />
+                {formik.errors.addressLine1 && <Error>{formik.errors.addressLine1}</Error>}
+            </Col>
+            <Col span={24}>
+                <label>Line 2</label>
+                <Input.TextArea as="textarea" rows={3} name="addressLine2" onChange={formik.handleChange} value={formik.values.addressLine2} />
             </Col>
         </Row>
-        <Form.List>
-            <label>Region</label>
-            <Input name="region" onChange={formik.handleChange} value={formik.values.region} />
-        </Form.List>
-        <div>
-            <label>Line 1</label>
-            <Field as="textarea" rows={3} name="addressLine1" onChange={formik.handleChange} value={formik.values.addressLine1} />
-            {formik.errors.addressLine1 && <Error>{formik.errors.addressLine1}</Error>}
-        </div>
-        <div>
-            <label>Line 2</label>
-            <Field as="textarea" rows={3} name="addressLine2" onChange={formik.handleChange} value={formik.values.addressLine2} />
-        </div>
-        <div>
-            <label>Country</label>
-            <Field value={formik.values.country.id} onChange={e => formik.setFieldValue("country.id", Number.parseInt(e.target.value))} as="select">
-                <option value="1">Viet Nam</option>
-                <option value="2">America</option>
-            </Field>
-        </div>
-        <Button type="submit" className=" float-end mt-4">Submit</Button>
-    </Form>);
+
+
+
+        <Row justify="end"><Button shape="round" style={{ margin: "8px" }} type="primary" htmlType="submit">Submit</Button></Row>
+    </form>);
 }
 
 export default AddressForm;

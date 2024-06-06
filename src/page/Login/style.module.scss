@@ -1,20 +1,23 @@
-.formContainer{
-    // border-radius: var(--radius-base);
-    // display: flex;
-    // flex-direction: row;
-    // padding: 0;
-    // margin: 0;
-    // width: fit-content;
-    .formBg{
-        // padding: 0;
-        // margin: 0;
-        // img{
-        //     border-bottom-left-radius:  var(--bs-border-radius);
-        //     border-top-left-radius:  var(--bs-border-radius);
-        //     height: 100%;
-        //     width: 105%;
-        //     object-fit: cover;
-        // }
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .formContainer{
+        max-width: 800px;
+        .header{
+            text-align: center;
+        }
+        .formBg{
+            padding: 0;
+            margin: 0;
+            img{
+                border-bottom-left-radius:  var(--base-radius);
+                border-top-left-radius:   var(--base-radius);
+                height: 100%;
+                width: 105%;
+                object-fit: cover;
+            }
+        }
+        
     }
-    
 }

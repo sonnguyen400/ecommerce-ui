@@ -1,13 +1,12 @@
-import { Col, List, Card } from "antd";
+import { List, Card, Row, Button, Col } from "antd";
 import AddressTag from "../../../components/address-tag/AddressTag";
 import style from './style.module.scss';
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
-import APIBase from "../../../api/ApiBase";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { findAllByUserId, setDefaultUserAddress } from "../../../store/address/addressSlide";
-function Address() {
+function UserAddressPage() {
     const address = useSelector(state => state.userAddress);
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
@@ -26,21 +25,22 @@ function Address() {
         if (user !== null && user.id !== undefined) {
             dispatch(findAllByUserId({ userId: user.id }));
         }
-        const elements = selectDefaultAddress.current.querySelectorAll("input[type='radio'][name='address']");
-        for (var element of elements) {
-            element.addEventListener("change", onChange);
-        }
+        console.log(selectDefaultAddress.current);
+        // const elements = selectDefaultAddress.current.querySelectorAll("input[type='radio'][name='address']");
+        // for (var element of elements) {
+        //     element.addEventListener("change", onChange);
+        // }
         return () => {
-            for (var element of elements) {
-                element.removeEventListener("change", onChange);
-            }
+            // for (var element of elements) {
+            //     element.removeEventListener("change", onChange);
+            // }
         }
     }, [user]);
     return (<Card title="Address">
-        <div className="d-flex flex-row">
-            <button onClick={() => { setEditable(false) }} className={clsx(style.disableEdit, { "d-none": !editable })}>Save</button>
-        </div>
-        <List variant="flush" ref={selectDefaultAddress}>
+        <Row justify="end">
+            <Col span={editable ? 3 : 0}><Button onClick={() => { setEditable(false) }} className={clsx(style.editEnable)}>Save</Button></Col>
+        </Row>
+        <ul ref={selectDefaultAddress}>
             {
                 address && address.map((item, index) =>
                 (<List.Item key={index} variant="flush" className={style.addressTag}>
@@ -51,7 +51,7 @@ function Address() {
                     </div>
                 </List.Item>))
             }
-        </List>
+        </ul>
         <Link to="/user/address/add" className="p-3">
             <button className={clsx(style.addAddressButton)}>
                 <div className={clsx(style.content)}>
@@ -60,10 +60,12 @@ function Address() {
                 </div>
             </button>
         </Link>
-        <div className="d-flex justify-content-center w-100"><button onClick={() => { setEditable(true) }} className={clsx(style.editEnable, { "d-none": editable })}>Edit</button></div>
+        <Row justify="center">
+            <Col span={editable ? 0 : 3}><Button onClick={() => { setEditable(true) }} className={clsx(style.editEnable)}>Edit</Button></Col>
+        </Row>
 
 
     </Card>);
 }
 
-export default Address;
+export default UserAddressPage;

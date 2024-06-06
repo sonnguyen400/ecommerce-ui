@@ -1,4 +1,4 @@
-import { Col } from 'antd';
+import { Col, Row } from 'antd';
 import CheckRadio from '../input-radio/CheckRadio';
 import clsx from 'clsx';
 import style from './style.module.scss';
@@ -17,14 +17,12 @@ function SelectVariation({ onChange, variation }) {
         });
     }, [])
     return (
-        <Col>
-            <label>{variation.name}</label>
-            <div ref={inputGroup} className={clsx("gx-2", style.inputGroup)}>
-                {variation.options.map((option, index) => {
-                    return <CheckRadio className={clsx(style.option)} key={variation.name + index} onChange={(e) => { change(e) }} value={option.value} name={variation.name}>{option.value}</CheckRadio>
-                })}
-            </div>
-        </Col>);
+        <Row ref={inputGroup} gutter={[0, 32]} className={clsx("gx-2", style.inputGroup)} >
+            <Col><label>{variation.name}</label></Col>
+            {variation.options.map((option, index) => {
+                return <Col key={variation.name + index}><CheckRadio className={clsx(style.option)} onChange={(e) => { change(e) }} value={option.value} name={variation.name}>{option.value}</CheckRadio></Col>
+            })}
+        </Row>);
 }
 
 export default memo(SelectVariation);

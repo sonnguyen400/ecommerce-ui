@@ -1,12 +1,21 @@
 .productCard{
-    max-width: 198px !important;
-}
-.productDetail{
+    width: 100%;
+    background-color: white;
+    border-radius: var(--base-radius);
+    padding:4px;
+    &:hover{
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+    img{
+        width: 100%;
+    }
     .productName{
         font-size: 0.95rem;
     }
+    .productDetail{
+        padding: 8px;
+    }
     .productPrice{
-        
         .current{
             color: rgba(255, 1, 1, 0.578);
             font-weight: 500;
@@ -40,6 +49,8 @@
     .rate{
         display: flex;
         align-items: center;
+        flex-direction: row;
+        padding-top: 4px;
         .buy{
             margin-left: 5px;
             font-size: 0.8rem;

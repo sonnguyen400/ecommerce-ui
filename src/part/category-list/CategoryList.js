@@ -1,11 +1,14 @@
-import CategoryItem from "../../components/category-item/CategoryItem";
-import { List } from "antd";
-function CategoryList({ children }) {
-    return (<List>
-        {children && Array.isArray(children) && children.map((item, index) => (
-            <CategoryItem>{item}</CategoryItem>
+import { Collapse } from "antd";
+import { Link } from "react-router-dom";
+function CategoryList({ items }) {
+    return (<Collapse>
+        {items && Array.isArray(items) && items.map((item, index) => (
+
+            <Collapse.Panel header={<Link to={`/admin/category/${item.id}`}>{item.name}</Link>}>
+                <p>{item.description}</p>
+            </Collapse.Panel>
         ))}
-    </List>);
+    </Collapse>);
 }
 
 export default CategoryList;

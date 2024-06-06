@@ -1,6 +1,13 @@
 .orderItem{
-    align-items: start;
     padding:12px 8px;
+    .image{
+        img{
+            width: 100%;
+        }
+    }
+    .productDetail{
+        align-self: flex-start;
+    }
     .productName{
         font-weight: 500;
         font-size: 1.2rem;
@@ -11,6 +18,7 @@
                 line-clamp: 1; 
         -webkit-box-orient: vertical;
         max-width: 400px;
+        color: red;
         
     }
     .price{

@@ -11,7 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../../../store/user/userSlide";
 import DarkModeToggle from "../../dark-mode-toggle";
 import APIBase from "../../../api/ApiBase";
-import { Col, Row } from "antd";
+import { Layout, Card, List } from "antd";
+import Search from "antd/es/transfer/search";
+import PrefixIcon from "../../../components/input-prefix-icon/PrefixIcon";
 function Header() {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
@@ -27,97 +29,84 @@ function Header() {
         })
     }
     return (
-        <div fluid>
-            <Row className={style.header}>
-                <Col xl={2}>
-                    <Link to="/">
-                        <h2>Logo</h2>
-                    </Link>
-                </Col>
-                <Col xl={4}>
-                    <ProductSearchBar />
-                </Col>
-                <Col>
-                    <div className="d-flex flex-row align-items-center justify-content-end">
-                        <Link to={"/cart"} className={style.link}>
-                            <i className="fi fi-rr-shopping-bag"></i>
-                        </Link>
-                        <Tippy
-                            interactive
-                            render={(attrs) => (
-                                <div tabIndex={-1} {...attrs}>
-                                    <div className={clsx(style.dropMenu)}>
-                                        <div className="list-group-flush">
-                                            {user ? (
-                                                <div className={style.menuItem}>
-                                                    <span>
-                                                        <i className="fi fi-rr-user"></i>
-                                                    </span>
-                                                    <Description>
-                                                        {`${user.lastname} ${user.firstname}`}
-                                                    </Description>
-                                                </div>
-                                            ) : (
-                                                <Link
-                                                    to="/login"
-                                                    className={style.menuItem}
-                                                >
-                                                    <span>
-                                                        <i className="fi fi-rr-user"></i>
-                                                    </span>
-                                                    <Description>
-                                                        Đăng nhập
-                                                    </Description>
-                                                </Link>
-                                            )}
-                                            <div className={style.menuItem}>
-                                                <span>
-                                                    <i className="fi fi-rr-moon-stars"></i>
-                                                </span>
-                                                <Description>
-                                                    Dark mode
-                                                </Description>
-                                                <div className="d-flex flex-grow-1 justify-content-end">
-                                                    <DarkModeToggle />
-                                                </div>
+        <Layout.Header className={style.container}>
+            <div className={style.headerL}>
+                <Link className={style.logo} to="/">
+                    <h2>Logo</h2>
+                </Link>
+                <Search className={style.searchBar} />
+            </div>
+            <div className={style.headerR}>
+                <Link to={"/cart"} className={style.link}>
+                    <i className="fi fi-rr-shopping-bag"></i>
+                </Link>
+                <Tippy
+                    interactive
+                    render={(attrs) => (
+                        <div tabIndex={-1} {...attrs}>
+                            <div className={clsx(style.dropMenu)}>
+                                <div className={clsx(style.content)}>
+                                    {user ? (
+
+                                        <div className={style.menuItem}>
+                                            <PrefixIcon><i className="fi fi-rr-user"></i></PrefixIcon>
+                                            <Description>
+                                                {`${user.lastname} ${user.firstname}`}
+                                            </Description>
+                                        </div>
+                                    ) : (
+                                        <Link
+                                            to="/login"
+                                            className={style.menuItem}
+                                        >
+                                            <span>
+                                                <i className="fi fi-rr-user"></i>
+                                            </span>
+                                            <Description>
+                                                Đăng nhập
+                                            </Description>
+                                        </Link>
+                                    )}
+                                    <div className={clsx(style.menuItem, style.toggle)}>
+                                        <div>
+                                            <PrefixIcon><i className="fi fi-rr-moon-stars"></i></PrefixIcon>
+                                            <Description>Dark mode</Description>
+                                        </div>
+                                        <div>
+                                            <div className="d-flex flex-grow-1 justify-content-end">
+                                                <DarkModeToggle />
                                             </div>
-                                            {user &&
-                                                <>
-                                                    <div
-                                                        className={style.seperate}
-                                                    ></div>
-                                                    <div className={style.menuItem} onClick={logout}>
-                                                        <span>
-                                                            <i className="fi fi-rs-sign-out-alt"></i>
-                                                        </span>
-                                                        <Description>
-                                                            Logout
-                                                        </Description>
-                                                    </div>
-                                                </>
-                                            }
                                         </div>
                                     </div>
+                                    {user &&
+
+                                        <div className={style.menuItem}>
+                                            <div
+                                                className={style.seperate}
+                                            ></div>
+                                            <div className={style.menuItem} onClick={logout}>
+                                                <PrefixIcon><i className="fi fi-rs-sign-out-alt"></i></PrefixIcon>
+                                                <Description>Logout</Description>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
-                            )}
-                        >
-                            <Link to="/user">
-                                <div className={style.avatar}>
-                                    <img
-                                        className="rounded-circle"
-                                        src={image}
-                                        alt=""
-                                    ></img>
-                                </div>
-                            </Link>
-                        </Tippy>
-                    </div>
-                </Col>
-                <Col xl={1} className="d-flex align-items-center">
-                    <i className="fi fi-rr-menu-burger"></i>
-                </Col>
-            </Row>
-        </div>
+                            </div>
+                        </div>
+                    )}
+                >
+                    <Link to="/user">
+                        <div className={style.avatar}>
+                            <img
+                                src={image}
+                                alt=""
+                            ></img>
+                        </div>
+                    </Link>
+                </Tippy>
+            </div>
+
+        </Layout.Header>
     );
 }
 

@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
-import { Col } from 'antd';
+import { Col, Row } from 'antd';
 import SelectVariation from '../../components/select-variaion/SelectVariaton';
-import CheckRadio from '../../components/input-radio/CheckRadio';
 import clsx from 'clsx';
 import style from './style.module.scss';
 import { memo } from 'react';
@@ -66,12 +65,12 @@ function ProductItemSelect({ productItems, onChange }) {
             onChange(item);
         }
     }
-    return (<Col>
-        <div className={clsx(style.status, { "text-primary": status > 0 })}><span className='text'>Status: </span>{status}</div>
+    return (<Row gutter={[14, 14]}>
+        <Col span={24} className={clsx(style.status, { "text-primary": status > 0 })}><span className='text'>Status: </span>{status}</Col>
         {variations.map((variation, index) =>
-            <SelectVariation onChange={update} variation={variation} key={index} label={variation.name} />
+            <Col span={24} key={index}><SelectVariation onChange={update} variation={variation} label={variation.name} /></Col>
         )}
-    </Col>);
+    </Row>);
 }
 
 export default memo(ProductItemSelect);
