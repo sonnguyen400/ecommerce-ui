@@ -14,8 +14,16 @@ import { Description } from "../../components/description";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../context";
 import { Col, Row, Input, Button } from "antd";
-import PrefixIcon from "../../components/input-prefix-icon/PrefixIcon";
-
+import PrefixIcon from "../../components/prefix-icon/PrefixIcon.js";
+const handleGoogleLogin = async () => {
+    try {
+        // Make a request to the backend server to initiate the Google OAuth2 flow
+        const response = await APIBase.get('/auth/google');
+        window.location.href = response.data.redirectUrl;
+    } catch (error) {
+        console.error('Error initiating Google login:', error);
+    }
+};
 function LoginForm({ className, success }) {
     const globalContext = useContext(GlobalContext);
     const [loginMessage, setLoginMessage] = useState(undefined);
@@ -71,7 +79,7 @@ function LoginForm({ className, success }) {
             <form noValidate onSubmit={formik.handleSubmit}>
                 {loginMessage && <Error>{loginMessage}</Error>}
 
-                <Row gutter={[0, 24]}>
+                <Row gutter={[0, 24]} justify={"center"}>
                     <Col span={24} >
                         <Input
                             prefix={<PrefixIcon><i className="fi fi-rr-user"></i></PrefixIcon>}
@@ -100,31 +108,49 @@ function LoginForm({ className, success }) {
 
                         <Error>{formik.errors.password && formik.errors.password}</Error>
                     </Col>
+                    <Col span={24}>
+                        <Row justify="end">
+                            <Col className={style.loginBtn}><Button htmlType="submit" type="primary">Login</Button></Col>
+                        </Row>
+                    </Col>
+                    <Col span={24}>
+                        <Description className="">
+                            Don't have an account yet? <Link to='/register'>Register</Link>
+                        </Description>
+                    </Col>
+                    <Col span={24}><Description>Or login with</Description></Col>
+                    <Col span={16}>
+                        <Row>
+                            <Col span={6}>
+                                <Button type="text"
+                                    icon={<PrefixIcon><img style={{ width: "100%" }} src={google} alt="Login with google" /></PrefixIcon>}
+                                    href="http://localhost:8085/oauth2/authorize/google" />
+                            </Col>
+
+                            <Col span={6}>
+                                <Button type="text"
+                                    icon={<PrefixIcon> <img style={{ width: "100%" }} src={facebook} alt="Login with facebook" /></PrefixIcon>}
+                                    href="http://localhost:8085/oauth2/authorize/google" />
+
+                            </Col>
+                            <Col span={6}>
+                                <Button type="text"
+                                    icon={<PrefixIcon> <img style={{ width: "100%" }} src={github} alt="Login with github" /></PrefixIcon>}
+                                    href="http://localhost:8085/oauth2/authorize/google" />
+                            </Col>
+                            <Col span={6}>
+                                <Button type="text"
+                                    icon={<PrefixIcon><img style={{ width: "100%" }} src={apple} alt="Login with apple" /></PrefixIcon>}
+                                    href="http://localhost:8085/oauth2/authorize/google" />
+                            </Col>
+                        </Row>
+                    </Col>
                 </Row>
 
-                <Row justify="end">
-                    <Col className={style.loginBtn}><Button htmlType="submit" type="primary">Login</Button></Col>
-                </Row>
-                <div className="pt-5">
-                    <Description>Login with</Description>
-                </div>
-                <div className={style.loginWith}>
-                    <div>
-                        <img src={google} alt="Login with google" />
-                    </div>
-                    <div>
-                        <img src={facebook} alt="Login with facebook" />
-                    </div>
-                    <div>
-                        <img src={github} alt="Login with github" />
-                    </div>
-                    <div>
-                        <img src={apple} alt="Login with apple" />
-                    </div>
-                </div>
-                <Description className="">
-                    Don't have an account yet? <Link to='/register'>Register</Link>
-                </Description>
+
+
+
+
             </form>
             <Button type="primary" onClick={refresh}> refresh</Button>
             <Button onClick={logout}> Logout</Button>

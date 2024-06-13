@@ -11,6 +11,7 @@ function ProductDetail() {
     const [urlParams, setUrlParams] = useSearchParams();
     const [data, setData] = useState(null);
     const [variationForm, setVariationForm] = useState(false);
+    const [load, reload] = useState(false);
     useLayoutEffect(() => {
         fetchProduct()
     }, [])
@@ -26,7 +27,7 @@ function ProductDetail() {
                 <Col span={24}>
                     <Row gutter={[24, 32]} className="p-3">
                         <Col md={4} className="p-3">
-                            {data && <Image className="w-100" src={data.productImage} />}
+                            {data && <Image className="w-100" src={data.picture} />}
                         </Col>
                         <Col md={8} className="p-3">
                             <div>
@@ -41,14 +42,14 @@ function ProductDetail() {
                         <Col sm={4}><Button type="primary" className="align-self-end" onClick={() => { setVariationForm(true) }}>Add variation</Button></Col>
                     </Row>
                 </Col>
-                {data && <VariationFormModal setProduct={setData} product={data} open={variationForm} footer={null} onCancel={() => { setVariationForm(false) }} />}
+                {data && <VariationFormModal reload={reload} setProduct={setData} product={data} open={variationForm} footer={null} onCancel={() => { setVariationForm(false) }} />}
                 <table className={clsx(style.productItemTable)}>
                     <thead>
                         <tr>
                             <td>Image</td>
                             <td>Properties</td>
                             <td>Value</td>
-                            <td>Price</td>
+                            <td>Original Price</td>
                             <td>Action</td>
                         </tr>
                     </thead>

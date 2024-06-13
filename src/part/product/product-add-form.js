@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, Input, Select, Row, Col, Upload, Space } from "antd";
 import { Error } from "../../components/form-component";
-import PrefixIcon from "../../components/input-prefix-icon/PrefixIcon";
+import PrefixIcon from "../../components/prefix-icon/PrefixIcon.js";
 import { GlobalContext } from "../../context";
 import APIBase from "../../api/ApiBase";
 import { useNavigate } from "react-router-dom";
@@ -97,7 +97,7 @@ export default function ProductAddForm({ submitHandler, defaultCategory, trigger
                                 onChange={(e) =>
                                     formik.setFieldValue(
                                         "category",
-                                        e.target.options[e.target.selectedIndex].value
+                                        e
                                     )
                                 }
                                 value={formik.values.category}

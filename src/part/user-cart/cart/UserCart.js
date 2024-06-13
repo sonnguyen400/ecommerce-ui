@@ -5,29 +5,33 @@ import APIBase from "../../../api/ApiBase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addAll } from "../../../store/cart/cartReducer";
-import { orderLine } from "../../../store/orderline/orderLine";
+import { orderLineSlice } from "../../../store/orderline/orderLine";
 function UserCart() {
-    const ordersState = useSelector(state => { return state.order });
+    const user = useSelector(store => store.user);
+    const ordersState = useSelector(state => state.order);
     const cartItems = useSelector(state => state.cart);
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
-        APIBase.get("api/v1/cart")
-            .then(payload => {
-                dispatch(addAll(payload.data));
-                setLoading(false);
-            })
-            .catch(console.error)
-    }, [dispatch])
+        if (user) {
+            APIBase.get("api/v1/cart?userId=" + user.id)
+                .then(payload => {
+                    dispatch(addAll(payload.data));
+                    setLoading(false);
+                })
+                .catch(console.error)
+        }
+
+    }, [])
     function order() {
-        dispatch(orderLine.actions.addAll(ordersState));
+        dispatch(orderLineSlice.actions.addAll(ordersState));
         navigate("/order");
     }
     return (<Row gutter={[24, 24]}>
         <Col span={24} md={{ span: 12 }} lg={{ span: 14 }}>
             <Card title="Your Item">
-                <List className="list-group-flush">
+                <List>
                     {!loading && cartItems.map((item, key) => <List.Item key={key}><OrderItem data={item} /></List.Item>)}
                 </List>
             </Card>

@@ -27,7 +27,7 @@ function OrderItem({ data, disabled }) {
     const [state, setState] = useState(true);
     function changeVariation() {
         if (state) {
-            APIBase.get(`api/v1/product/${data.productItem.product_.id}`)
+            APIBase.get(`api/v1/product/${data.productItem.product.id}`)
                 .then(payload => {
                     setProduct(payload.data);
                     return payload.data;
@@ -49,8 +49,6 @@ function OrderItem({ data, disabled }) {
             object.productItem = value
             updateItem(object);
         }
-
-
     }
     function updateItem(cartItem) {
         dispatch(updateCartItem(cartItem))
@@ -62,12 +60,12 @@ function OrderItem({ data, disabled }) {
                 <Row align="middle" gutter={12} className={clsx(style.orderItem)}>
                     {!disabled && <Col span={1}><input type='checkbox' checked={orderItems && orderItems.some(item => data.id === item.id)} onChange={selectItem} /></Col>}
                     <Col span={6} className={style.image}>
-                        <img src={data.productItem.product_ && data.productItem.product_.productImage} />
+                        <img src={data.productItem.product && data.productItem.product.picture} />
                     </Col>
                     <Col span={16} className={style.productDetail}>
                         <Row>
                             <Col span={24}>
-                                <Link to={`/product?id=${data.productItem.product_.id}`} className={clsx(style.productName)}>{data.productItem.product_ && data.productItem.product_.name}</Link>
+                                <Link to={`/product?id=${data.productItem.product.id}`} className={clsx(style.productName)}>{data.productItem.product && data.productItem.product.name}</Link>
                             </Col>
                             <Col span={24}>
                                 <span className={clsx(style.price)}>{data.productItem && data.productItem.price}</span>

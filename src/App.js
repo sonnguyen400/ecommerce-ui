@@ -7,15 +7,19 @@ import "./App.css";
 import Loader from "./components/loader/Loader";
 import { GlobalContext } from "./context";
 import { Role } from "./constant";
-import { Layout } from "antd";
+import { Layout, message, notification } from "antd";
 function App() {
     let [loaderContent, setLoaderContent] = useState(false);
     let [darkMode, setDarkmode] = useState(false);
+    const [notificationAPI, notificationContext] = notification.useNotification();
+    const [messageAPI, messageContext] = message.useMessage();
     return (
         <Layout>
-            {loaderContent === false ? null : <Loader render={loaderContent} />}
+            {loaderContent === false ? null : <Loader />}
             <GlobalContext.Provider
                 value={{
+                    notification: notificationAPI,
+                    message: message,
                     authentication: undefined,
                     authorization: Role.GUEST,
                     loader: setLoaderContent,

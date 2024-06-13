@@ -1,10 +1,10 @@
 
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
-import PrefixIcon from "../../../components/input-prefix-icon/PrefixIcon";
+import PrefixIcon from "../../../components/prefix-icon/PrefixIcon.js";
 function Sidebar({ ...props }) {
     return (
-        <Menu>
+        <Menu style={{ height: "100%" }}>
             <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-dashboard"></i></PrefixIcon>}>
                 Dashboard
             </Menu.Item>
@@ -14,12 +14,15 @@ function Sidebar({ ...props }) {
                     Category Management
                 </Link>
             </Menu.Item>
-
             <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-to-do"></i></PrefixIcon>}>
-                Order Management
+                <Link to="/admin/order-manage">
+                    Order Management
+                </Link>
             </Menu.Item>
             <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-box-open-full"></i></PrefixIcon>}>
-                Product Manage
+                <Link to="/admin/product-manage">
+                    Product Manage
+                </Link>
             </Menu.Item>
             <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-warehouse-alt"></i></PrefixIcon>}>
                 Warehouse Manage

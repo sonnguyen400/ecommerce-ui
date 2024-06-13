@@ -7,7 +7,7 @@ function ProductCard({ children, ...props }) {
         <div {...props} className={clsx(style.productCard)}>
             <Link to={`/product?id=${children.id}`}>
                 <Row>
-                    <Col span={24}><img alt="fg" src={children.productImage || "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lt6j2nuwf2ksf0_tn"} /></Col>
+                    <Col span={24}><img alt="fg" src={children.picture || "https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lt6j2nuwf2ksf0_tn"} /></Col>
                     <Row className={style.productDetail}>
                         <Col span={24}><p className={style.productName}>{children.name}</p></Col>
                         <Col span={24} className={style.productPrice}>

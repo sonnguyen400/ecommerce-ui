@@ -39,29 +39,33 @@ function CategoryDetail() {
         }
     }, [id])
 
-    const items = [{
-        key: 1,
-        label: "Products",
-        children: <>
-            <Col className="py-3"><Button onClick={() => { setProductDiag(true) }}>Add Product</Button></Col>
-            <Card title='Product List'>
-                {products && <ProductListBigIcon>{products}</ProductListBigIcon>}
-            </Card>
-            <Modal title="Add new product" size="lg" open={productDiag} onCancel={() => { setProductDiag(false) }} footer={null} >
-                <ProductAddForm defaultCategory={data} />
-            </Modal>
-        </>
-    },
-    {
-        key: 2,
-        label: "Categories",
-        children: <>
-            <Col className="py-3" onClick={() => setCategoryDiag(true)}><Button>Add Nested Category</Button></Col>
-            <Card>
-                {data && Array.isArray(data.children) && <CategoryList items={data.children} />}
-            </Card>
-            {data && <CategoryAddModal state={categoryDiag} setState={setCategoryDiag} parent={data} addNestedCategory={addNestedCategory} />}</>
-    }
+    const items = [
+        {
+            key: 1,
+            label: "Categories",
+            children: <>
+                <Col className="py-3" onClick={() => setCategoryDiag(true)}><Button>Add Nested Category</Button></Col>
+                <Card>
+                    {data && Array.isArray(data.children) && <CategoryList items={data.children} />}
+                </Card>
+                {data && <CategoryAddModal state={categoryDiag} setState={setCategoryDiag} parent={data} addNestedCategory={addNestedCategory} />}</>
+        }
+
+        ,
+        {
+            key: 2,
+            label: "Products",
+            children: <>
+                <Col className="py-3"><Button onClick={() => { setProductDiag(true) }}>Add Product</Button></Col>
+                <Card title='Product List'>
+                    {products && <ProductListBigIcon>{products}</ProductListBigIcon>}
+                </Card>
+                <Modal title="Add new product" size="lg" open={productDiag} onCancel={() => { setProductDiag(false) }} footer={null} >
+                    <ProductAddForm defaultCategory={data} />
+                </Modal>
+            </>
+        }
+
     ]
     return (data &&
         <Card title={data.name}>

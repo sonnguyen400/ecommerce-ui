@@ -3,7 +3,7 @@ import { cartSlide } from "./cart/cartReducer.js";
 import { orderSlice } from "./order/orderReducer.js";
 import { userSlide } from "./user/userSlide.js";
 import { userAddress } from "./address/addressSlide.js";
-import { orderLine } from "./orderline/orderLine.js";
+import { orderLineSlice } from "./orderline/orderLine.js";
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +11,6 @@ export const store = configureStore({
         order: orderSlice.reducer,
         user: userSlide.reducer,
         userAddress: userAddress.reducer,
-        orderLines: orderLine.reducer
+        orderLines: orderLineSlice.reducer
     },
 });

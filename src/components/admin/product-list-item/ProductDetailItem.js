@@ -1,13 +1,15 @@
 import { Row, Image, Col } from 'antd';
 import { Link } from 'react-router-dom';
-function ProductDetailItem({ children }) {
+function ProductDetailItem({ children, ...props }) {
     return (
-        <Row className='py-2'>
-            <Col lg={1}><Image className='w-100 h-100' rounded src={children.productImage} /></Col>
-            <Col>
-                <Link className='inherit-link' to={`/admin/product?id=${children.id}`}><h6>{children.name}</h6></Link>
-            </Col>
-        </Row>);
+        <Col span={24}>
+            <Row {...props} gutter={[14, 14]}>
+                <Col span={8}><Image src={children.picture} /></Col>
+                <Col span={16}>
+                    <Link to={`/admin/product?id=${children.id}`}><span>{children.name}</span></Link>
+                </Col>
+            </Row>
+        </Col>);
 }
 
 export default ProductDetailItem;

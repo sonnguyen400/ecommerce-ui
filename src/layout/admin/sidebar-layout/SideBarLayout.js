@@ -1,10 +1,6 @@
-import style from './style.module.scss';
-import Header from '../../../part/header/admin/header';
-import { Col, Row, Card, Layout, Menu } from 'antd';
+import { Layout } from 'antd';
 import Sidebar from '../../../part/admin/sidebar/Sidebar';
 import { useState } from 'react';
-import PrefixIcon from '../../../components/input-prefix-icon/PrefixIcon';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 const Trigger = styled.div`
     height: 64px;

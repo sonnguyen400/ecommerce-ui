@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 export const addAllProductItem = function (state, action) {
+    console.log(action.payload)
     return action.payload;
 }
 export const empty = function (state, action) {
@@ -8,7 +9,7 @@ export const empty = function (state, action) {
 export const add = function (state, action) {
     return [...state, action.payload];
 }
-export const orderLine = createSlice({
+export const orderLineSlice = createSlice({
     name: "orderLine",
     initialState: [],
     reducers: {

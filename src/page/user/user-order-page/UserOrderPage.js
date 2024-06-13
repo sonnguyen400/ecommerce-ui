@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import APIBase from "../../../api/ApiBase.js";
 import { findAllByUserId } from "../../../store/address/addressSlide.js";
 import AddressTag from "../../../components/address-tag/AddressTag.js";
-import PrefixIcon from "../../../components/input-prefix-icon/PrefixIcon.js";
+import PrefixIcon from "../../../components/prefix-icon/PrefixIcon.js";
 function UserOrderPage() {
     const [orderInfor, setOrderInfor] = useState({});
     const orderLines = useSelector(state => state.orderLines);
@@ -39,7 +39,7 @@ function UserOrderPage() {
             }).then(() => {
                 setTotal(total => calculateTotal());
             });
-    }, [dispatch, user, address])
+    }, [dispatch])
 
     function setAddress(id) {
         setOrderInfor(infor => {

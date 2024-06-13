@@ -1,29 +1,47 @@
-import { Field, Form, Formik } from "formik";
-import { Button, Row, Col } from "antd";
+import { Form, useFormik } from "formik";
+import { Button, Input, Row, Col } from "antd";
+import { Error } from "../../components/form-component";
 import * as Yup from 'yup';
 function CategoryForm({ parent, submitHandler }) {
     var initialValues = {
-        "name": ""
+        "name": "",
+        "description": ""
     }
     var validationSchema = Yup.object().shape({
         "name": Yup.string().required("Required")
     })
-    return (
-        <Formik onSubmit={submitHandler} initialValues={initialValues} validationSchema={validationSchema}>
-            {({ errors, touched }) => (
-                <Form>
-                    <div>
-                        <label>Category's name</label>
-                        <Field name="name" className="form-control" />
-                        {errors.name && touched.name && <h6 className="text-sm text-danger" style={{ "display": "block" }} type="invalid"><small>{errors.name}</small></h6>}
-                    </div>
+    const formik = useFormik({
+        initialValues: initialValues,
+        validationSchema: validationSchema,
 
-                    <div className="d-flex justify-content-end">
-                        <Button type="submit" className="mt-3 ms-auto">Submit</Button>
-                    </div>
-                </Form>
-            )}
-        </Formik>);
+        onSubmit: submitHandler
+    })
+    return (
+        <form onSubmit={formik.handleSubmit}>
+            <Row gutter={[16, 16]} align="bottom">
+                <Col span={24}>
+                    <label>Category's name</label>
+                    <Input name="name"
+                        status={formik.errors.name && "error"}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
+                    {formik.errors.name && <Error>{formik.errors.name}</Error>}
+                </Col>
+                <Col span={20}>
+                    <label>Description</label>
+                    <Input.TextArea name="description"
+                        status={formik.errors.description && "error"}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
+                    {formik.errors.description && <Error>{formik.errors.description}</Error>}
+                </Col>
+                <Col span={4}>
+                    <Button type="primary" htmlType="submit">Submit</Button>
+                </Col>
+            </Row>
+        </form>);
 }
 
 export default CategoryForm;

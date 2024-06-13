@@ -1,7 +1,7 @@
-import { Card, Col, Row } from "antd";
+import { Alert, Card, Col, Row, message } from "antd";
 import RegisterForm from "../../part/register-form";
 import APIBase from "../../api/ApiBase";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Error } from "../../components/form-component";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../context";
@@ -16,29 +16,37 @@ const MiddleDiv = styled.div`
 function Register() {
     const [error, setError] = useState(false);
     const globalContext = useContext(GlobalContext);
+
+    const [messageApi, contextHolder] = message.useMessage();
+
     const navigate = useNavigate();
+    useEffect(() => {
+
+    }, [])
     function onSubmit(data) {
         globalContext.loader("")
         APIBase.post("/register", data)
             .then((payload) => {
-                globalContext.loader("Register successfully<br>Redirect in 3 seconds");
-                setTimeout(() => {
-                    navigate("/login")
-                    globalContext.loader(false);
-                }, 3000)
+                navigate("/login");
             })
             .catch(e => {
-                setError(e);
-                globalContext.loader(false);
+                setError(e.response.data.message)
+            }).finally(() => {
+                globalContext.loader(false)
             });
     }
     return (
         <Row justify={"center"}>
             <Col span={24} md={16} lg={{ span: 10 }}>
                 <Card>
-                    <h2 className="pb-4 text-center">Register</h2>
-                    {error && <Error>{error}</Error>}
-                    <RegisterForm onSubmit={onSubmit} />
+
+                    <Row justify={"center"} gutter={[24, 24]}>
+                        <Col span={24}><h2 style={{ textAlign: "center" }}>Register</h2></Col>
+
+                        {error && <Col span={24}><Alert type="error" description={error}></Alert></Col>}
+
+                        <Col span={24}><RegisterForm onSubmit={onSubmit} /></Col>
+                    </Row>
                 </Card>
             </Col>
         </Row>

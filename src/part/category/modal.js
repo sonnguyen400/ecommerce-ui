@@ -1,33 +1,34 @@
-import { Modal, Button } from 'antd';
+import { Modal, Button, notification } from 'antd';
 import CategoryForm from './category-add-form';
 import APIBase from '../../api/ApiBase';
 import { useContext } from 'react';
 import { GlobalContext } from '../../context';
 
 function CategoryAddModal({ state, setState, parent, addNestedCategory }) {
-    const loader = useContext(GlobalContext);
+    const [context, notificationContext] = notification.useNotification();
     function addCategorySubmit(data) {
         APIBase
-            .post(`api/v1/category/${parent.id}`, JSON.stringify(data), {
+            .post(`api/v1/category/${parent.id}`, [data], {
                 headers: {
                     "Content-Type": "application/json"
                 }
             })
             .then(payload => {
-                console.log(payload.data)
                 addNestedCategory(payload.data);
                 return payload.data;
             }).catch(err => {
-                console.log(err)
+                notification.error({
+                    message: "Error",
+                    description: err
+                })
                 return err;
             }).finally((data) => {
-                loader("");
                 setState(false);
             })
 
     }
     return (
-        <Modal title="Add nested Category" open={state} onCancel={() => setState(false)}>
+        <Modal footer={null} title="Add nested Category" open={state} onCancel={() => setState(false)}>
             <CategoryForm submitHandler={addCategorySubmit} />
         </Modal>);
 }

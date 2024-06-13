@@ -4,12 +4,12 @@ import LinkListItem from '../../components/link-list-Item/LinkListItem';
 import { Link } from "react-router-dom";
 import { Col, Row, Card, List } from "antd";
 import style from './style.module.scss';
-import PrefixIcon from '../../components/input-prefix-icon/PrefixIcon';
+import PrefixIcon from '../../components/prefix-icon/PrefixIcon';
 function UserInfor() {
     const user = useSelector((state) => state.user);
     return (<Card >
         <Col>
-            <Row className={style.avatar}><img src={image} /></Row>
+            <Row className={style.avatar}><img alt='avatar' src={image} /></Row>
             <h3 className="text-center pt-4">{user ? `${user.lastname} ${user.firstname}` : <Link to="/login">Login</Link>}</h3>
         </Col>
 

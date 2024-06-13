@@ -5,7 +5,7 @@ import clsx from "clsx";
 function ProductListBigIcon({ children }) {
     return (
         <Row>
-            {children && Array.isArray(children) && children.map((item, index) => <ProductDetailItem className={clsx(style.productCard)} md={3}>{item}</ProductDetailItem>)}
+            {children && Array.isArray(children) && children.map((item, index) => <ProductDetailItem key={index} className={clsx(style.productCard)} >{item}</ProductDetailItem>)}
         </Row>);
 }
 

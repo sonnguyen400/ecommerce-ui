@@ -28,7 +28,7 @@ function ProductItemView({ productItem, setData }) {
     return (productItem && <>
         <tr>
             <td rowSpan={Array.isArray(productItem.options) ? productItem.options.length : 0}>
-                <Image width="100px" src={productItem.productImage} />
+                <Image width="100px" src={productItem.picture} />
             </td>
             <td>
                 {productItem.options[0].variation.name}
@@ -37,7 +37,7 @@ function ProductItemView({ productItem, setData }) {
                 {productItem.options[0].value}
             </td>
             <td rowSpan={Array.isArray(productItem.options) ? productItem.options.length : 0}>
-                {productItem.price}
+                {productItem.originalPrice}
             </td>
             <td rowSpan={Array.isArray(productItem.options) ? productItem.options.length : 0}>
                 <Button type="text" onClick={() => deleteItem(productItem.id)}>Delete</Button>
