@@ -65,10 +65,10 @@ function ProductItemSelect({ productItems, onChange }) {
             onChange(item);
         }
     }
-    return (<Row gutter={[14, 14]}>
+    return (<Row gutter={[14, 12]}>
         <Col span={24} className={clsx(style.status, { "text-primary": status > 0 })}><span className='text'>Status: </span>{status}</Col>
         {variations.map((variation, index) =>
-            <Col span={24} key={index}><SelectVariation onChange={update} variation={variation} label={variation.name} /></Col>
+            <Col key={index}><SelectVariation onChange={update} variation={variation} label={variation.name} /></Col>
         )}
     </Row>);
 }

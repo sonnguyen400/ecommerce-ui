@@ -10,6 +10,7 @@ function VariationFormModal({ product, setProduct, reload, ...props }) {
     const [loading, setLoading] = useState(false);
     function onSubmitHandler(data) {
         globalContext.loader("");
+        console.log(data)
         APIBase.post(`api/v1/product/${product.id}/item`, data)
             .then((payload) => {
                 setProduct(product => {

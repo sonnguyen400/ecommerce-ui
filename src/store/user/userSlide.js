@@ -18,6 +18,11 @@ export const logoutUser = createAsyncThunk(
 export const userSlide = createSlice({
     initialState: null,
     name: "user",
+    reducers: {
+        clear: (state, action) => {
+            return null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchUser.fulfilled, (state, action) => {

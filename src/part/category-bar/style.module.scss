@@ -1,7 +1,12 @@
-.category{
-    padding:8px 16px;
+.container{
     position: sticky;
-    top:32px;
+    top:0px;
+    background-color: white;
+    .category{
+    padding:8px 16px;
+    max-width: 1200px;
+    width: 100%;
+    justify-content: center;
     cursor: pointer;
     .categoryItem{
         justify-content: center;
@@ -15,4 +20,5 @@
             color:var(--sub-color-800);
         }
     }
+}
 }

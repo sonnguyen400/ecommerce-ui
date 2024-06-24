@@ -2,17 +2,16 @@ import clsx from "clsx";
 import CategoryBar from "../../part/category-bar/CategoryBar";
 import Header from "../../part/header/user/header";
 import style from './style.module.scss';
-import { Layout } from "antd";
-
+import { Layout, Row } from "antd";
 function HeadOnly({ children }) {
     return (
         <Layout>
             <Header />
             <Layout.Content >
                 <CategoryBar />
-                <div className={style.container}>
+                <Row className={style.container}>
                     {children}
-                </div>
+                </Row>
             </Layout.Content>
         </Layout>);
 }

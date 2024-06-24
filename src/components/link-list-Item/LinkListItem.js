@@ -14,17 +14,17 @@ class LinkListItem extends React.Component {
         return (<List.Item className={clsx(style.item, this.props.className)}>
             <Link to={this.props.to} className={clsx(style.link)}>
                 <Row style={{ width: "100%" }} align="middle" justify="space-between">
-                    <Col>
+                    <Col span={8}>
                         <Row>
-                            <Col className={style.icon}>{this.props.prefix}</Col>
-                            <Col className={style.text}>{this.props.title}</Col>
+                            <Col span={5} className={style.icon}>{this.props.prefix}</Col>
+                            <Col span={19} className={style.text}>{this.props.title}</Col>
                         </Row>
                     </Col>
-                    <Col>
-                        <Row>
+                    <Col span={16}>
+                        <Row justify="end">
                             <Col className={style.content}>{this.props.children}</Col>
                             {this.props.arrow &&
-                                <Col>
+                                <Col span={4}>
                                     <span className={clsx(style.icon)}>
                                         <i className="fi fi-rr-angle-small-right"></i>
                                     </span>

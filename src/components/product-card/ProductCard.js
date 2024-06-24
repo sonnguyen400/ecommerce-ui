@@ -1,7 +1,8 @@
-import { Card, Rate, Col, Row } from "antd";
+import { Card, Col, Row } from "antd";
 import style from './style.module.scss';
 import clsx from "clsx";
 import { Link } from "react-router-dom";
+import RateStar from "../rate-start/RateStar";
 function ProductCard({ children, ...props }) {
     return (
         <div {...props} className={clsx(style.productCard)}>
@@ -16,7 +17,8 @@ function ProductCard({ children, ...props }) {
                             <span className={style.percent}>12</span>
                         </Col>
                         <Col span={24} className={style.rate}>
-                            <Rate />
+
+                            <RateStar fontSize={15} />
                             <Row className={style.buy}>123k</Row>
                         </Col>
                     </Row>

@@ -32,6 +32,9 @@ export const cartSlide = createSlice({
         },
         findAll: (state, action) => {
             return state;
+        },
+        clear: (state, action) => {
+            return [];
         }
     },
     extraReducers: (builder) => {
@@ -48,6 +51,9 @@ export const cartSlide = createSlice({
                         state[i] = action.payload;
                     }
                 }
+                return state;
+            }).addCase(updateCartItem.rejected, (state, action) => {
+                console.log(action)
                 return state;
             })
 

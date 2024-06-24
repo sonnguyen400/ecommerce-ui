@@ -1,4 +1,4 @@
-import { Col, Row, Card, Image, Button, Flex, notification } from "antd";
+import { Col, Row, Card, Image, Button, Flex, notification, Space } from "antd";
 import style from './style.module.scss';
 import { useNavigate, useSearchParams } from "react-router-dom";
 import clsx from "clsx";
@@ -32,8 +32,14 @@ function ProductPage() {
     }, [])
 
 
+    function isAvailable() {
+        return selectedItem.warehouses.reduce((pre, warehouseItem) => {
+            if (warehouseItem && warehouseItem.qty) return pre + warehouseItem.qty;
+            return pre;
+        }, 0) > 0
+    }
     function addCard() {
-        if (selectedItem) {
+        if (selectedItem && isAvailable()) {
             let cardItem = {
                 productItem: {
                     id: selectedItem.id
@@ -54,7 +60,7 @@ function ProductPage() {
     }
 
     function orderNow() {
-        if (selectedItem) {
+        if (selectedItem && isAvailable()) {
             const item = new Array()
             item.push({
                 qty: qty,
@@ -82,26 +88,37 @@ function ProductPage() {
         }
     }
     return (product &&
-        <Row gutter={{ sm: 16, lg: 32 }}>
+        <Row gutter={[16, 16]}>
             <Col span={10}>
-                <Card className={style.card}
-                    cover={<div className={style.productImage}>
-                        <Image className="w-100 h-100 " src={product.picture} alt="" />
-                    </div>}
-                >
-                    <Col>
+                <Row gutter={[16, 16]}>
+                    <Col span={24}>
+                        <Card className={style.card}
+                            cover={<div className={style.productImage}>
+                                <Image style={{ aspectRatio: "1/1", objectFit: "contain" }} src={product.picture} alt="" />
+                            </div>}
+                        >
+                            <Col>
+
+                            </Col>
+                            <Row className="px-3">
+                                {product.productItems.map((item, index) => {
+                                    if (item.picture) return <Col className="p-2 rounded border-1 border-primary-600" lg={3} key={index}><Image className="w-100 h-100 ratio-1x1" src={item.picture} /></Col>
+                                })}
+                            </Row>
+                        </Card>
                     </Col>
-                    <Row className="px-3">
-                        {product.productItems.map((item, index) => {
-                            if (item.picture) return <Col className="p-2 rounded border-1 border-primary-600" lg={3} key={index}><Image className="w-100 h-100 ratio-1x1" src={item.picture} /></Col>
-                        })}
-                    </Row>
-                </Card>
+                    <Col span={24}>
+                        <Card title={<small>Description</small>}>
+                            {product.description}
+                        </Card>
+                    </Col>
+                </Row>
+
             </Col>
             <Col span={14}>
                 <Card title={<span style={{ fontSize: "2rem", padding: "16px 0px", fontWeight: 400 }}>{product.name}</span>} className={clsx(style.productDetail)}>
                     <Row gutter={[16, 16]}>
-                        <Col span={24}><span className={style.price}>{selectedItem && selectedItem.originalPrice}</span></Col>
+                        <Col span={24}><span className={style.price}>{selectedItem && selectedItem.price}</span></Col>
                         <Col span={24}>
                             <ProductItemSelect onChange={setSelectedItem} productItems={product.productItems} />
                         </Col>
@@ -109,15 +126,16 @@ function ProductPage() {
                             <InputNumber value={qty} style={{ fontSize: "1rem" }} type="number" onChange={setQty} />
                         </Col>
                         <Col span={24}>
-                            <Flex gap={[16, 16]} justify="end">
-                                <Col><Button style={{ backgroundColor: "#333" }} shape="round" icon={<PrefixIcon style={{ color: "white" }}><i className="fi fi-rr-shopping-cart-add"></i></PrefixIcon>} className="mt-2" onClick={addCard} /></Col>
-                                <Col><Button type="primary" shape="round" onClick={() => { orderNow() }}>Order Now</Button></Col>
-                            </Flex>
+                            <Row justify="end">
+                                <Button style={{ backgroundColor: "#333", marginRight: "5px" }} shape="round" icon={<PrefixIcon style={{ color: "white" }}><i className="fi fi-rr-shopping-cart-add"></i></PrefixIcon>} className="mt-2" onClick={addCard} />
+                                <Button type="primary" shape="round" onClick={() => { orderNow() }}>Order Now</Button>
+                            </Row>
                         </Col>
                     </Row>
                 </Card>
 
             </Col>
+
         </Row>);
 }
 

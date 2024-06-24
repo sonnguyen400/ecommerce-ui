@@ -48,10 +48,11 @@ function VariationOptionSelect({ name, variations, setVariations, remove, props 
     }
     return (<>
         <Col span={10}>
-            <Form.Item name={[name, "variation"]} {...props}>
+            <Form.Item
+                rules={[{ required: "Required" }]}
+                name={[name, "variation"]} {...props}>
                 <Select options={variations && variations.map(variation_ => ({ label: variation_.name, value: variation_.id }))}
                     value={selectedVariation}
-                    defaultValue={(Array.isArray(variations) && variations.length > 0) ? variations[0].id : 0}
                     onChange={value => {
                         setSelectedVariation(variations.find(variation_ => variation_.id == value))
                         setChange(change => !change);
@@ -70,9 +71,10 @@ function VariationOptionSelect({ name, variations, setVariations, remove, props 
             </Form.Item>
         </Col>
         <Col span={12}>
-            <Form.Item name={[name, "id"]} {...props}>
+            <Form.Item
+                rules={[{ required: "Required" }]}
+                name={[name, "id"]} {...props}>
                 <Select
-                    defaultValue={(selectedVariation && Array.isArray(selectedVariation.options) && selectedVariation.options.length > 0) ? selectedVariation.options[0].id : 0}
                     options={selectedVariation && Array.isArray(selectedVariation.options) && selectedVariation.options.map(option_ => ({ label: option_.value, value: option_.id }))}
                     dropdownRender={menu => <>
                         {menu}
@@ -96,7 +98,6 @@ function VariationOptionSelect({ name, variations, setVariations, remove, props 
 
 function VariationForm({ submitHandler, loading, onCancel, product }) {
     const [variations, setVariations] = useState([]);
-    const [context, notifContext] = notification.useNotification();
 
     useEffect(() => {
         APIBase.get(`/api/v1/variation`).then(payload => { setVariations(payload.data) });
@@ -111,11 +112,10 @@ function VariationForm({ submitHandler, loading, onCancel, product }) {
             options: data.options.map(option_ => ({
                 id: option_.id,
                 variation: {
-                    id: option_.variation
+                    id: option_.variation.id
                 }
             }))
         }
-        console.log(data)
         formData.append("productItem", new Blob([JSON.stringify(productItem)], { type: "application/json" }))
         if (submitHandler) {
             submitHandler(formData)
@@ -123,7 +123,7 @@ function VariationForm({ submitHandler, loading, onCancel, product }) {
     }
     return (
         <Form onFinish={buildFormData}>
-            <Row >
+            <Row gutter={14}>
                 <Col span={24}>
                     <Row><label>Picture</label></Row>
                     <Form.Item name="picture">

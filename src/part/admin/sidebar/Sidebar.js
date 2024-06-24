@@ -25,10 +25,14 @@ function Sidebar({ ...props }) {
                 </Link>
             </Menu.Item>
             <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-warehouse-alt"></i></PrefixIcon>}>
-                Warehouse Manage
+                <Link to="/admin/warehouse">
+                    Warehouse Manage
+                </Link>
             </Menu.Item>
             <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-user-check"></i></PrefixIcon>}>
-                User Manage
+                <Link to="/admin/user/manage">
+                    User Manage
+                </Link>
             </Menu.Item>
         </Menu>);
 }

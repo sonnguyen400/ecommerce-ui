@@ -38,8 +38,8 @@ export default function ProductAddForm({ submitHandler, defaultCategory, trigger
                 navigate(`/admin/product?id=${payload.data.id}`)
             })
             .catch((e) => {
+                globalContext.message.success("Successfully Added Product")
                 console.log(e)
-
             })
             .finally(() => {
                 globalContext.loader(false);
@@ -57,7 +57,20 @@ export default function ProductAddForm({ submitHandler, defaultCategory, trigger
                                 <Button icon={<PrefixIcon><i className="fi fi-rr-inbox-out"></i></PrefixIcon>}>Click to Upload</Button>
                             </Upload>
                         </Col>
-
+                        <Col span={12}>
+                            <Row><label>Manufacturer</label></Row>
+                            <Input
+                                name="manufacturer"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.manufacturer}
+                            />
+                            {formik.touched.manufacturer && formik.errors.manufacturer ? (
+                                <small className="text-danger">{formik.errors.manufacturer}</small>
+                            ) : (
+                                ""
+                            )}
+                        </Col>
                         <Col span={12}>
                             <label>Product's name</label>
                             <Input

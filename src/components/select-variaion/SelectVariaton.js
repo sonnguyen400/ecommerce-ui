@@ -17,11 +17,13 @@ function SelectVariation({ onChange, variation }) {
         });
     }, [])
     return (
-        <Row ref={inputGroup} gutter={[0, 32]} className={clsx("gx-2", style.inputGroup)} >
+        <Row ref={inputGroup} gutter={[0, 8]} className={clsx("gx-2", style.inputGroup)} >
             <Col><label>{variation.name}</label></Col>
-            {variation.options.map((option, index) => {
-                return <Col key={variation.name + index}><CheckRadio className={clsx(style.option)} onChange={(e) => { change(e) }} value={option.value} name={variation.name}>{option.value}</CheckRadio></Col>
-            })}
+            <Row gutter={[16, 16]}>
+                {variation.options.map((option, index) => {
+                    return <Col style={{ width: "fit-content" }} key={variation.name + index}><CheckRadio className={clsx(style.option)} onChange={(e) => { change(e) }} value={option.value} name={variation.name}>{option.value}</CheckRadio></Col>
+                })}
+            </Row>
         </Row>);
 }
 

@@ -15,6 +15,10 @@ export const orderLineSlice = createSlice({
     reducers: {
         addAll: addAllProductItem,
         'empty': empty,
-        'add': add
+        'add': add,
+        clear: (state, action) => {
+            return [];
+        }
     }
+
 })

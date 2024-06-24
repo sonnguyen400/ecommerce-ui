@@ -15,7 +15,7 @@ function App() {
     const [messageAPI, messageContext] = message.useMessage();
     return (
         <Layout>
-            {loaderContent === false ? null : <Loader />}
+            {loaderContent ? <Loader /> : ""}
             <GlobalContext.Provider
                 value={{
                     notification: notificationAPI,

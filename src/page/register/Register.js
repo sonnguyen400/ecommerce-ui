@@ -16,13 +16,8 @@ const MiddleDiv = styled.div`
 function Register() {
     const [error, setError] = useState(false);
     const globalContext = useContext(GlobalContext);
-
     const [messageApi, contextHolder] = message.useMessage();
-
     const navigate = useNavigate();
-    useEffect(() => {
-
-    }, [])
     function onSubmit(data) {
         globalContext.loader("")
         APIBase.post("/register", data)
@@ -36,15 +31,12 @@ function Register() {
             });
     }
     return (
-        <Row justify={"center"}>
+        <Row justify={"center"} style={{ margin: "5rem 0px" }}>
             <Col span={24} md={16} lg={{ span: 10 }}>
                 <Card>
-
                     <Row justify={"center"} gutter={[24, 24]}>
                         <Col span={24}><h2 style={{ textAlign: "center" }}>Register</h2></Col>
-
                         {error && <Col span={24}><Alert type="error" description={error}></Alert></Col>}
-
                         <Col span={24}><RegisterForm onSubmit={onSubmit} /></Col>
                     </Row>
                 </Card>

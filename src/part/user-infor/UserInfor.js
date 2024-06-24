@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Card, List } from "antd";
 import style from './style.module.scss';
 import PrefixIcon from '../../components/prefix-icon/PrefixIcon';
-function UserInfor() {
-    const user = useSelector((state) => state.user);
+function UserInfor({ user }) {
     return (<Card >
         <Col>
             <Row className={style.avatar}><img alt='avatar' src={image} /></Row>

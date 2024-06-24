@@ -13,21 +13,14 @@ import APIBase from "../../../api/ApiBase";
 import { Layout, Row } from "antd";
 import Search from "antd/es/transfer/search";
 import PrefixIcon from "../../../components/prefix-icon/PrefixIcon.js";
+import Logout from "../../logout/Logout.js";
 function Header() {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
         dispatch(fetchUser());
-        console.log(user)
     }, []);
-    function logout() {
-        APIBase.post("/logout").then(() => {
-            navigate("/login");
-        }).catch(err => {
-            console.debug(err);
-        })
-    }
     return (
         <Layout.Header className={style.container}>
             <Row className={style.header} align="middle" justify="space-between">
@@ -48,13 +41,14 @@ function Header() {
                                 <div className={clsx(style.dropMenu)}>
                                     <div className={clsx(style.content)}>
                                         {user ? (
-
-                                            <div className={style.menuItem}>
-                                                <PrefixIcon><i className="fi fi-rr-user"></i></PrefixIcon>
-                                                <Description>
-                                                    {`${user.lastname} ${user.firstname}`}
-                                                </Description>
-                                            </div>
+                                            <Link to="/user">
+                                                <div className={style.menuItem}>
+                                                    <PrefixIcon><i className="fi fi-rr-user"></i></PrefixIcon>
+                                                    <Description>
+                                                        {`${user.lastname} ${user.firstname}`}
+                                                    </Description>
+                                                </div>
+                                            </Link>
                                         ) : (
                                             <Link
                                                 to="/login"
@@ -80,15 +74,17 @@ function Header() {
                                             </div>
                                         </div>
                                         {user &&
-
                                             <div className={style.menuItem}>
                                                 <div
                                                     className={style.seperate}
                                                 ></div>
-                                                <div className={style.menuItem} onClick={logout}>
-                                                    <PrefixIcon><i className="fi fi-rs-sign-out-alt"></i></PrefixIcon>
-                                                    <Description>Logout</Description>
-                                                </div>
+                                                <Logout trigger={
+                                                    <div className={style.menuItem}>
+                                                        <PrefixIcon><i className="fi fi-rs-sign-out-alt"></i></PrefixIcon>
+                                                        <Description>Logout</Description>
+                                                    </div>
+                                                } />
+
                                             </div>
                                         }
                                     </div>

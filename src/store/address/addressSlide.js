@@ -11,7 +11,7 @@ export const findAllByUserId = createAsyncThunk(
 export const postNewUserAddress = createAsyncThunk(
     'user/address/postNewUserAddress',
     async (data, { rejectWithValue }) => {
-        const response = await APIBase.post(`api/v1/user/${data.userId}/address`, data)
+        const response = await APIBase.post(`api/v1/user/address`, data)
         return response.data;
     }
 )
@@ -32,6 +32,12 @@ export const setDefaultUserAddress = createAsyncThunk(
 export const userAddress = createSlice({
     name: "userAddress",
     initialState: [],
+    reducers: {
+        clear: (state, action) => {
+            return [];
+        }
+    }
+    ,
     extraReducers: (builder) => {
         builder
             .addCase(deleteUserAddress.fulfilled, (state, action) => state.filter(item => item.id !== action.payload))

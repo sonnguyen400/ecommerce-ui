@@ -1,19 +1,22 @@
-import { Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import style from './style.module.scss';
 import clsx from 'clsx';
 import InputNumber from '../input-number/InputNumber';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderSlice } from '../../store/order/orderReducer';
 import ProductItemSelect from '../../part/product-item-selection/ProductItemSelect';
 import APIBase from '../../api/ApiBase';
 import { memo } from 'react';
 import { deleteCartItem, updateCartItem } from '../../store/cart/cartReducer';
+import { GlobalContext } from '../../context';
 function OrderItem({ data, disabled }) {
     const dispatch = useDispatch();
     const orderItems = useSelector(state => { return state.order });
     const [product, setProduct] = useState(undefined);
+    const [item, setItem] = useState(undefined);
+    const globalContext = useContext(GlobalContext);
     function selectItem(e) {
         if (e.target.checked) {
             dispatch(orderSlice.actions.addItem(data));
@@ -24,32 +27,45 @@ function OrderItem({ data, disabled }) {
     function deleteItem(e) {
         dispatch(deleteCartItem(data.id));
     }
-    const [state, setState] = useState(true);
+    const [state, setState] = useState(false);
     function changeVariation() {
-        if (state) {
+        if (!product) {
             APIBase.get(`api/v1/product/${data.productItem.product.id}`)
                 .then(payload => {
                     setProduct(payload.data);
                     return payload.data;
                 }).then(data => {
-                    setState(false)
+                    setState(true)
+                }).catch(e => {
+                    globalContext.message.error("Error while fetching options");
                 })
         } else {
-            setState(true);
+            setState(state_ => !state_);
         }
+
     }
     function updateQty(value) {
         let object = { ...data };
         object.qty = Number.parseInt(value);
         updateItem(object);
     }
-    function updateProductItem(value) {
-        let object = { ...data };
-        if (value) {
-            object.productItem = value
-            updateItem(object);
+
+    function saveItem() {
+        if (item) {
+            let object = { ...data };
+            object.productItem = {
+                id: item.id
+            };
+            updateItem(object)
+        } else {
+
+            globalContext.message.warning("This option isn't available! Select another");
         }
     }
+    function updateProductItem(value) {
+        setItem(value)
+    }
+
     function updateItem(cartItem) {
         dispatch(updateCartItem(cartItem))
     }
@@ -76,28 +92,27 @@ function OrderItem({ data, disabled }) {
                                     <i className="fi fi-rr-angle-small-down"></i>
                                 </button>
                             </Col>
-                            <Col span={24} >
-                                <Row justify="space-between">
-                                    <Col>
-                                        <InputNumber disabled={disabled} onChange={updateQty} value={data.qty} className={clsx(style.quantityChange)} min={1} />
-                                    </Col>
-                                    <Col className={style.total}>
-                                        <div className={style.label}>Total</div>
-                                        <div className={style.value}>{data.qty * data.productItem.price}</div>
-                                    </Col>
-                                </Row>
-                            </Col>
+                            <Row justify="space-between">
+                                <Col span={4}>
+                                    <InputNumber disabled={disabled} onChange={updateQty} value={data.qty} className={clsx(style.quantityChange)} min={1} />
+                                </Col>
+                                <Col span={8} className={style.total}>
+                                    <div className={style.label}>Total</div>
+                                    <div className={style.value}>{data.qty * data.productItem.price}</div>
+                                </Col>
+                            </Row>
                         </Row>
 
                     </Col>
                     {!disabled && <Col span={1} className={clsx(style.deleteBtn)} onClick={deleteItem}><i className="fi fi-br-cross-small"></i></Col>}
                 </Row>
             </Col>
-            <Col span={state ? 24 : 0}>
-                <Row>
-                    {product === undefined ? <div /> : <ProductItemSelect onChange={updateProductItem} productItems={product.productItems} />}
+            {(product && state) && <Col span={state ? 24 : 0}>
+                <Row justify="space-between">
+                    <Col span={20}><ProductItemSelect onChange={updateProductItem} productItems={product.productItems} /></Col>
+                    <Col span={4}><Button onClick={saveItem} type='text' style={{ color: "#006dee", fontWeight: 500 }}>Save</Button></Col>
                 </Row>
-            </Col>
+            </Col>}
         </Row >}
     </div >);
 }

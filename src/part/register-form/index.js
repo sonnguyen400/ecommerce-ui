@@ -11,7 +11,7 @@ function RegisterForm({ onSubmit, ...props }) {
             firstname: Yup.string().required("first name cant be blank"),
             lastname: Yup.string().required("required"),
             dateOfBirth: Yup.string().required("required"),
-            phoneNumber: Yup.string().required().length(10, "Phone number is invalid"),
+            phoneNumber: Yup.string().required(),
             email: Yup.string().email()
         })
     });
