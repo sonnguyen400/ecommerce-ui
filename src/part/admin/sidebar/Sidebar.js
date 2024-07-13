@@ -6,7 +6,7 @@ function Sidebar({ ...props }) {
     return (
         <Menu style={{ height: "100%" }}>
             <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-dashboard"></i></PrefixIcon>}>
-                Dashboard
+                <Link to="/admin">Dashboard</Link>
             </Menu.Item>
 
             <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-category-alt"></i></PrefixIcon>}>

@@ -3,19 +3,18 @@ import AddressTag from "../../../components/address-tag/AddressTag";
 import style from './style.module.scss';
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { findAllByUserId, setDefaultUserAddress, deleteUserAddress } from "../../../store/address/addressSlide";
 import AddressAddModal from "../../../part/address-add-modal/AddressAddModal";
+import useAuth from "../../../secure/useAuth";
 function UserAddressPage() {
     const address = useSelector(state => state.userAddress);
-    const user = useSelector(state => state.user);
+    const [state, user] = useAuth();
     const dispatch = useDispatch();
     const selectDefaultAddress = useRef();
     const [editable, setEditable] = useState(false);
     const [addressModal, setAddressModal] = useState(false);
     function onChange(e) {
-        // let checked = selectDefaultAddress.current.querySelector("input[type='radio'][name='address']:checked");
         if (e.target.checked) {
             dispatch(setDefaultUserAddress({
                 userId: user.id,
@@ -41,7 +40,7 @@ function UserAddressPage() {
                 (<List.Item key={index} variant="flush" className={style.addressTag}>
                     <input type="radio" checked={item.isDefault} onChange={onChange} value={item.id && item.id.addressId} name="address" />
                     <div className={clsx(style.address)}>
-                        <AddressTag data={item.address} />
+                        <AddressTag data={item} />
                         <button onClick={() => deleteUserUserAddress(item.id)} className={clsx(style.deleteBtn)} style={{ display: !editable ? "none" : "block" }}><i className="fi fi-sr-minus-circle"></i></button>
                     </div>
                 </List.Item>))

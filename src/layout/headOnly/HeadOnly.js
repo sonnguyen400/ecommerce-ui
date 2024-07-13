@@ -1,6 +1,5 @@
-import clsx from "clsx";
-import CategoryBar from "../../part/category-bar/CategoryBar";
-import Header from "../../part/header/user/header";
+import CategoryBar from "../../part/user/category-bar/CategoryBar.js";
+import Header from "../../part/user/header/header.js";
 import style from './style.module.scss';
 import { Layout, Row } from "antd";
 function HeadOnly({ children }) {

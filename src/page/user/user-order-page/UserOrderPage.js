@@ -104,7 +104,7 @@ function UserOrderPage() {
                                     name="address">
                                     <Select style={{ width: "100%", height: "fit-content" }} options={address && address.map((item, index) => ({
                                         value: item.id.addressId,
-                                        label: <AddressTag data={item.address} />
+                                        label: <AddressTag data={item} />
                                     }))}
                                         dropdownRender={(menu) => <>
                                             {menu}

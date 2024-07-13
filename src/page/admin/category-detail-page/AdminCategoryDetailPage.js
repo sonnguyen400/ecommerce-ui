@@ -4,9 +4,9 @@ import { useParams, useSearchParams } from "react-router-dom";
 import APIBase from "../../../api/ApiBase";
 import CategoryList from "../../../part/category-list/CategoryList";
 import ProductListBigIcon from "../../../part/product-list-bigicon/product-list-big-icon";
-import ProductAddForm from "../../../part/product/product-add-form";
+import ProductAddForm from "../../../part/admin/product/product-add-form";
 import { GlobalContext } from "../../../context";
-import CategoryAddModal from "../../../part/category/modal";
+import CategoryAddModal from "../../../part/admin/category/modal";
 import TabPane from "antd/es/tabs/TabPane";
 function AdminCategoryDetailPage() {
     const globalContext = useContext(GlobalContext);

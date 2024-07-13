@@ -13,7 +13,7 @@ import { deleteCartItem, updateCartItem } from '../../store/cart/cartReducer';
 import { GlobalContext } from '../../context';
 function OrderItem({ data, disabled }) {
     const dispatch = useDispatch();
-    const orderItems = useSelector(state => { return state.order });
+    const orderItems = useSelector(state => state.order);
     const [product, setProduct] = useState(undefined);
     const [item, setItem] = useState(undefined);
     const globalContext = useContext(GlobalContext);

@@ -2,6 +2,7 @@ import { Layout } from 'antd';
 import Sidebar from '../../../part/admin/sidebar/Sidebar';
 import { useState } from 'react';
 import styled from 'styled-components';
+import Header from '../../../part/admin/header/header';
 const Trigger = styled.div`
     height: 64px;
     display: flex;
@@ -26,7 +27,9 @@ function SidebarLayout({ children }) {
                 <Sidebar />
             </Layout.Sider>
             <Layout>
-                <Layout.Header />
+                <Layout.Header>
+                    <Header />
+                </Layout.Header>
                 <Layout.Content>
                     {children}
                 </Layout.Content>

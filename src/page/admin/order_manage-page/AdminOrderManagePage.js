@@ -1,10 +1,10 @@
 import { Card, Row, Col, Table, Select, Button, Tag, Modal, Input, Flex, Pagination, Form, Space } from "antd";
 import { useContext, useEffect, useState } from "react";
 import APIBase from "../../../api/ApiBase";
-import OrderFilter from "../../../part/order-filter/OrderFilter";
+import OrderFilter from "../../../part/admin/order-filter/OrderFilter.js";
 import { GlobalContext } from "../../../context";
 import { Link } from "react-router-dom";
-import OrderStatusTag from "../../../part/order-status-tag/OrderStatusTag";
+import OrderStatusTag from "../../../part/admin/order-status-tag/OrderStatusTag.js";
 import dayjs from "dayjs";
 import PrefixIcon from '../../../components/prefix-icon/PrefixIcon.js';
 function AdminOrderManagePage() {

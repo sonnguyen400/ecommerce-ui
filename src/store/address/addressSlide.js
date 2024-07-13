@@ -40,7 +40,7 @@ export const userAddress = createSlice({
     ,
     extraReducers: (builder) => {
         builder
-            .addCase(deleteUserAddress.fulfilled, (state, action) => state.filter(item => item.id !== action.payload))
+            .addCase(deleteUserAddress.fulfilled, (state, action) => state.filter(item => item.address.id !== action.payload.addressId))
             .addCase(findAllByUserId.fulfilled, (state, action) => action.payload)
             .addCase(postNewUserAddress.fulfilled, (state, action) => {
                 notification.success({

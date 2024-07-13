@@ -26,18 +26,6 @@ const handleGoogleLogin = async () => {
 };
 function LoginForm({ className, success }) {
     const globalContext = useContext(GlobalContext);
-    const [loginMessage, setLoginMessage] = useState(undefined);
-    function refresh() {
-        APIBase.get("refresh").catch(console.log).then(console.log);
-    }
-    function getUser() {
-        return APIBase.get("auth/user", {
-            headers: { credentials: "include" },
-        });
-    }
-    function logout() {
-        APIBase.post("/logout").catch(console.log).then(console.log);
-    }
     const authObject = Yup.object().shape({
         username: Yup.string().required("Username can be blank"),
         password: Yup.string()
@@ -51,7 +39,7 @@ function LoginForm({ className, success }) {
             password: "",
         },
         onSubmit: (values) => {
-            globalContext.loader("");
+            globalContext.loader(true);
             APIBase.post("login", JSON.stringify(values), {
                 withCredentials: true,
                 headers: {
@@ -59,14 +47,10 @@ function LoginForm({ className, success }) {
                     credentials: "include",
                 },
             })
-                .then(() => getUser())
                 .then((payload) => payload.data)
-                .then((data) => {
-                    globalContext.authentication = data;
-                    success();
-                })
                 .catch((error) => {
-                    setLoginMessage("Error");
+                    console.log(error)
+                    globalContext.message.error(error.response?.data.message || "Username or Password is wrong")
                 })
                 .finally(() => {
                     globalContext.loader(false);
@@ -77,7 +61,6 @@ function LoginForm({ className, success }) {
     return (
         <div className={clsx("w-100", className)}>
             <form noValidate onSubmit={formik.handleSubmit}>
-                {loginMessage && <Error>{loginMessage}</Error>}
 
                 <Row gutter={[0, 24]} justify={"center"}>
                     <Col span={24} >
@@ -146,17 +129,7 @@ function LoginForm({ className, success }) {
                         </Row>
                     </Col>
                 </Row>
-
-
-
-
-
             </form>
-            <Button type="primary" onClick={refresh}> refresh</Button>
-            <Button onClick={logout}> Logout</Button>
-            {/* 
-                    <Button onClick={getUser}> user</Button>
-                     */}
         </div>
     );
 }

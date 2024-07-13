@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addAll } from "../../../store/cart/cartReducer";
 import { orderLineSlice } from "../../../store/orderline/orderLine";
+import useAuth from "../../../secure/useAuth";
 function UserCart() {
-    const user = useSelector(store => store.user);
+    const [state, user] = useAuth();
     const ordersState = useSelector(state => state.order);
     const cartItems = useSelector(state => state.cart);
     const [loading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ function UserCart() {
                 .catch(console.error)
         }
 
-    }, [])
+    }, [user, state])
     function order() {
         dispatch(orderLineSlice.actions.addAll(ordersState));
         navigate("/order");

@@ -5,7 +5,7 @@ import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../../context";
 import LinkListItem from "../../../components/link-list-Item/LinkListItem";
 import PrefixIcon from "../../../components/prefix-icon/PrefixIcon";
-import OrderList from "../../user/user-cart/order-list";
+import OrderList from "./order-list";
 import AccountStatusTag from "../../../part/account-status-tag/AccountStatusTag";
 function AdminUserDetailPage() {
     const [params, setParams] = useSearchParams();

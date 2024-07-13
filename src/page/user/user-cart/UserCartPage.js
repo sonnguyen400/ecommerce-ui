@@ -2,8 +2,9 @@ import { Tabs } from 'antd';
 import { useSelector } from 'react-redux';
 import UserCart from '../../../part/user-cart/cart/UserCart';
 import OrderList from './order-list';
+import useAuth from '../../../secure/useAuth';
 function UserCartPage() {
-    const user = useSelector(store => store.user)
+    const [state, user] = useAuth();
     const items = [
         {
             key: 1,

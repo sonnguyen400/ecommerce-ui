@@ -8,16 +8,13 @@ import ProductItemSelect from "../../../part/product-item-selection/ProductItemS
 import InputNumber from "../../../components/input-number/InputNumber";
 import { addCartItem } from "../../../store/cart/cartReducer";
 import PrefixIcon from "../../../components/prefix-icon/PrefixIcon";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { orderLineSlice } from "../../../store/orderline/orderLine";
+import Currency from "../../../components/currency/Currency";
 function ProductPage() {
-    console.log("render")
     const navigate = useNavigate();
-    const user = useSelector(store => store);
     const dispatch = useDispatch();
     const [urlParams, setUrlParams] = useSearchParams();
-    const [context, notifContext] = notification.useNotification();
     const [qty, setQty] = useState(1);
     const [product, setProduct] = useState(null);
     const [selectedItem, setSelectedItem] = useState(undefined);
@@ -29,7 +26,7 @@ function ProductPage() {
             }).then(data => {
                 setSelectedItem(data.productItems[0])
             }).catch(err => err)
-    }, [])
+    }, [urlParams])
 
 
     function isAvailable() {
@@ -100,7 +97,7 @@ function ProductPage() {
                             <Col>
 
                             </Col>
-                            <Row className="px-3">
+                            <Row>
                                 {product.productItems.map((item, index) => {
                                     if (item.picture) return <Col className="p-2 rounded border-1 border-primary-600" lg={3} key={index}><Image className="w-100 h-100 ratio-1x1" src={item.picture} /></Col>
                                 })}
@@ -116,9 +113,9 @@ function ProductPage() {
 
             </Col>
             <Col span={14}>
-                <Card title={<span style={{ fontSize: "2rem", padding: "16px 0px", fontWeight: 400 }}>{product.name}</span>} className={clsx(style.productDetail)}>
+                <Card title={<span className={style.pdName}>{product.name}</span>} className={clsx(style.productDetail)}>
                     <Row gutter={[16, 16]}>
-                        <Col span={24}><span className={style.price}>{selectedItem && selectedItem.price}</span></Col>
+                        <Col span={24}><Currency className={style.price} value={selectedItem && selectedItem.price} /></Col>
                         <Col span={24}>
                             <ProductItemSelect onChange={setSelectedItem} productItems={product.productItems} />
                         </Col>

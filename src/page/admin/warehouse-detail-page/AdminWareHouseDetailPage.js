@@ -50,7 +50,9 @@ function AdminWareHouseDetailPage() {
         formData.append("file", fileList[0])
         APIBase.post(`/api/v1/warehouse/${params.get("id")}/importXLSX`, formData)
             .then(payload => payload.data)
-            .then(console.log)
+            .then(data => {
+                globalContext.message.success("Import successfully");
+            })
             .catch(e => {
                 globalContext.message.error("Reading file error");
             }).finally(() => {
@@ -88,7 +90,7 @@ function AdminWareHouseDetailPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {productList && productList.map((item_, index) => (
+                            {productList && productList.map((item_, index) =>
                                 <>
                                     <tr>
                                         <td rowSpan={item_.productItems.length}> <Link to={`/admin/product?id=${item_.id}`}><LinkStyle>{item_.id}</LinkStyle></Link> </td>
@@ -100,21 +102,17 @@ function AdminWareHouseDetailPage() {
                                         <td>{item_.productItems[0]?.productItem.price}</td>
                                         <td>{item_.productItems[0]?.qty}</td>
                                     </tr>
-                                    <tr>
-                                        {item_.productItems.map((item, index) => {
-                                            if (index == 0) return false;
-                                            return (<>
-                                                <td>{item.productItem.id}</td>
-                                                <td>{item.productItem.options?.map(option_ => option_.value).join(",")}</td>
-                                                <td>{item.productItem.originalPrice}</td>
-                                                <td>{item.productItem.price}</td>
-                                                <td>{item.qty}</td>
-                                            </>)
-                                        })}
-                                    </tr>
-                                </>
-
-                            ))}
+                                    {item_.productItems.map((item, index) => {
+                                        if (index == 0) return false;
+                                        return (<tr>
+                                            <td>{item.productItem.id}</td>
+                                            <td>{item.productItem.options?.map(option_ => option_.value).join(",")}</td>
+                                            <td>{item.productItem.originalPrice}</td>
+                                            <td>{item.productItem.price}</td>
+                                            <td>{item.qty}</td>
+                                        </tr>)
+                                    })}
+                                </>)}
                         </tbody>
                     </table>
                 </Row>

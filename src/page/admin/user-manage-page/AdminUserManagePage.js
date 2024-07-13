@@ -1,5 +1,5 @@
 import { Card, Row, Col, Table, Pagination } from "antd";
-import UserFilter from "../../../part/user-filter/UserFilter";
+import UserFilter from "../../../part/admin/user-filter/UserFilter";
 import { useState, useEffect, useContext } from "react";
 import APIBase from "../../../api/ApiBase";
 import { Link } from "react-router-dom";
@@ -11,7 +11,6 @@ function AdminUserManagePage() {
     const [page, setPage] = useState({ page: 0, size: 10 })
     const [filter, setFilter] = useState(undefined);
     const [users, setUsers] = useState(undefined);
-    const globalContext = useContext(GlobalContext);
     const [loader, setLoader] = useState(true);
     function onFilter(value) {
         Object.keys(value).forEach(key => {

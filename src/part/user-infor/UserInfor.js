@@ -1,5 +1,4 @@
 import image from '../../assets/image/image.png';
-import { useSelector } from "react-redux";
 import LinkListItem from '../../components/link-list-Item/LinkListItem';
 import { Link } from "react-router-dom";
 import { Col, Row, Card, List } from "antd";

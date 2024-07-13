@@ -1,7 +1,7 @@
-import { Row, Col, Card, List } from 'antd';
+import { Row, Col } from 'antd';
 import { useState, useEffect } from 'react';
 import APIBase from '../../../../api/ApiBase';
-import UserOrder from '../../../../part/user-order/UserOrder';
+import UserOrder from '../../../../part/user/user-order/UserOrder';
 function OrderList({ state, user }) {
     const [data, setData] = useState(null);
     useEffect(() => {

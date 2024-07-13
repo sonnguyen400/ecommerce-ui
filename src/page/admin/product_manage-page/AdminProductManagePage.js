@@ -1,9 +1,10 @@
-import { Card, Row, Col, Pagination, message } from "antd";
+import { Card, Row, Col, Pagination, Button } from "antd";
 import ProductFilter from "../../../part/product-filter/ProductFilter";
 import { useContext, useEffect, useState } from "react";
 import APIBase from "../../../api/ApiBase";
 import { GlobalContext } from "../../../context";
 import { Link } from "react-router-dom";
+import PrefixIcon from "../../../components/prefix-icon/PrefixIcon.js";
 var apiTimeout = undefined;
 function AdminProductManagePage() {
     const [api, setApi] = useState("api/v1/product")
@@ -13,9 +14,14 @@ function AdminProductManagePage() {
     const globalContext = useContext(GlobalContext);
     const [loader, setLoader] = useState(true);
     function onFilter(value) {
+        if (value.options) {
+            value.options = value.options.map(option_ => option_.id);
+        }
+
         Object.keys(value).forEach(key => {
             if (!value[key]) delete value[key];
         })
+        console.log(value)
         if (Array.isArray(value.category) && value.category.length == 2) {
             value.category = value.category[value.category.length - 1];
         }
@@ -28,15 +34,15 @@ function AdminProductManagePage() {
             setFilter(filter);
             var param = new URLSearchParams(filter);
             var pagination = new URLSearchParams(page);
-            setApi(api => `api/v1/product/filter?${param.toString()}&${pagination.toString()}`);
+            setApi(api => `${param.toString()}&${pagination.toString()}`);
         } else {
-            setApi(api => `api/v1/product?page=${page.page}&size=${page.size}`)
+            setApi(api => `page=${page.page}&size=${page.size}`)
         }
     }, [filter, page])
     useEffect(() => {
         if (!apiTimeout) {
             apiTimeout = setTimeout(() => {
-                APIBase.get(api).then(payload => {
+                APIBase.get(`api/v1/product?${api}`).then(payload => {
                     setProducts(payload.data)
                     setLoader(state => !state)
                 }).catch(e => {
@@ -56,21 +62,21 @@ function AdminProductManagePage() {
                     <ProductFilter onFilter={onFilter} />
                 </Col>
                 <Col span={20}>
-                    <Card title="Product List">
+                    <Card title={<Row justify="space-between"><span>Product List</span><a target="_blank" href={`http://localhost:8085/api/v1/product/xlsx?${api}`}><Button style={{ backgroundColor: "#0f7a40" }} type="primary" icon={<PrefixIcon><i style={{ color: "white" }} class="fi fi-sr-file-excel"></i></PrefixIcon>}>Export</Button></a></Row>}>
                         <Col span={24}>
-                            <Row>
-                                {products && products.map((product_, index) =>
+                            <Row gutter={[12, 12]}>
+                                {products && products.content && products.content.map((product_, index) =>
                                     <Col key={index} span={12} lg={{ span: 4 }}>
                                         <Link to={`/admin/product?id=${product_.id}`}>
                                             <Card cover={<img alt={product_.name} src={product_.picture} />} title={product_.name} hoverable={true}>
-                                                <p>{product_.description}</p>
+                                                <p style={{ maxLines: "3", overflow: "hidden", textOverflow: "ellipsis", maxHeight: "40px" }}>{product_.description}</p>
                                             </Card>
                                         </Link>
                                     </Col>
                                 )}
                             </Row>
-                            <Row justify="end">
-                                <Pagination onChange={(page, size) => setPage({ page: page - 1, size: size })} defaultCurrent={1} total={500} />
+                            <Row justify="end" style={{ padding: "8px 0px" }}>
+                                <Pagination onChange={(page, size) => setPage({ page: page - 1, size: size })} defaultCurrent={1} total={products && products.totalPages} />
                             </Row>
                         </Col>
                     </Card>

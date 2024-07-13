@@ -2,12 +2,10 @@ import SidebarLayout from "../layout/admin/sidebar-layout/SideBarLayout.js";
 import HeadOnly from "../layout/headOnly/HeadOnly.js";
 import LoginPage from "../page/Login/LoginPage.js";
 import Home from "../page/user/home/Home.js";
-import VariationForm from "../part/product-item/variation-form-modal.js";
-import ProductAdd from "../part/product/product-add-form";
 import Personal from "../page/user/personal/Personal.js";
 import UserAddressPage from "../page/user/user-address-page/UserAddressPage.js";
 import PaymentMethods from "../page/user/payment-methods/PaymentMethods.js";
-import Register from "../page/register/Register.js";
+import Register from "../page/user/register/Register.js";
 import UserCartPage from "../page/user/user-cart/UserCartPage.js";
 import UserOrderPage from "../page/user/user-order-page/UserOrderPage.js";
 import ProductPage from "../page/user/product-page/ProductPage.js";
@@ -24,11 +22,15 @@ import ProductDetailPage from "../page/admin/product-detail-page/ProductDetail.j
 import AdminOrderDetailPage from "../page/admin/order-detail-page/AdminOrderDetailPage.js";
 import AdminWarehouseManagePage from "../page/admin/warehouse-manage/AdminWarehouseManagePage.js";
 import AdminWareHouseDetailPage from "../page/admin/warehouse-detail-page/AdminWareHouseDetailPage.js";
+import SearchProductPage from "../page/user/search-product-page/SearchProductPage.js";
 export const publicRouter = [
     { 'path': "/login", 'component': LoginPage },
     { 'path': "/register", 'component': Register },
+    { 'path': "/product", 'component': ProductPage, 'layout': HeadOnly },
     { 'path': "/", 'component': Home, 'layout': HeadOnly },
-    { 'path': "/items", 'component': VariationForm, 'layout': SidebarLayout },
+    { 'path': "/product/search", 'component': SearchProductPage, 'layout': HeadOnly },
+]
+export const userRouter = [
     { 'path': "/user", 'component': Personal, 'layout': HeadOnly },
     { 'path': "/user/address", 'component': UserAddressPage, 'layout': HeadOnly },
     { 'path': "/user/payment", 'component': PaymentMethods, 'layout': HeadOnly },
@@ -37,8 +39,8 @@ export const publicRouter = [
     { 'path': "/order", 'component': UserOrderPage, 'layout': HeadOnly },
     { 'path': "/order/success", 'component': UserOrderSuccessPage, 'layout': HeadOnly },
     { 'path': "/purchase", 'component': UserOrderPurchase, 'layout': HeadOnly },
-    { 'path': "/product", 'component': ProductPage, 'layout': HeadOnly },
-    { 'path': "/add", 'component': ProductAdd, 'layout': SidebarLayout },
+]
+export const adminRouter = [
     { 'path': "/admin", 'component': AdminDashboardPage, 'layout': SidebarLayout },
     { 'path': "/admin/product", 'component': ProductDetailPage, 'layout': SidebarLayout },
     { 'path': "/admin/product-manage", 'component': AdminProductManagePage, 'layout': SidebarLayout },
@@ -49,5 +51,5 @@ export const publicRouter = [
     { 'path': "/admin/order-manage", 'component': AdminOrderManagePage, 'layout': SidebarLayout },
     { 'path': "/admin/order", 'component': AdminOrderDetailPage, 'layout': SidebarLayout },
     { 'path': "/admin/user/manage", 'component': AdminUserManagePage, 'layout': SidebarLayout },
-    { 'path': "/admin/user", 'component': AdminUserDetailPage, 'layout': SidebarLayout },
+    { 'path': "/admin/user", 'component': AdminUserDetailPage, 'layout': SidebarLayout }
 ]

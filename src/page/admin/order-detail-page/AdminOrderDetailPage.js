@@ -5,7 +5,7 @@ import APIBase from "../../../api/ApiBase";
 import { GlobalContext } from "../../../context";
 import { Description } from "../../../components/description";
 import Title from "antd/es/skeleton/Title";
-import OrderStatusTag from "../../../part/order-status-tag/OrderStatusTag";
+import OrderStatusTag from "../../../part/admin/order-status-tag/OrderStatusTag";
 
 function AdminOrderDetailPage() {
     const [params, setRequestParams] = useSearchParams();

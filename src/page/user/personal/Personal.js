@@ -1,23 +1,28 @@
 import { Col, Row, Button, Modal } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import UserInfor from "../../../part/user-infor/UserInfor";
 import PrefixIcon from "../../../components/prefix-icon/PrefixIcon";
 import Logout from "../../../part/logout/Logout";
 import { useContext, useState } from "react";
-import UpdateUserForm from "../../../part/update-user-form/UpdateUserForm";
+import UpdateUserForm from "../../../part/user/update-user-form/UpdateUserForm";
 import APIBase from "../../../api/ApiBase";
 import { fetchUser } from "../../../store/user/userSlide";
 import { GlobalContext } from "../../../context";
+import useAuth from "../../../secure/useAuth";
 function Personal() {
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
+    const [state, user] = useAuth();
     const [modal, setModal] = useState(false);
     const globalContext = useContext(GlobalContext);
+
     function onUpdateUser(data) {
+        globalContext.loader(true);
         APIBase.put(`/api/v1/user/${user.id}`, data).then(payload => {
             dispatch(fetchUser)
         }).catch(e => {
             console.log(e);
+        }).finally(() => {
+            globalContext.loader()
         })
     }
     return (

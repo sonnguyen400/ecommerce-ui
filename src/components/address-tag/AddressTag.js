@@ -5,10 +5,13 @@ function AddressTag({ data, className, props }) {
     return (<Row {...props} className={className}>
         <Col>
             <div className={clsx(style.address)}>
-                {data.city}
+                {data?.phoneNumber}
+            </div>
+            <div className={clsx(style.address)}>
+                {data.address?.city}
             </div>
             <div className={clsx(style.addressLine)}>
-                {data.addressLine1}
+                {data.address?.addressLine1}
             </div>
         </Col>
     </Row>);
