@@ -7,7 +7,6 @@ import ProductListBigIcon from "../../../part/product-list-bigicon/product-list-
 import ProductAddForm from "../../../part/admin/product/product-add-form";
 import { GlobalContext } from "../../../context";
 import CategoryAddModal from "../../../part/admin/category/modal";
-import TabPane from "antd/es/tabs/TabPane";
 function AdminCategoryDetailPage() {
     const globalContext = useContext(GlobalContext);
     const { id } = useParams();

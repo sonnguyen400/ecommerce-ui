@@ -1,5 +1,5 @@
 import { Card, Row, Col, Pagination, Button } from "antd";
-import ProductFilter from "../../../part/product-filter/ProductFilter";
+import ProductFilter from "../../../part/admin/product-filter/ProductFilter";
 import { useContext, useEffect, useState } from "react";
 import APIBase from "../../../api/ApiBase";
 import { GlobalContext } from "../../../context";

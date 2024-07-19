@@ -1,14 +1,15 @@
 import Tippy from "@tippyjs/react/headless";
 import style from './style.module.scss';
-import PrefixIcon from "../../components/prefix-icon/PrefixIcon";
-import { Card, Row, Col, Button, Skeleton, Empty } from "antd";
+import { Col, Button, Skeleton, Empty } from "antd";
 import { memo, useEffect, useRef, useState } from "react";
-import APIBase from "../../api/ApiBase";
-import { throttle } from "lodash";
-import { Link } from "react-router-dom";
+import APIBase from "../../../api/ApiBase";
+import { debounce } from "lodash";
+import { Link, useNavigate } from "react-router-dom";
+import useDevice from "../../../hooks/useDevice";
 
-function SearchInput() {
+function SearchInput({ onClick, minimize }) {
     const inputRef = useRef();
+    const navigate = useNavigate();
     const [products, setProducts] = useState();
     const [loading, setLoading] = useState(null);
     const [visible, setVisible] = useState(false);
@@ -16,21 +17,32 @@ function SearchInput() {
     function fetchProduct(name) {
         if (name.trim()) {
             setLoading(true);
-            APIBase.get(`/api/v1/product?name=${name}`)
+            APIBase.get(`/api/v1/product?name=${encodeURIComponent(name)}`)
                 .then(payload => payload.data)
                 .then(data => {
                     setProducts(data.content);
                     setLoading(false);
                 })
+                .catch(e => {
+                    setProducts(undefined)
+                })
         }
     }
     function onInput(e) {
-        fetchProduct(e.target.value)
+        debounce(fetchProduct, 2000)
     }
     useEffect(() => {
-        inputRef.current.addEventListener("input", throttle(onInput, 1000))
+        function fetch(e) {
+            return onInput(e.target.value)
+        }
+        inputRef.current.addEventListener("input", fetch)
+        inputRef.current.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                document.getElementById('searchBtn').click();
+            }
+        })
         return () => {
-            inputRef.current?.removeEventListener("input", throttle(onInput, 1000));
+            inputRef.current?.removeEventListener("input", fetch);
         }
     }, [])
     return (
@@ -43,10 +55,10 @@ function SearchInput() {
             }}
             placement="bottom-start"
             render={attr => (
-                <Col className={style.searchResult} style={{ maxWidth: "460px", width: "100%" }} tabIndex={-1} {...attr}>
+                <Col className={style.searchResult} style={{ maxWidth: "460px", width: "90vw" }} tabIndex={-1} {...attr}>
                     {loading && <Skeleton />}
-                    {(products == null || (Array.isArray(products) && products.length == 0)) && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-                    {products && <div className={style.result}>
+                    {(products === null || (Array.isArray(products) && products.length === 0)) && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+                    {products && products.length > 0 && <div className={style.result}>
                         {products.map(product_ => {
                             var prices = product_.productItems.map(item_ => item_.price);
                             return (<Link to={`/product?id=${product_.id}`} className={style.productItem} >
@@ -60,15 +72,20 @@ function SearchInput() {
                                 </div>
                             </Link>)
                         })}
-                        <Link to={`/product/search?name=${inputRef.current.value}`}><Button type="text" block>Show All</Button></Link>
+                        <Button id="searchBtn" onClick={() => {
+                            var value = inputRef.current.value;
+                            if (value !== "") {
+                                navigate(`/product/search?name=${value}`);
+                            }
+                        }} type="text" block>Show All</Button>
                     </div>}
                 </Col>
             )}
         >
             <div onClick={() => setVisible(true)} tabIndex={0} onBlur={() => setVisible(false)} className={style.container}>
-                <input ref={inputRef} />
-                <div className={style.icon}>
-                    <i class="fi fi-rr-search"></i>
+                <input ref={inputRef} style={{ display: minimize ? "none" : "block" }} />
+                <div className={style.icon} onClick={onClick}>
+                    <i className="fi fi-rr-search"></i>
                 </div>
             </div>
         </Tippy>

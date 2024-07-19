@@ -1,41 +1,60 @@
-import { Row, Col, Select } from "antd";
-function ProductFilter() {
+import { Row, Col, Select, Flex } from "antd";
+import { memo, useEffect, useState } from "react";
+function ProductFilter({ onFilter }) {
+    const [params, setParams] = useState(new Map());
+
     return (<Row gutter={[12, 12]}>
-        <Col span={12} lg={{ span: 6 }} >
-            <Select
-                options={[
-                    {
-                        label: "0-2.000.000",
-                        value: "0-2.000.000",
-                    },
-                    {
-                        label: "2.000.000-5.000.000",
-                        value: "2.000.000-5.000.000"
-                    },
-                    {
-                        label: "5.000.000-10.000.000",
-                        value: "5.000.000-10.000.000",
-                    },
-                    {
-                        label: "10.000.000-15.000.000",
-                        value: "10.000.000-15.000.000",
-                    },
-                    {
-                        label: "15.000.000-20.000.000",
-                        value: "15.000.000-20.000.000",
-                    },
-                    {
-                        label: "20.000.000-30.000.000",
-                        value: "20.000.000-30.000.000",
-                    },
-                    {
-                        label: "Above 30.000.000",
-                        value: "30.000.000",
-                    }
-                ]}
-            />
+        <Col span={24} md={{ span: 8 }} lg={{ span: 6 }} >
+            <Flex align="center" direction="horizontal">
+                <span style={{ marginRight: "12px" }}>Range</span>
+                <Select
+                    onChange={value => {
+                        setParams(params_ => {
+                            let [from, to] = value ? value.split("-") : [undefined, undefined];
+                            params_.set("price-min", from);
+                            params_.set("price-max", to);
+                            return params_;
+                        })
+                        onFilter(params)
+                    }}
+                    options={[
+                        {
+                            label: "0-2.000.000",
+                            value: "0-2000000",
+                        },
+                        {
+                            label: "2.000.000-5.000.000",
+                            value: "2000000-5000000"
+                        },
+                        {
+                            label: "5.000.000-10.000.000",
+                            value: "5000000-10000000",
+                        },
+                        {
+                            label: "10.000.000-15.000.000",
+                            value: "10000000-15000000",
+                        },
+                        {
+                            label: "15.000.000-20.000.000",
+                            value: "15000000-20000000",
+                        },
+                        {
+                            label: "20.000.000-30.000.000",
+                            value: "20000000-30000000",
+                        },
+                        {
+                            label: "Above 30.000.000",
+                            value: "30000000",
+                        },
+                        {
+                            label: "All",
+                            value: 0
+                        }
+                    ]}
+                />
+            </Flex>
         </Col>
     </Row>);
 }
 
-export default ProductFilter;
+export default memo(ProductFilter);

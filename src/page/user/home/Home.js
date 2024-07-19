@@ -9,7 +9,6 @@ function Home() {
     useEffect(() => {
         APIBase.get("api/v1/product").then(payload => {
             setProducts(payload.data);
-            console.log(payload.data)
             return payload.data;
         }).catch(err => err)
     }, [])
@@ -20,9 +19,9 @@ function Home() {
         </Col>
         <Col span={24} style={{ marginTop: "16px" }}>
             <Row gutter={16}>
-                {products && products.content.map((product, index) =>
+                {products && products.content.map((product_, index) =>
                     <Col span={12} lg={{ span: 4 }} key={index} className="p-1" >
-                        <ProductCard >{product}</ProductCard>
+                        <ProductCard data={product_} />
                     </Col>)}
             </Row>
         </Col>

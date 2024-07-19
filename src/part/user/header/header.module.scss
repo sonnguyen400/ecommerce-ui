@@ -1,58 +1,70 @@
-.container{
-    position: sticky;
-    top: 0px;
+@import '../../../global.module.scss';
+
+.header {
+    max-width: 1200px;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: white;
-    z-index: 1;
-    .header{
-        max-width: 1200px;
+    height: 100%;
+
+    .item {
+        width: fit-content;
+        line-height: normal;
+
+        &.left {
+            justify-self: flex-start;
+        }
+
+        &.right {
+            justify-self: flex-end;
+        }
+
+        &.logo {
+            padding-right: 16px;
+
+            h2 {
+                line-height: 0px;
+            }
+        }
+
+        &.search {
+            @include mobile {
+                order: 4 !important;
+            }
+        }
+    }
+}
+
+.dropMenu {
+    padding-top: 18px;
+
+    .content {
+        background-color: white;
+        padding: 8px 16px;
+        border-radius: var(--base-radius);
+
+        .menuItem {
+            display: flex;
+            align-items: center;
+            padding: 0px;
+            min-width: 200px;
+
+            &.toggle {
+                justify-content: space-between;
+            }
+        }
+    }
+}
+
+.avatar {
+    max-height: 64px;
+    height: 100%;
+
+    padding: 12px;
+    line-height: 0px !important;
+    aspect-ratio: 1/1;
+
+    img {
+        border-radius: 50%;
         width: 100%;
         height: 100%;
-    }
-    .logo{
-        padding-right: 16px;
-        h2{
-            line-height: 0px;
-        }
-    }
-    .headerL,.headerR{
-       display:flex ;
-       align-items: center;
-    }
-    .headerR{
-        cursor: pointer;
-        .dropMenu{
-            padding-top: 18px;
-            .content{
-                background-color: white;
-                padding:8px 16px;
-                border-radius: var(--base-radius);
-
-                .menuItem{
-                    display: flex;
-                    align-items: center;
-                    padding:0px;
-                    min-width: 200px;
-                    &.toggle{
-                        justify-content: space-between;
-                    }
-                }
-            }
-        }
-        .avatar{
-            max-height: 64px;
-            height: 100%;
-            
-            padding: 12px;
-            line-height: 0px !important;
-            aspect-ratio: 1/1;
-            img{
-                border-radius: 50%;
-                width: 100%;
-                height: 100%;
-            }
-        }
     }
 }

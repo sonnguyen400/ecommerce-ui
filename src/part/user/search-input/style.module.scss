@@ -1,90 +1,93 @@
-$mobile-width: 480px; 
-$tablet-width: 768px; 
-$desktop-width: 1024px;  
-@mixin mobile { @media (max-width: #{$mobile-width - 1px}) {     
-   } 
-  }  
-  
-  @mixin tablet { @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {       
-     @content;   
-   } 
-  }  
-  
-  @mixin desktop {   @media (min-width: #{$desktop-width}) {     
-    @content;  
-   } 
-}
-.container{
-    --radius:0.75rem;
-    --border-color:rgba(0, 0, 0, 0.118);
+@import '../../../global.module.scss';
+
+.container {
+    --radius: 0.75rem;
+    --border-color: rgba(0, 0, 0, 0.118);
     border-radius: var(--radius);
     display: flex;
     flex-direction: row;
     overflow: hidden;
-    border:1px solid var(--border-color);
+    border: 1px solid var(--border-color);
     height: 32px;
-    color:rgba(0, 0, 0, 0.698);
-    input{
-        border:none;
-        padding:8px 0px 8px 12px;
+    color: rgba(0, 0, 0, 0.698);
+
+    input {
+        border: none;
+        padding: 8px 0px 8px 12px;
         color: inherit;
         font-weight: 500;
-        &:focus{
+        flex: 1;
+
+        &:focus {
             border: none;
             outline: none;
         }
     }
-    &:focus-within{
-        border:1px solid rgba(0, 0, 0, 0.234);
+
+    &:focus-within {
+        border: 1px solid rgba(0, 0, 0, 0.234);
     }
-    .icon{
+
+    .icon {
         height: 32px;
         display: flex;
         align-items: center;
         line-height: 0px;
         height: 100%;
         padding: 0px 8px;
-        border-radius: 0px  var(--radius)  var(--radius) 0px;
+        border-radius: 0px var(--radius) 0px 0px;
+
+        &:hover {
+            background-color: var(--primary-color-200);
+        }
     }
 }
-.searchResult{
+
+.searchResult {
     background-color: white;
-    line-height:normal;
+    line-height: normal;
     border-radius: 0.65rem;
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-    .result{
-        padding:8px 16px;
-        .productItem{
-            &:hover{
+
+    .result {
+        padding: 8px 16px;
+
+        .productItem {
+            &:hover {
                 background-color: rgba(0, 0, 0, 0.077);
             }
+
             display: flex;
             flex-direction: row;
-            .picture{
+
+            .picture {
                 width: 25%;
-                img{
+
+                img {
                     width: 100%;
                     aspect-ratio: 1/1;
                     object-fit: contain;
-    
+
                 }
             }
-            .spec{
+
+            .spec {
                 width: 75%;
                 padding-left: 8px;
-                div{
+
+                div {
                     padding-bottom: 4px;
                 }
-                .name{
+
+                .name {
                     font-weight: 500;
-                    
+
                 }
-                .price{
-                    color:var(--primary-color-800)
+
+                .price {
+                    color: var(--primary-color-800)
                 }
             }
         }
     }
 }
-
-

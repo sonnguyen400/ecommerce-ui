@@ -3,7 +3,7 @@ import globalStyle from '../../../assets/style/base.module.scss';
 import style from './style.module.scss';
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-function CategoryBar() {
+function CategoryBar({ className }) {
     const phones = [
         {
             key: "3",
@@ -15,7 +15,7 @@ function CategoryBar() {
 
     return (
 
-        <Row justify="center" className={style.container}>
+        <Row justify="center" className={clsx(style.container, className)}>
             <Row className={style.category}>
                 <Col span={8} md={{ span: 6 }} lg={{ span: 4 }} className={style.category}>
                     <Dropdown menu={{ items: phones }}>

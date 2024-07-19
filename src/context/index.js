@@ -1,3 +1,2 @@
-import React, { useContext } from "react";
-
-export const GlobalContext=React.createContext();
+export { GlobalContext } from './GlobalContext';
+export { DeviceContext } from './DeviceContext';

@@ -1,9 +1,71 @@
-.container{
-    max-width: 1200px;
-    margin:0px auto;
-    padding:16px;
+@import '../../global.module.scss';
+
+.header {
+    position: sticky;
+    top: 0px;
     width: 100%;
-    div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    z-index: 1;
+
+    .categoryToggle {
+        @include tablet {
+            display: none;
+        }
+
+        @include desktop {
+            display: none;
+        }
+
+        &.active {
+            i {
+                rotate: 90deg;
+                background-color: var(--primary-color-200);
+            }
+        }
+
+        i {
+            border-radius: $border-radius;
+            padding: 16px;
+            cursor: pointer;
+            transition: 1s linear;
+
+            &:hover {
+                background-color: var(--primary-color-200);
+            }
+
+        }
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0px auto;
+    padding: 16px;
+    width: 100%;
+
+    div {
         width: 100%;
+    }
+}
+
+.category {
+    transform: translateY(-100%);
+    display: none;
+    transition: 1s linear;
+
+    @include mobile {
+        display: none;
+    }
+
+    @include tablet {
+        display: none;
+    }
+
+    &.display {
+        display: flex !important;
+        transform: translateY(0%) !important;
     }
 }

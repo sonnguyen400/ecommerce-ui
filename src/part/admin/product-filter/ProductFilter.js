@@ -1,14 +1,13 @@
 import { Col, Input, Divider, Form, Space, Cascader, Select, Row, Button } from "antd";
 import { useEffect, useState } from "react";
-import APIBase from "../../api/ApiBase";
+import APIBase from "../../../api/ApiBase";
 import FormList from "antd/es/form/FormList";
-import PrefixIcon from "../../components/prefix-icon/PrefixIcon";
-import SelectVariaton from "../../components/select-variaion/SelectVariaton";
+import PrefixIcon from "../../../components/prefix-icon/PrefixIcon";
+import SelectVariaton from "../../../components/select-variaion/SelectVariaton";
 
 function VariationOptionSelect({ name, variations, remove, props }) {
     let [selectedVariation, setSelectedVariation] = useState((Array.isArray(variations) && variations.length > 0) ? variations[0] : undefined);
     let [change, setChange] = useState(true);
-
     return (<>
         <Col span={10}>
             <Form.Item name={[name, "variation"]} {...props}>

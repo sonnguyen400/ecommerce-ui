@@ -5,7 +5,7 @@ import { Fragment, useState } from "react";
 
 import "./App.css";
 import Loader from "./components/loader/Loader";
-import { GlobalContext } from "./context";
+import { DeviceContext, GlobalContext } from "./context";
 import { Role } from "./constant";
 import { Layout, message, notification } from "antd";
 import RoleBaseAuthorize from "./secure/RoleBaseAuthorize";

@@ -1,0 +1,15 @@
+@import '../../../global.module.scss';
+
+.carousel {
+    width: 100%;
+
+    .content {
+        background-color: antiquewhite;
+        min-height: 40vh;
+
+        @include mobile {
+            min-height: 33vh;
+        }
+    }
+
+}
