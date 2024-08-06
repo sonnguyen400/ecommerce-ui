@@ -3,9 +3,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { userAddress } from "../../store/address/addressSlide";
-import { cartSlide } from "../../store/cart/cartReducer";
-import { orderSlice } from "../../store/order/orderReducer";
-import { orderLineSlice } from "../../store/orderline/orderLine";
 import { userSlide } from "../../store/user/userSlide";
 import PrefixIcon from "../../components/prefix-icon/PrefixIcon";
 import APIBase from "../../api/ApiBase";
@@ -21,9 +18,6 @@ function Logout({ trigger }) {
     const globalContext = useContext(GlobalContext);
     function logout() {
         dispatch(userAddress.actions.clear);
-        dispatch(cartSlide.actions.clear);
-        dispatch(orderSlice.actions.clear);
-        dispatch(orderLineSlice.actions.clear);
         dispatch(userSlide.actions.clear);
         APIBase.post("/logout")
             .then(() => {

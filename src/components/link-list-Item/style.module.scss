@@ -1,42 +1,48 @@
-.item{
-    font-weight:600;
+.item {
+    font-weight: 600;
     color: var(--primary-color-800);
     width: 100%;
-    &:hover{
+
+    &:hover {
         background-color: var(--primary-color-200);
     }
-    .link{
+
+    .link {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding:8px;
-        .text{
+        padding: 8px;
+
+        .text {
             flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             padding-right: 5px;
-            text-wrap:nowrap;
+            text-wrap: nowrap;
             font-size: 1rem;
         }
-        .icon{
+
+        .icon {
             padding-top: 3px;
             padding-right: 4px;
             justify-self: end;
             font-weight: 600;
-            &.iconMain{
+
+            &.iconMain {
                 padding-right: 10px;
             }
         }
-        .content{
+
+        .content {
             color: var(--primary-color-600);
             flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             padding-right: 5px;
-            text-wrap:nowrap;
+            text-wrap: nowrap;
             font-size: 1rem;
         }
     }
-    
+
 }

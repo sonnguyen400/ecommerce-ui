@@ -5,12 +5,11 @@ import APIBase from "../../../api/ApiBase";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../../../context";
 import AccountStatusTag from "../../../part/account-status-tag/AccountStatusTag";
-var apiTimeout = undefined;
 function AdminUserManagePage() {
     const [api, setApi] = useState("api/v1/product")
     const [page, setPage] = useState({ page: 0, size: 10 })
     const [filter, setFilter] = useState(undefined);
-    const [users, setUsers] = useState(undefined);
+    const [data, setData] = useState();
     const [loader, setLoader] = useState(true);
     function onFilter(value) {
         Object.keys(value).forEach(key => {
@@ -29,30 +28,11 @@ function AdminUserManagePage() {
         }
     }, [filter, page])
     useEffect(() => {
-        if (!apiTimeout) {
-            apiTimeout = setTimeout(() => {
-                setLoader(true);
-                APIBase.get(api).then(payload => {
-                    setUsers(payload.data.map((user_, key) => ({
-                        id: key,
-                        firstname: user_.firstname,
-                        lastname: user_.lastname,
-                        email: user_.email,
-                        phone: user_.phoneNumber,
-                        dob: user_.dateOfBirth,
-                        gender: user_.gender,
-                        status: <AccountStatusTag status={user_.account.status} />,
-                        action: <Link to={`/admin/user?id=${user_.id}`}>Detail</Link>
-                    })));
-                }).catch(console.log).finally(() => {
-                    setLoader(false);
-                })
-                apiTimeout = null;
-            }, 1000)
-        } else {
-            clearTimeout(apiTimeout);
-            apiTimeout = undefined;
-        }
+        APIBase.get(api).then(payload => {
+            setData(payload.data);
+        }).catch(console.log).finally(() => {
+            setLoader(false);
+        })
     }, [api])
     const columns = [
         {
@@ -91,11 +71,24 @@ function AdminUserManagePage() {
                         loading={loader}
                         pagination={false}
                         columns={columns}
-                        dataSource={users} />
+                        dataSource={data && data.content.map((user_, key) => {
+                            console.log(user_)
+                            return ({
+                                id: key,
+                                firstname: user_.firstname,
+                                lastname: user_.lastname,
+                                email: user_.email,
+                                phone: user_.phoneNumber,
+                                dob: user_.dateOfBirth,
+                                gender: user_.gender,
+                                status: <AccountStatusTag status={user_.account?.status} />,
+                                action: <Link to={`/admin/user?id=${user_.id}`}>Detail</Link>
+                            })
+                        })} />
                 </Col>
                 <Col span={24}>
                     <Row justify="end" style={{ marginTop: "20px" }}>
-                        <Pagination total={500} defaultCurrent={1} onChange={(page, size) => setPage({
+                        <Pagination total={data && data.totalPages} defaultCurrent={1} onChange={(page, size) => setPage({
                             page: page - 1,
                             size: size
                         })} />

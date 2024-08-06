@@ -1,10 +1,9 @@
 import { Col, Button, Row, Select, Input } from "antd";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
+import { Error } from "../../../components";
 import PrefixIcon from "../../../components/prefix-icon/PrefixIcon";
-import { Error } from "../../../components/form-component";
 function UpdateUserForm({ user, onSubmit }) {
-
     const schema = Yup.object().shape({
         firstname: Yup.string().required("first name cant be blank"),
         lastname: Yup.string().required("required"),

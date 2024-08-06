@@ -8,8 +8,7 @@ import OrderStatusTag from "../../../part/admin/order-status-tag/OrderStatusTag.
 import dayjs from "dayjs";
 import PrefixIcon from '../../../components/prefix-icon/PrefixIcon.js';
 function AdminOrderManagePage() {
-
-    const [data, setData] = useState(undefined);
+    const [data, setData] = useState({});
     const [page, setPage] = useState({ page: 0, size: 10 })
     const [filter, setFilter] = useState(undefined);
     const globalContext = useContext(GlobalContext);
@@ -150,7 +149,7 @@ function AdminOrderManagePage() {
                                 rowExpandable: (record) => !!record.description
                             }}
                             columns={columns}
-                            dataSource={data && data.map((value, index) => ({
+                            dataSource={data.content && data.content.map((value, index) => ({
                                 key: index,
                                 id: value.id,
                                 firstname: value.user.firstname,
@@ -173,7 +172,7 @@ function AdminOrderManagePage() {
                     </Col>
                 </Row>
                 <Row justify="end">
-                    <Pagination onChange={(page, size) => { onPageChange([page, size]) }} defaultCurrent={1} total={500} />
+                    <Pagination onChange={(page, size) => { onPageChange([page, size]) }} defaultCurrent={1} total={data.totalPages} />
                 </Row>
             </Card>
         </Col>

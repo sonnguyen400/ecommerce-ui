@@ -1,13 +1,11 @@
 import { Row, Col, Card, Avatar, Button, Flex, Statistic, DatePicker, Space } from "antd";
 import style from './style.module.scss';
-import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import APIBase from "../../../api/ApiBase";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, ArcElement, Title } from "chart.js";
 import { Line, Pie, getElementAtEvent } from "react-chartjs-2";
 import { Link } from "react-router-dom";
-import { ref } from "yup";
-import { Description } from "../../../components/description";
+import { Description } from "../../../components";
 import useAuth from "../../../secure/useAuth";
 import AccountStatusTag from "../../../part/account-status-tag/AccountStatusTag";
 const { Meta } = Card;
@@ -281,7 +279,7 @@ function AdminDashboardPage() {
             </Card>
         </Col>
         <Col span={12}>
-            <Card title="Prospective user">
+            <Card title="Prospective customers">
                 <Row gutter={12}>
                     {prospectiveUser && prospectiveUser.map((user_, index) => <Col span={12}>
                         <Card

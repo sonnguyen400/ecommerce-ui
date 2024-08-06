@@ -67,9 +67,11 @@ function ProductItemSelect({ productItems, onChange }) {
     }
     return (<Row gutter={[6, 6]}>
         <Col span={24} className={clsx(style.status, { "text-primary": status > 0 })}><span className='text'>Status: </span>{status}</Col>
-        {variations.map((variation, index) =>
-            <Col key={index}><SelectVariation onChange={update} variation={variation} label={variation.name} /></Col>
-        )}
+        <Col>
+            {variations.map((variation, index) =>
+                <SelectVariation key={index} onChange={update} variation={variation} label={variation.name} />
+            )}
+        </Col>
     </Row>);
 }
 

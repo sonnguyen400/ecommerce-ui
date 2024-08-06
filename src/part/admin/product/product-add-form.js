@@ -2,12 +2,11 @@ import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, Input, Select, Row, Col, Upload, Space } from "antd";
-import { Error } from "../../../components/form-component/index.js";
 import PrefixIcon from "../../../components/prefix-icon/PrefixIcon.js";
 import { GlobalContext } from "../../../context/index.js";
 import APIBase from "../../../api/ApiBase.js";
 import { useNavigate } from "react-router-dom";
-
+import { Error } from "../../../components";
 export default function ProductAddForm({ submitHandler, defaultCategory, trigger }) {
     const globalContext = useContext(GlobalContext);
     const navigate = useNavigate();

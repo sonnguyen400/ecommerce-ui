@@ -1,59 +1,79 @@
-.productCard{
+.productCard {
     width: 100%;
     background-color: white;
     border-radius: var(--base-radius);
-    padding:4px;
-    &:hover{
+    padding: 4px;
+
+    &:hover {
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
-    img{
+
+    img {
         width: 100%;
         aspect-ratio: 1/1;
         object-fit: contain;
     }
-    .productName{
-        font-size: 0.95rem;
+
+    .productName {
+        font-size: 0.8rem;
+        font-weight: 500;
+        padding: 6px 0px 3px 0px;
     }
-    .productDetail{
+
+    .manufacturer {
+        padding: 0 0 6px 0;
+        font-weight: 500;
+        color: var(--primary-color-800)
+    }
+
+    .productDetail {
         padding: 8px;
     }
-    .productPrice{
-        .current{
-            color: rgba(255, 1, 1, 0.578);
+
+    .productPrice {
+        .current {
+            color: var(--sub-color-600);
             font-weight: 500;
-            &::after{
+
+            &::after {
                 content: "đ";
                 margin-left: 3px;
                 font-size: 0.7rem;
             }
         }
-        .before{
+
+        .before {
             font-size: 0.9rem;
             padding-left: 5px;
             text-decoration: line-through;
-            color: var( --primary-color-600);
-            &::after{
+            color: var(--primary-color-600);
+
+            &::after {
                 content: "đ";
                 font-size: 0.7rem;
             }
         }
-        .percent{
+
+        .percent {
             font-size: 0.6rem;
             background-color: var(--primary-color-600);
-            padding:1px 4px;
+            padding: 1px 4px;
             color: white;
             margin-left: 4px;
-            &::after{
-                content:"%";
+
+            &::after {
+                content: "%";
             }
         }
     }
-    .rate{
+
+    .rate {
         display: flex;
         align-items: center;
         flex-direction: row;
         padding-top: 4px;
-        .buy{
+
+        .buy {
             margin-left: 5px;
             font-size: 0.8rem;
         }

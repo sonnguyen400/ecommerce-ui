@@ -1,11 +1,10 @@
-import { Button, Card, Col, Row, Statistic, Tabs } from "antd";
+import { Card, Col, Row, Statistic, Button } from "antd";
+import { Tabs, PrefixIcon, LinkListItem } from "../../../components";
 import { useSearchParams } from "react-router-dom";
 import APIBase from "../../../api/ApiBase";
 import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../../context";
-import LinkListItem from "../../../components/link-list-Item/LinkListItem";
-import PrefixIcon from "../../../components/prefix-icon/PrefixIcon";
-import OrderList from "./order-list";
+import OrderList from "../../../part/admin/order-list/OrderList";
 import AccountStatusTag from "../../../part/account-status-tag/AccountStatusTag";
 function AdminUserDetailPage() {
     const [params, setParams] = useSearchParams();
@@ -39,37 +38,37 @@ function AdminUserDetailPage() {
     }
     var items = [
         {
-            key: 2,
+            key: 1,
             label: "To Pay",
             children: <OrderList state="PENDING" user={data} />
         },
         {
-            key: 3,
+            key: 2,
             label: "Preparing",
             children: <OrderList state="PREPARING" user={data} />
         },
         {
-            key: 4,
+            key: 3,
             label: "Delivering",
             children: <OrderList state="DELIVERING" user={data} />
         },
         {
-            key: 5,
+            key: 4,
             label: "Delivered",
             children: <OrderList state="DELIVERED" user={data} />
         },
         {
-            key: 6,
+            key: 5,
             label: "Completed",
             children: <OrderList state="COMPLETED" user={data} />
         },
         {
-            key: 7,
+            key: 6,
             label: "Cancelled",
             children: <OrderList state="CANCEL" user={data} />
         },
         {
-            key: 8,
+            key: 7,
             label: "Return",
             children: <OrderList state="RETURN" user={data} />
         }
@@ -85,8 +84,7 @@ function AdminUserDetailPage() {
                         </Col>
                         <LinkListItem title="Email" prefix={<PrefixIcon><i className="fi fi-rr-envelope"></i></PrefixIcon>}>
                             {data.email}
-                        </LinkListItem>
-                        <LinkListItem title="Phone" prefix={<PrefixIcon><i className="fi fi-rr-phone-call"></i></PrefixIcon>}>
+                        </LinkListItem>                        <LinkListItem title="Phone" prefix={<PrefixIcon><i className="fi fi-rr-phone-call"></i></PrefixIcon>}>
                             {data.phoneNumber}
                         </LinkListItem>
                         <LinkListItem title="Gender" prefix={<i className="fi fi-rr-venus-mars"></i>}>

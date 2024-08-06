@@ -1,6 +1,7 @@
-.filters{
-    overflow-x: auto;
-    &::-webkit-scrollbar-thumb{
-        height: 4px;
+.filter {
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
     }
 }

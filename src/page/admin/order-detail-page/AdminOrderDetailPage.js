@@ -1,10 +1,9 @@
-import { Card, Row, Col, Space, Flex, Statistic, Timeline, Divider, Tag, Button, Modal, Form, Input, Select } from "antd";
+import { Card, Row, Col, Space, Flex, Statistic, Timeline, Divider, Tag, Button, Modal, Form, Input, Select, Avatar } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import APIBase from "../../../api/ApiBase";
 import { GlobalContext } from "../../../context";
-import { Description } from "../../../components/description";
-import Title from "antd/es/skeleton/Title";
+import { Description } from "../../../components";
 import OrderStatusTag from "../../../part/admin/order-status-tag/OrderStatusTag";
 
 function AdminOrderDetailPage() {
@@ -71,18 +70,9 @@ function AdminOrderDetailPage() {
                 <Col span={6}>
                     <Row gutter={[16, 16]}>
                         <Col span={24}>
-                            <Card title="Customer">
-                                <Row align="center">
-                                    <Col span={24}>
-                                        <Flex align="center" vertical={true}>
-                                            <img style={{ width: "100%", borderRadius: "50%", padding: "0px 3rem" }} src={data.user.picture} />
-                                            <h5>{`${data.user.firstname} ${data.user.lastname}`}</h5>
-                                        </Flex>
-                                        <Description>{data.user.email}</Description>
-                                        <Description>{data.user.phone}</Description>
-                                        <Description>{data.user.gender}</Description>
-                                    </Col>
-                                </Row>
+                            <Card title="Customer" >
+                                <Card.Meta description={data.user.email}
+                                    avatar={<Avatar src={data.user.picture} />} title={`${data.user.firstname} ${data.user.lastname}`} />
                             </Card>
                         </Col>
                         <Col span={24}>

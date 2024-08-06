@@ -1,12 +1,8 @@
-import clsx from "clsx";
 import { Col, Dropdown, Row } from "antd";
 import style from './style.module.scss';
-import Tippy from "@tippyjs/react/headless";
-import { Link } from "react-router-dom";
 import PrefixIcon from "../../../components/prefix-icon/PrefixIcon";
-import { Description } from "../../../components/description";
+import { Description } from "../../../components";
 import Logout from "../../logout/Logout";
-import DarkModeToggle from "../../dark-mode-toggle/index.js";
 import useAuth from "../../../secure/useAuth";
 import image from "../../../assets/image/image.png";
 function Header() {

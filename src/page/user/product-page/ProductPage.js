@@ -1,31 +1,36 @@
-import { Col, Row, Card, Image, Button, Flex, notification, Space } from "antd";
+import { Col, Row, Card, Image, Button, Rate, Avatar, Divider } from "antd";
 import style from './style.module.scss';
 import { useNavigate, useSearchParams } from "react-router-dom";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import APIBase from "../../../api/ApiBase";
 import ProductItemSelect from "../../../part/product-item-selection/ProductItemSelect";
 import InputNumber from "../../../components/input-number/InputNumber";
-import { addCartItem } from "../../../store/cart/cartReducer";
 import PrefixIcon from "../../../components/prefix-icon/PrefixIcon";
-import { useDispatch } from "react-redux";
-import { orderLineSlice } from "../../../store/orderline/orderLine";
 import Currency from "../../../components/currency/Currency";
+import { GlobalContext } from "../../../context";
+import useAuth from "../../../secure/useAuth";
+import CommentForm from "../../../part/user/comment-form/CommentForm";
 function ProductPage() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const [state, user, hasRole] = useAuth();
     const [urlParams, setUrlParams] = useSearchParams();
     const [qty, setQty] = useState(1);
     const [product, setProduct] = useState(null);
-    const [selectedItem, setSelectedItem] = useState(undefined);
+    const [selectedItem, setSelectedItem] = useState();
+    const globalContext = useContext(GlobalContext);
+    const [comments, setComments] = useState([]);
+
     useEffect(() => {
         APIBase.get(`api/v1/product/${urlParams.get("id")}`)
             .then(payload => {
                 setProduct(payload.data);
                 return payload.data;
-            }).then(data => {
-                setSelectedItem(data.productItems[0])
             }).catch(err => err)
+        APIBase.get(`api/v1/comment?product=${urlParams.get("id")}`)
+            .then(payload => {
+                setComments(payload.data);
+            }).catch(console.log)
     }, [urlParams])
 
 
@@ -37,25 +42,24 @@ function ProductPage() {
     }
     function addCard() {
         if (selectedItem && isAvailable()) {
-            let cardItem = {
+            let cartItem = {
                 productItem: {
                     id: selectedItem.id
                 },
                 qty: qty
             }
-            dispatch(addCartItem(cardItem));
-            notification.success({
-                message: "Success",
-                description: "Add to cart successfully"
-            })
+            globalContext.message.success(`Add ${product.name} to cart successfully !`);
+            APIBase.post("/api/v1/cart", cartItem)
+                .then(payload => {
+                })
+                .catch(e => {
+                    console.error(e)
+                    globalContext.message.error(`Error while operating action`);
+                })
         } else {
-            notification.info({
-                message: "Choose another options",
-                description: "This Options isn't available"
-            })
+            globalContext.message.info("We are so sorry Your selection has yet available")
         }
     }
-
     function orderNow() {
         if (selectedItem && isAvailable()) {
             const item = new Array()
@@ -64,7 +68,7 @@ function ProductPage() {
                 id: 0,
                 productItem: {
                     id: selectedItem.id,
-                    product: selectedItem.product,
+                    product: product,
                     price: selectedItem.price,
                     originalPrice: selectedItem.originalPrice,
                     options: selectedItem.options.map(option_ => ({
@@ -75,47 +79,52 @@ function ProductPage() {
                     }))
                 }
             })
-            dispatch(orderLineSlice.actions.addAll(item))
-            navigate("/order")
-        } else {
-            notification.info({
-                message: "Choose another options",
-                description: "This Options isn't available"
+            navigate("/checkout", {
+                state: {
+                    data: item
+                }
             })
+        } else {
+            globalContext.message.info("We sorry Your selection has yet available")
         }
     }
+    function postComment(data) {
+        APIBase.post(`api/v1/comment`, {
+            ...data,
+            user: {
+                id: user.id
+            },
+            product: {
+                id: urlParams.get("id")
+            }
+        }).then(payload => {
+            setComments(comments => [payload.data, ...comments])
+        })
+    }
     return (product &&
-        <Row gutter={[16, 16]}>
-            <Col span={10}>
-                <Row gutter={[16, 16]}>
-                    <Col span={24}>
-                        <Card className={style.card}
-                            cover={<div className={style.productImage}>
-                                <Image style={{ aspectRatio: "1/1", objectFit: "contain" }} src={product.picture} alt="" />
-                            </div>}
-                        >
-                            <Col>
-
-                            </Col>
-                            <Row>
-                                {product.productItems.map((item, index) => {
-                                    if (item.picture) return <Col className="p-2 rounded border-1 border-primary-600" lg={3} key={index}><Image className="w-100 h-100 ratio-1x1" src={item.picture} /></Col>
-                                })}
-                            </Row>
-                        </Card>
-                    </Col>
-                    <Col span={24}>
-                        <Card title={<small>Description</small>}>
-                            {product.description}
-                        </Card>
-                    </Col>
-                </Row>
-
+        <Row gutter={[16, 16]} >
+            <Col md={{ span: 10 }} span={24} order={1}>
+                <Card className={style.card}
+                    cover={<div className={style.productImage}>
+                        <Image style={{ aspectRatio: "1/1", objectFit: "contain" }} src={product.picture} alt="" />
+                    </div>}
+                >
+                    <Row>
+                        {product.productItems.map((item, index) => {
+                            if (item.picture) return <Col className="p-2 rounded border-1 border-primary-600" lg={3} key={index}><Image className="w-100 h-100 ratio-1x1" src={item.picture} /></Col>
+                        })}
+                    </Row>
+                </Card>
             </Col>
-            <Col span={14}>
+            <Col md={{ span: 10 }} span={24} order={3}>
+                <Card title={<small>Description</small>}>
+                    {product.description}
+                </Card>
+            </Col>
+            <Col md={{ span: 14 }} span={24} order={2}>
                 <Card title={<span className={style.pdName}>{product.name}</span>} className={clsx(style.productDetail)}>
                     <Row gutter={[16, 16]}>
-                        <Col span={24}><Currency className={style.price} value={selectedItem && selectedItem.price} /></Col>
+                        <Col span={24}><Currency className={style.price} value={selectedItem?.price || (product && product.productItems[0].price)} /></Col>
                         <Col span={24}>
                             <ProductItemSelect onChange={setSelectedItem} productItems={product.productItems} />
                         </Col>
@@ -124,14 +133,42 @@ function ProductPage() {
                         </Col>
                         <Col span={24}>
                             <Row justify="end">
-                                <Button style={{ backgroundColor: "#333", marginRight: "5px" }} shape="round" icon={<PrefixIcon style={{ color: "white" }}><i className="fi fi-rr-shopping-cart-add"></i></PrefixIcon>} className="mt-2" onClick={addCard} />
-                                <Button type="primary" shape="round" onClick={() => { orderNow() }}>Order Now</Button>
+                                <Button style={{ backgroundColor: "#333", marginRight: "5px" }} shape="round" icon={<PrefixIcon style={{ color: "white" }}><i className="fi fi-rr-shopping-cart-add"></i></PrefixIcon>} className="mt-2" onClick={() => {
+                                    if (hasRole("USER")) addCard();
+                                    else globalContext.message.info("You need to login first");
+                                }} />
+                                <Button type="primary" shape="round" onClick={() => {
+                                    if (hasRole("USER")) orderNow();
+                                    else globalContext.message.info("You need to login first");
+                                }}>Order Now</Button>
                             </Row>
                         </Col>
                     </Row>
                 </Card>
-
             </Col>
+            <Col md={{ span: 14 }} span={24} order={4} id="comment">
+
+                <Row gutter={[16, 16]}>
+                    <Col span={24}>
+                        <Card title="Comment">
+                            <CommentForm onSubmit={postComment} />
+                        </Card>
+                    </Col>
+                    <Col span={24}>
+                        <Card title={<Row><span>Comment</span> <></></Row>}>
+                            {comments.map(comment_ =>
+                                <>
+                                    <Card.Meta title={`${comment_.user.firstname} ${comment_.user.lastname}`} avatar={<Avatar src={comment_.user.picture} />} description={<Rate disabled value={comment_.rate} />} />
+                                    <div style={{ paddingTop: "6px" }}>{comment_.comment}</div>
+                                    <Divider />
+                                </>
+                            )}
+
+                        </Card>
+                    </Col>
+                </Row>
+            </Col>
+
 
         </Row>);
 }

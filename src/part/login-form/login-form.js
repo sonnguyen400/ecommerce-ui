@@ -3,18 +3,16 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import APIBase from "../../api/ApiBase";
 import clsx from "clsx";
-import { Error } from "../../components/form-component";
+import { Error, PrefixIcon, Description } from "../../components";
 import google from "../../assets/image/google.png";
 import facebook from "../../assets/image/facebook.png";
 import apple from "../../assets/image/apple.png";
 import github from "../../assets/image/github.png";
 import style from "./style.module.scss";
 import { Link } from "react-router-dom";
-import { Description } from "../../components/description";
-import { useContext, useState } from "react";
+import { useContext, } from "react";
 import { GlobalContext } from "../../context";
 import { Col, Row, Input, Button } from "antd";
-import PrefixIcon from "../../components/prefix-icon/PrefixIcon.js";
 const handleGoogleLogin = async () => {
     try {
         // Make a request to the backend server to initiate the Google OAuth2 flow

@@ -1,8 +1,13 @@
-import { Tabs } from 'antd';
-import { useSelector } from 'react-redux';
+import { Card } from 'antd';
 import UserCart from '../../../part/user-cart/cart/UserCart';
-import OrderList from './order-list';
+import Tabs from '../../../components/tabs/Tabs';
+import OrderList from '../../../part/user/order-list/OrderList';
+import styled from 'styled-components';
 import useAuth from '../../../secure/useAuth';
+const Container = styled.div`
+    background-color: white;
+    border-radius: 0.95rem;
+`
 function UserCartPage() {
     const [state, user] = useAuth();
     const items = [
@@ -49,10 +54,7 @@ function UserCartPage() {
 
     ]
     return (
-        <Tabs
-            defaultActiveKey='1'
-            items={items}
-        />);
+        <Container className={styled}><Tabs items={items} /></Container>);
 }
 
 export default UserCartPage;

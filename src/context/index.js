@@ -1,2 +1,2 @@
 export { GlobalContext } from './GlobalContext';
-export { DeviceContext } from './DeviceContext';
+export { DarkModeContext } from './DarkmodeContext';

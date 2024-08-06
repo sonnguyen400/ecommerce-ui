@@ -1,6 +1,6 @@
 import { Form, useFormik } from "formik";
 import { Button, Input, Row, Col } from "antd";
-import { Error } from "../../../components/form-component";
+import { Error } from "../../../components";
 import * as Yup from 'yup';
 function CategoryForm({ parent, submitHandler }) {
     var initialValues = {

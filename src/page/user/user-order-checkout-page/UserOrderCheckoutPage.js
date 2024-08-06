@@ -4,14 +4,13 @@ import OrderItem from "../../../components/order-item/OrderItem.js";
 import { useContext, useEffect, useState } from "react";
 import APIBase from "../../../api/ApiBase.js";
 import { findAllByUserId } from "../../../store/address/addressSlide.js";
-import AddressTag from "../../../components/address-tag/AddressTag.js";
-import PrefixIcon from "../../../components/prefix-icon/PrefixIcon.js";
+import { AddressTag, PrefixIcon, Description } from "../../../components";
 import AddressAddModal from "../../../part/address-add-modal/AddressAddModal.js";
 import { GlobalContext } from "../../../context/index.js";
-import { useNavigate } from "react-router-dom";
-import { Description } from "../../../components/description/index.js";
-function UserOrderPage() {
-    const orderLines = useSelector(state => state.orderLines);
+import { useLocation, useNavigate } from "react-router-dom";
+function UserOrderCheckOutPage() {
+    const { state } = useLocation();
+    const { data } = state;
     const user = useSelector(state => state.user);
     const address = useSelector(state => state.userAddress);
     const [shipMethods, setShipMethods] = useState(null);
@@ -41,15 +40,16 @@ function UserOrderPage() {
     }
 
     function calculateTotal() {
-        return orderLines.reduce((pre, item) => {
+        return data.reduce((pre, item) => {
             return pre + item.productItem.price * item.qty;
         }, 0) + (currentShipMethod ? currentShipMethod.price : 0);
     }
 
     function submitHandler(value) {
         globalContext.loader(true);
-        var data = {
-            orderLines: orderLines.map(line => ({
+
+        var payload = {
+            orderLines: data.map(line => ({
                 productItem: {
                     id: line.productItem.id
                 },
@@ -73,13 +73,19 @@ function UserOrderPage() {
             note: value.note,
             total: calculateTotal()
         }
-        APIBase.post('/api/v1/order', data)
+        APIBase.post('/api/v1/order', payload)
             .then(payload => payload.data)
             .then(data => {
+                globalContext.loader(false)
                 if (data.payment.type.id == 1) {
-                    navigate(`/order/success`);
+                    navigate(`/result`, {
+                        state: {
+                            status: "success",
+                            title: "Successfully Purchased Cloud Server ECS!",
+                            subTitle: "If you have any question, please contact 0393497961 for more"
+                        }
+                    });
                 } else {
-
                     navigate(`/purchase?id=${data.id}`);
                 }
             })
@@ -117,7 +123,7 @@ function UserOrderPage() {
                         <Col span={24}>
                             <Card title={<Row align="middle"><PrefixIcon><i className="fi fi-rr-marker"></i></PrefixIcon><span>Order Lines</span></Row>}>
                                 <List className="list-group-flush">
-                                    {orderLines.map((item, index) => (<List.Item key={item}>
+                                    {data && data.map((item, index) => (<List.Item key={item}>
                                         <OrderItem data={item} disabled />
                                     </List.Item>))}
                                 </List>
@@ -146,7 +152,7 @@ function UserOrderPage() {
                             </Card>
                         </Col>
                         <Col span={24}>
-                            <Card title={<Row align="middle"><PrefixIcon><i class="fi fi-rr-shipping-fast"></i></PrefixIcon><span>Delivery Method</span></Row>}>
+                            <Card title={<Row align="middle"><PrefixIcon><i className="fi fi-rr-shipping-fast"></i></PrefixIcon><span>Delivery Method</span></Row>}>
                                 <Form.Item rules={[{ required: "Required" }]} name="shipmethod">
                                     <Select
                                         options={
@@ -188,4 +194,4 @@ function UserOrderPage() {
     );
 }
 
-export default UserOrderPage;
+export default UserOrderCheckOutPage;

@@ -1,14 +1,13 @@
 import image from "../../../assets/image/image.png";
 import { React, useState } from "react";
 import style from "./header.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { memo } from "react";
 import Tippy from "@tippyjs/react/headless";
-import { Description } from "../../../components/description/index.js";
+import { Description, PrefixIcon } from "../../../components";
 import clsx from "clsx";
 import DarkModeToggle from "../../dark-mode-toggle/index.js";
 import { Col, Row } from "antd";
-import PrefixIcon from "../../../components/prefix-icon/PrefixIcon.js";
 import Logout from "../../logout/Logout.js";
 import useAuth from "../../../secure/useAuth.js";
 import SearchInput from "../search-input/SearchInput.js";

@@ -1,7 +1,7 @@
 import { Col, Collapse, Row } from "antd";
 import { useContext, useEffect, useState } from "react";
 import APIBase from "../../../api/ApiBase";
-import { Description } from "../../../components/description";
+import { Description } from "../../../components/";
 import { GlobalContext } from "../../../context";
 import { Link } from "react-router-dom";
 function AdminWarehouseManagePage() {

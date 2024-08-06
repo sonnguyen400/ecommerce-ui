@@ -2,12 +2,11 @@ import { Row, Col, Select, Flex } from "antd";
 import { memo, useEffect, useState } from "react";
 function ProductFilter({ onFilter }) {
     const [params, setParams] = useState(new Map());
-
     return (<Row gutter={[12, 12]}>
-        <Col span={24} md={{ span: 8 }} lg={{ span: 6 }} >
+        <Col span={24}  >
             <Flex align="center" direction="horizontal">
                 <span style={{ marginRight: "12px" }}>Range</span>
-                <Select
+                <Select style={{ flex: 1 }}
                     onChange={value => {
                         setParams(params_ => {
                             let [from, to] = value ? value.split("-") : [undefined, undefined];

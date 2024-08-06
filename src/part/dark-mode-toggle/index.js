@@ -1,17 +1,10 @@
-import { memo, useContext } from "react";
+import { memo } from "react";
 import { Switch } from "antd";
-import { GlobalContext } from "../../context";
+import useDarkMode from "../../hooks/useDarkmode";
 
 function DarkModeToggle() {
-    const globalState = useContext(GlobalContext);
-    function onChange(e) {
-        if (e.target.checked) {
-            globalState.darkmode.set(true);
-        } else {
-            globalState.darkmode.set(false);
-        }
-    }
-    return <Switch defaultChecked={globalState.darkmode.value} onChange={() => globalState.darkmode.set(value => !value)} />;
+    const [state, reverse] = useDarkMode();
+    return <Switch defaultChecked={state} onChange={reverse} />;
 }
 
 export default memo(DarkModeToggle);

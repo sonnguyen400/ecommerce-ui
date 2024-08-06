@@ -6,8 +6,8 @@ import { Layout, Row, Space } from "antd";
 import useDevice from "../../hooks/useDevice.js";
 import clsx from "clsx";
 function HeadOnly({ children }) {
-    const [category, setCategory] = useState(true);
     const device = useDevice();
+    const [category, setCategory] = useState(device !== "MOBILE");
     return (
         <Layout>
             <Layout.Header style={device === "MOBILE" ? { padding: "8px" } : {}} className={style.header} >

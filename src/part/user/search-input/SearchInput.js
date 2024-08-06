@@ -9,6 +9,7 @@ import useDevice from "../../../hooks/useDevice";
 
 function SearchInput({ onClick, minimize }) {
     const inputRef = useRef();
+    const searchTrigger = useRef();
     const navigate = useNavigate();
     const [products, setProducts] = useState();
     const [loading, setLoading] = useState(null);
@@ -28,17 +29,16 @@ function SearchInput({ onClick, minimize }) {
                 })
         }
     }
-    function onInput(e) {
-        debounce(fetchProduct, 2000)
-    }
+
     useEffect(() => {
-        function fetch(e) {
-            return onInput(e.target.value)
-        }
+        const fetch = debounce((e) => {
+            fetchProduct(e.target.value)
+        }, 1000)
+
         inputRef.current.addEventListener("input", fetch)
         inputRef.current.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
-                document.getElementById('searchBtn').click();
+                searchTrigger.current.click();
             }
         })
         return () => {
@@ -49,10 +49,7 @@ function SearchInput({ onClick, minimize }) {
         <Tippy
             interactive
             ref={tippy}
-            visible={visible}
-            onDestroy={() => {
-                console.log('destroy');
-            }}
+            visible={true}
             placement="bottom-start"
             render={attr => (
                 <Col className={style.searchResult} style={{ maxWidth: "460px", width: "90vw" }} tabIndex={-1} {...attr}>
@@ -72,19 +69,24 @@ function SearchInput({ onClick, minimize }) {
                                 </div>
                             </Link>)
                         })}
-                        <Button id="searchBtn" onClick={() => {
-                            var value = inputRef.current.value;
-                            if (value !== "") {
-                                navigate(`/product/search?name=${value}`);
-                            }
-                        }} type="text" block>Show All</Button>
+                        <Button type="text" block onClick={() => {
+                            searchTrigger.current.click()
+                        }}>Show All</Button>
                     </div>}
                 </Col>
             )}
         >
-            <div onClick={() => setVisible(true)} tabIndex={0} onBlur={() => setVisible(false)} className={style.container}>
+            <div onFocus={() => {
+                setVisible(true)
+            }} tabIndex={0} onBlur={() => setVisible(false)} className={style.container}>
                 <input ref={inputRef} style={{ display: minimize ? "none" : "block" }} />
-                <div className={style.icon} onClick={onClick}>
+                <div ref={searchTrigger} id="searchBtn" className={style.icon} onClick={() => {
+                    var value = inputRef.current.value;
+                    if (value !== "") {
+                        setVisible(false);
+                        navigate(`/product/search?name=${value}`);
+                    }
+                }}>
                     <i className="fi fi-rr-search"></i>
                 </div>
             </div>

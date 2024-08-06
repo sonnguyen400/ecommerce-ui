@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { Button, Col, Input, Row, Select } from "antd";
 import * as Yup from 'yup';
-import { Error } from '../../../components/form-component';
+import { Error } from '../../../components';
 function UserAddressForm({ onSubmit }) {
     const validateSchema = Yup.object({
         city: Yup.string().required(),

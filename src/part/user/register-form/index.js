@@ -1,8 +1,7 @@
 import { Col, Row, Input, Button, Select, DatePicker } from "antd";
-import { Error } from "../../../components/form-component";
+import { Error, PrefixIcon } from "../../../components";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import PrefixIcon from "../../../components/prefix-icon/PrefixIcon";
 function RegisterForm({ onSubmit, ...props }) {
     const schema = Yup.object().shape({
         username: Yup.string().required().min(6, "Username can't be blank"),

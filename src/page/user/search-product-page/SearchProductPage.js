@@ -5,10 +5,16 @@ import { useContext, useEffect, useState } from "react";
 import APIBase from "../../../api/ApiBase";
 import ProductCard from "../../../components/product-card/ProductCard";
 import { GlobalContext } from "../../../context";
-
+import style from './style.module.scss';
 function SearchProductPage() {
     const [urlParams, setUrlParams] = useSearchParams();
-    const [data, setData] = useState(undefined);
+    const [data, setData] = useState({
+        content: [],
+        pageable: {
+            pageSize: 0,
+            pageNumber: 0
+        }
+    });
     const globalContext = useContext(GlobalContext);
     useEffect(() => {
         var apiParam = new URLSearchParams(urlParams);
@@ -26,33 +32,39 @@ function SearchProductPage() {
             <Col span={24}>
                 <h2>Search Result</h2>
             </Col>
-            <Col span={16} style={{ overflowX: "scroll" }}>
-                <ProductFilter onFilter={params_ => {
-                    setUrlParams(urlSearchParams_ => {
-                        params_.entries().forEach(([key, value]) => {
-                            if (value) urlSearchParams_.set(key, value);
-                            else urlSearchParams_.delete(key);
-                        });
-                        return urlParams;
-                    })
-                }} />
-            </Col>
-            <Col span={8}>
-                <Select
-                    options={[
-                        {
-                            label: "From Top",
-                            value: 1,
-                        }, {
-                            label: "From Bottom",
-                            value: 2
-                        }
-                    ]}
-                />
+            <Col span={24}>
+                <Row className={style.filter} gutter={[16, 16]}>
+                    <Col span={12} md={{ span: 8 }} style={{ overflowX: "scroll" }}>
+                        <ProductFilter onFilter={params_ => {
+                            setUrlParams(urlSearchParams_ => {
+                                params_.entries().forEach(([key, value]) => {
+                                    if (value) urlSearchParams_.set(key, value);
+                                    else urlSearchParams_.delete(key);
+                                });
+                                return urlParams;
+                            })
+                        }} />
+                    </Col>
+                    <Col span={12} md={{ span: 6 }}>
+                        <Select
+                            style={{ width: "100%" }}
+                            options={[
+                                {
+                                    label: "From Top",
+                                    value: 1,
+
+                                }, {
+                                    label: "From Bottom",
+                                    value: 2
+                                }
+                            ]}
+                        />
+                    </Col>
+                </Row>
             </Col>
             <Col span={24}>
-                <Row>
-                    {data?.content && data.content.map((product_, index) => <Col key={index} span={12} md={{ span: 6 }} lg={{ span: 4 }} ><ProductCard data={product_} /></Col>)}
+                <Row gutter={[16, 16]}>
+                    {data.content.map((product_, index) => <Col key={index} span={12} md={{ span: 6 }} lg={{ span: 4 }} ><ProductCard data={product_} /></Col>)}
                 </Row>
             </Col>
             <Col span={24}>

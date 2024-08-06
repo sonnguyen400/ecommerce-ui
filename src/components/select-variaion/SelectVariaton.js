@@ -3,7 +3,7 @@ import CheckRadio from '../input-radio/CheckRadio';
 import clsx from 'clsx';
 import style from './style.module.scss';
 import { memo, useEffect, useRef } from 'react';
-function SelectVariation({ onChange, variation }) {
+function SelectVariation({ onChange, variation, ...props }) {
     const inputGroup = useRef();
     function change(e) {
         onChange({
@@ -17,13 +17,15 @@ function SelectVariation({ onChange, variation }) {
         });
     }, [])
     return (
-        <Row ref={inputGroup} gutter={[0, 4]} className={clsx("gx-2", style.inputGroup)} >
-            <Col><label>{variation.name}</label></Col>
-            <Row gutter={[8, 4]}>
-                {variation.options.map((option, index) => {
-                    return <Col style={{ width: "fit-content" }} key={variation.name + index}><CheckRadio className={clsx(style.option)} onChange={(e) => { change(e) }} value={option.value} name={variation.name}>{option.value}</CheckRadio></Col>
-                })}
-            </Row>
+        <Row ref={inputGroup} {...props} gutter={[0, 4]} className={clsx("gx-2", style.inputGroup)} >
+            <Col>
+                <Row><label>{variation.name}</label></Row>
+                <Row gutter={[8, 4]}>
+                    {variation.options.map((option, index) => {
+                        return <Col style={{ width: "fit-content" }} key={variation.name + index}><CheckRadio className={clsx(style.option)} onChange={(e) => { change(e) }} value={option.value} name={variation.name}>{option.value}</CheckRadio></Col>
+                    })}
+                </Row>
+            </Col>
         </Row>);
 }
 

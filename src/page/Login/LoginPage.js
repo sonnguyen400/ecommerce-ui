@@ -1,7 +1,7 @@
 import { Row, Col, Card, Flex } from "antd";
 import LoginForm from "../../part/login-form/login-form";
 import style from "./style.module.scss";
-import { Description } from "../../components/description";
+import { Description } from "../../components";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../secure/useAuth";
 function LoginPage() {
