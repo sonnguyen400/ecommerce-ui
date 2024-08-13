@@ -48,8 +48,12 @@ function ProductPage() {
                 productItem: {
                     id: selectedItem.id
                 },
+                user: {
+                    id: user.id
+                },
                 qty: qty
             }
+            console.log(cartItem)
             globalContext.message.success(`Add ${product.name} to cart successfully !`);
             APIBase.post("/api/v1/cart", cartItem)
                 .then(payload => {

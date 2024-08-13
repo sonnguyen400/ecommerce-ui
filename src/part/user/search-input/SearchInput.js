@@ -15,7 +15,6 @@ function SearchInput({ }) {
     });
     const [loading, setLoading] = useState(null);
     const [visible, setVisible] = useState(false);
-    const tippy = useRef();
     function fetchProduct(name) {
         if (name.trim()) {
             setLoading(true);
@@ -48,17 +47,16 @@ function SearchInput({ }) {
     }, [])
     return (
         <Tippy
-            ref={tippy}
+            interactive
             onClickOutside={() => { setVisible(false) }}
             visible={visible}
-            placement="bottom-start"
             render={attr => (
-                <Col className={style.searchResult} style={{ maxWidth: "460px", width: "90vw" }} tabIndex={-1} {...attr}>
+                <Col className={style.searchResult} style={{ maxWidth: "460px", width: "90vw", }} tabIndex={-1} {...attr}>
                     {loading && <Skeleton />}
                     {products.content.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
                     {<div className={style.result}>
                         {products.content.map(product_ => {
-                            return (<Link to={`/product?id=${product_.id}`} className={style.productItem} >
+                            return (<Link to={`/product?id=${product_.id}`} onClick={() => setVisible(false)} className={style.productItem} >
                                 <div className={style.picture}>
                                     <img src={product_.picture} />
                                 </div>

@@ -28,7 +28,7 @@ function SearchProductPage() {
     }, [urlParams])
 
     return (
-        <Row gutter={[16, 16]}>
+        <Row gutter={{ xs: 6, sm: 8, md: 12, lg: 16 }}>
             <Col span={24}>
                 <h2>Search Result</h2>
             </Col>

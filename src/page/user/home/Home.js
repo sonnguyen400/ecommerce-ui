@@ -24,17 +24,17 @@ function Home() {
         <Col span={24}><UserCarousel className={style.carousel} /></Col>
         <Col span={24}>
             <Card title="New Items">
-                <Row className={style.category} gutter={[15, 15]} style={{ overflowX: "scroll" }}>{newests.content.map((product_, index) => <Col span={12} md={{ span: 6 }} lg={{ span: 4 }} key={index}><ProductCardv2 className={style.productCard} data={product_} /></Col>)}</Row>
+                <Row className={style.category} gutter={{ xs: 6, sm: 8, md: 12, lg: 16 }} style={{ overflowX: "scroll" }}>{newests.content.map((product_, index) => <Col span={12} md={{ span: 6 }} lg={{ span: 4 }} key={index}><ProductCardv2 className={style.productCard} data={product_} /></Col>)}</Row>
             </Card>
         </Col>
         <Col span={24}>
             <Card title="Monitor">
-                <Row className={style.category} gutter={[15, 15]} style={{ overflowX: "scroll" }}>{monitors.content.map((product_, index) => <Col span={12} md={{ span: 6 }} lg={{ span: 4 }} key={index}><ProductCardv2 className={style.productCard} data={product_} /></Col>)}</Row>
+                <Row className={style.category} gutter={{ xs: 6, sm: 8, md: 12, lg: 16 }} style={{ overflowX: "scroll" }}>{monitors.content.map((product_, index) => <Col span={12} md={{ span: 6 }} lg={{ span: 4 }} key={index}><ProductCardv2 className={style.productCard} data={product_} /></Col>)}</Row>
             </Card>
         </Col>
         <Col span={24}>
             <Card title="Interesting Accessories">
-                <Row className={style.category} gutter={[15, 15]} style={{ overflowX: "scroll" }}>{accessories.content.map((product_, index) => <Col span={12} md={{ span: 6 }} lg={{ span: 4 }} key={index}><ProductCardv2 className={style.productCard} data={product_} /></Col>)}</Row>
+                <Row className={style.category} gutter={{ xs: 6, sm: 8, md: 12, lg: 16 }} style={{ overflowX: "scroll" }}>{accessories.content.map((product_, index) => <Col span={12} md={{ span: 6 }} lg={{ span: 4 }} key={index}><ProductCardv2 className={style.productCard} data={product_} /></Col>)}</Row>
             </Card>
         </Col>
 

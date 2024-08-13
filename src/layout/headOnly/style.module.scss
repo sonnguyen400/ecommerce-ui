@@ -11,6 +11,8 @@
     z-index: 1;
 
     .categoryToggle {
+        display: block;
+
         @include tablet {
             display: none;
         }
@@ -19,18 +21,10 @@
             display: none;
         }
 
-        &.active {
-            i {
-                rotate: 90deg;
-                background-color: var(--primary-color-200);
-            }
-        }
 
         i {
             border-radius: $border-radius;
-            padding: 16px;
             cursor: pointer;
-            transition: 1s linear;
 
             &:hover {
                 background-color: var(--primary-color-200);
@@ -45,8 +39,14 @@
     margin: 0px auto;
     padding: 16px;
 
-    >div {
-        width: 100%;
+    @include mobile {
+        padding: 0px;
+    }
+
+    :global .ant-card-body {
+        @include mobile {
+            padding: 8px !important;
+        }
     }
 }
 

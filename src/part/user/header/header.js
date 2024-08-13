@@ -7,21 +7,22 @@ import Tippy from "@tippyjs/react/headless";
 import { Description, PrefixIcon } from "../../../components";
 import clsx from "clsx";
 import DarkModeToggle from "../../dark-mode-toggle/index.js";
-import { Col, Row } from "antd";
+import { Col, Row, Space } from "antd";
 import Logout from "../../logout/Logout.js";
 import useAuth from "../../../secure/useAuth.js";
 import SearchInput from "../search-input/SearchInput.js";
 import useDevice from "../../../hooks/useDevice.js";
 import AvatarHolder from "../../../assets/image/avata_placeholderjpg.jpg";
+import Logo from "../../../assets/image/logo192.png";
 function Header({ searchTrigger }) {
     const [state, user] = useAuth();
     const device = useDevice();
-    const [search, setSearch] = useState(false);
     return (
         <Row className={style.header} gutter={[16, 16]} align="middle">
-            <Col order={1} className={clsx(style.item, style.left, style.logo)}>
-                <Link to="/">
-                    <h2>GadgetHub</h2>
+            <Col order={1} className={clsx(style.item, style.logo, style.left, style.logo)}>
+                <Link className={style.box} to="/">
+                    <img src={Logo} />
+                    <h2 >GadgetHub</h2>
                 </Link>
             </Col>
             <Col order={2} className={clsx(style.item, style.left, style.search)} tabIndex={-1}>
@@ -31,7 +32,7 @@ function Header({ searchTrigger }) {
                     </div>
                 </div> : <SearchInput />}
             </Col>
-            <Col order={3} flex={device === "MOBILE" && search ? undefined : 1} />
+            <Col order={3} className={style.blank} flex={device === "MOBILE" ? 0 : 1} />
             <Col order={4} className={clsx(style.item, style.right)}>
                 <Link to={"/cart"} className={clsx(style.link)}>
                     <i className="fi fi-rr-shopping-bag"></i>
@@ -95,7 +96,7 @@ function Header({ searchTrigger }) {
                     </div>
                 )}
             >
-                <Col order={5} span={(search && (device === "TABLET" || device === "MOBILE")) ? 0 : undefined} className={clsx(style.item, style.right)}>
+                <Col order={5} className={clsx(style.item, style.right)}>
                     <Link to="/user">
                         <div className={style.avatar}>
                             <img

@@ -7,6 +7,7 @@ import useDevice from "../../hooks/useDevice.js";
 import SearchInput from "../../part/user/search-input/SearchInput.js";
 import logo from '../../assets/image/logo512.png';
 import clsx from "clsx";
+import Link from "antd/es/typography/Link.js";
 function HeadOnly({ children }) {
     const device = useDevice();
     const [category, setCategory] = useState(device !== "MOBILE");
@@ -20,9 +21,9 @@ function HeadOnly({ children }) {
             <Layout.Content >
                 {(device === "MOBILE" || device === "TABLET") && search && <div style={{ padding: "8px 16px" }}><SearchInput /></div>}
                 <CategoryBar className={clsx(style.category, category ? style.display : " ")} />
-                <Row className={style.container}>
+                <div className={style.container}>
                     {children}
-                </Row>
+                </div>
             </Layout.Content>
             <Layout.Footer className={style.footer}>
                 <div className={style.container}>
@@ -35,8 +36,14 @@ function HeadOnly({ children }) {
                             <div>Developer: Nguyễn Hoàng Sơn</div>
                             <div>Email: sonnguyen9616@gmail.com </div>
                             <div>Telephone: 0393497961</div>
-                            <div>Github: </div>
-                        </Col>
+                            <h4>
+                                <code>Facebook: <Link target="https://www.facebook.com/profile.php?id=100008617812145https://www.facebook.com/profile.php?id=100008617812145">https://www.facebook.com/profile.php?id=100008617812145</Link></code>
+
+                            </h4>
+                            <h4>
+                                <code>Github: <Link target="blank" href="https://github.com/sonnguyen400">https://github.com/sonnguyen400</Link></code>
+
+                            </h4>                        </Col>
                     </Row>
                     <Row className={style.project} gutter={[24, 24]}>
                         <Col span={24}>
