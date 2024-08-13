@@ -44,6 +44,10 @@
     max-width: 1200px;
     margin: 0px auto;
     padding: 16px;
+
+    >div {
+        width: 100%;
+    }
 }
 
 .category {
@@ -62,5 +66,28 @@
     &.display {
         display: flex !important;
         transform: translateY(0%) !important;
+    }
+}
+
+.footer {
+    background-color: var(--primary-color-600);
+
+    color: white;
+
+    .container {
+        max-width: 1200px;
+        margin: 0px auto;
+
+        .logo {
+            img {
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .project {
+            padding-top: 20px;
+            font-weight: 500;
+        }
     }
 }

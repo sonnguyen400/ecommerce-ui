@@ -4,7 +4,7 @@ import APIBase from "../../api/ApiBase";
 export const fetchUser = createAsyncThunk(
     "user/fetchUser",
     async (data, { rejectWithValue }) => {
-        const response = await APIBase.get(`auth/user`);
+        const response = await APIBase.get(`/api/v1/auth/user`);
         return response.data;
     }
 );

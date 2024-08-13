@@ -1,5 +1,5 @@
 import { Form, Flex, Button, Rate, Input } from "antd";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 function CommentForm({ onSubmit }) {
     const formik = useFormik({
         initialValues: {

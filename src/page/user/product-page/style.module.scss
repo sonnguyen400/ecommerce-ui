@@ -1,22 +1,32 @@
-
-
-.productImage{
+.productImage {
     aspect-ratio: 1/1;
-    
+    padding: 16px;
 }
-.pdName{
+
+.pictureSlide {
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+
+    &::-webkit-scrollbar {
+        height: 3px;
+    }
+}
+
+.pdName {
     font-size: 1.3rem;
-    color:#333;
+    color: #333;
 
 }
-.productDetail{
-    .price{
+
+.productDetail {
+    .price {
         font-size: 1.3rem;
-        font-weight:500;
-        color:rgb(255, 39, 39);
+        font-weight: 500;
+        color: rgb(255, 39, 39);
         letter-spacing: 2px;
     }
-    .price::after{
+
+    .price::after {
         content: "đ";
         font-size: smaller;
         margin-left: 4px;

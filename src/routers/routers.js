@@ -39,9 +39,13 @@ export const userRouter = [
     { 'path': "/checkout", 'component': UserOrderCheckOutPage, 'layout': HeadOnly },
     { 'path': "/order", 'component': UserOrderDetailPage, 'layout': HeadOnly },
     { 'path': "/purchase", 'component': UserOrderPurchase, 'layout': HeadOnly },
+
+
+    { 'path': "/admin", 'component': AdminDashboardPage, 'layout': SidebarLayout },
+    { 'path': "/admin/order-manage", 'component': AdminOrderManagePage, 'layout': SidebarLayout },
+    { 'path': "/admin/order", 'component': AdminOrderDetailPage, 'layout': SidebarLayout },
 ]
 export const adminRouter = [
-    { 'path': "/admin", 'component': AdminDashboardPage, 'layout': SidebarLayout },
     { 'path': "/admin/product", 'component': ProductDetailPage, 'layout': SidebarLayout },
     { 'path': "/admin/product-manage", 'component': AdminProductManagePage, 'layout': SidebarLayout },
     { 'path': "/admin/category", 'component': AdminCategoryManagePage, 'layout': SidebarLayout },

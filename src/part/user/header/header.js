@@ -12,23 +12,27 @@ import Logout from "../../logout/Logout.js";
 import useAuth from "../../../secure/useAuth.js";
 import SearchInput from "../search-input/SearchInput.js";
 import useDevice from "../../../hooks/useDevice.js";
-
-function Header() {
+import AvatarHolder from "../../../assets/image/avata_placeholderjpg.jpg";
+function Header({ searchTrigger }) {
     const [state, user] = useAuth();
     const device = useDevice();
     const [search, setSearch] = useState(false);
     return (
         <Row className={style.header} gutter={[16, 16]} align="middle">
-            <Col order={1} span={(search && (device === "TABLET" || device === "MOBILE")) ? 0 : undefined} className={clsx(style.item, style.left, style.logo)}>
+            <Col order={1} className={clsx(style.item, style.left, style.logo)}>
                 <Link to="/">
-                    <h2>Logo</h2>
+                    <h2>GadgetHub</h2>
                 </Link>
             </Col>
-            <Col order={2} className={clsx(style.item, style.left, style.search)}>
-                <SearchInput minimize={((!search) && (device === "TABLET" || device === "MOBILE")) ? true : false} onClick={() => { if (device === "MOBILE" || device === "TABLET") setSearch(state_ => !state_) }} />
+            <Col order={2} className={clsx(style.item, style.left, style.search)} tabIndex={-1}>
+                {(device === "MOBILE" || device === "TABLET") ? <div className={style.searchTrigger}>
+                    <div className={style.icon} onClick={() => { searchTrigger(search => !search) }}>
+                        <i className="fi fi-rr-search"></i>
+                    </div>
+                </div> : <SearchInput />}
             </Col>
             <Col order={3} flex={device === "MOBILE" && search ? undefined : 1} />
-            <Col order={4} span={(search && (device === "TABLET" || device === "MOBILE")) ? 0 : undefined} className={clsx(style.item, style.right)}>
+            <Col order={4} className={clsx(style.item, style.right)}>
                 <Link to={"/cart"} className={clsx(style.link)}>
                     <i className="fi fi-rr-shopping-bag"></i>
                 </Link>
@@ -95,7 +99,7 @@ function Header() {
                     <Link to="/user">
                         <div className={style.avatar}>
                             <img
-                                src={image && user && user.picture}
+                                src={(user && user.picture) || AvatarHolder}
                                 alt=""
                             ></img>
                         </div>

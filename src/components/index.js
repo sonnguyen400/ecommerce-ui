@@ -12,3 +12,4 @@ export { default as RateStart } from './rate-start/RateStar.js';
 export { default as SelectVariation } from './select-variaion/SelectVariaton.js';
 export { default as Tabs } from './tabs/Tabs.js';
 export { default as OrderItem } from './order-item/OrderItem.js';
+export { default as ProductCardv2 } from './product-card-v2/ProductCard.js';

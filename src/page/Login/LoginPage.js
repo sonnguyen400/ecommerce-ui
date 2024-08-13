@@ -21,7 +21,7 @@ function LoginPage() {
                             </Col>
                             <LoginForm
                                 success={() => {
-                                    if (navigate("ADMIN")) navigate("/admin");
+                                    if (hasRole("ADMIN")) navigate("/admin");
                                     if (hasRole("USER")) navigate("/");
                                 }}
                             />

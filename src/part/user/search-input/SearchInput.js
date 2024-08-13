@@ -5,23 +5,24 @@ import { memo, useEffect, useRef, useState } from "react";
 import APIBase from "../../../api/ApiBase";
 import { debounce } from "lodash";
 import { Link, useNavigate } from "react-router-dom";
-import useDevice from "../../../hooks/useDevice";
 
-function SearchInput({ onClick, minimize }) {
+function SearchInput({ }) {
     const inputRef = useRef();
     const searchTrigger = useRef();
     const navigate = useNavigate();
-    const [products, setProducts] = useState();
+    const [products, setProducts] = useState({
+        content: []
+    });
     const [loading, setLoading] = useState(null);
     const [visible, setVisible] = useState(false);
     const tippy = useRef();
     function fetchProduct(name) {
         if (name.trim()) {
             setLoading(true);
-            APIBase.get(`/api/v1/product?name=${encodeURIComponent(name)}`)
+            APIBase.get(`/api/v2/product?name=${encodeURIComponent(name)}`)
                 .then(payload => payload.data)
                 .then(data => {
-                    setProducts(data.content);
+                    setProducts(data);
                     setLoading(false);
                 })
                 .catch(e => {
@@ -47,17 +48,16 @@ function SearchInput({ onClick, minimize }) {
     }, [])
     return (
         <Tippy
-            interactive
             ref={tippy}
-            visible={true}
+            onClickOutside={() => { setVisible(false) }}
+            visible={visible}
             placement="bottom-start"
             render={attr => (
                 <Col className={style.searchResult} style={{ maxWidth: "460px", width: "90vw" }} tabIndex={-1} {...attr}>
                     {loading && <Skeleton />}
-                    {(products === null || (Array.isArray(products) && products.length === 0)) && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
-                    {products && products.length > 0 && <div className={style.result}>
-                        {products.map(product_ => {
-                            var prices = product_.productItems.map(item_ => item_.price);
+                    {products.content.length == 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+                    {<div className={style.result}>
+                        {products.content.map(product_ => {
                             return (<Link to={`/product?id=${product_.id}`} className={style.productItem} >
                                 <div className={style.picture}>
                                     <img src={product_.picture} />
@@ -65,21 +65,21 @@ function SearchInput({ onClick, minimize }) {
                                 <div className={style.spec}>
                                     <div className={style.name} span={24}>{product_.name}</div>
                                     <div className={style.manufacturer} span={24}>{product_.manufacturer}</div>
-                                    <div className={style.price} span={24}>{Math.min(...prices)} - {Math.max(...prices)}</div>
+                                    <div className={style.price} span={24}>{product_.min_price}</div>
                                 </div>
                             </Link>)
                         })}
-                        <Button type="text" block onClick={() => {
+                        {products.content.length != 0 && <Button type="text" block onClick={() => {
                             searchTrigger.current.click()
-                        }}>Show All</Button>
+                        }}>Show All</Button>}
                     </div>}
                 </Col>
             )}
         >
             <div onFocus={() => {
                 setVisible(true)
-            }} tabIndex={0} onBlur={() => setVisible(false)} className={style.container}>
-                <input ref={inputRef} style={{ display: minimize ? "none" : "block" }} />
+            }} tabIndex={0} className={style.container}>
+                <input ref={inputRef} />
                 <div ref={searchTrigger} id="searchBtn" className={style.icon} onClick={() => {
                     var value = inputRef.current.value;
                     if (value !== "") {

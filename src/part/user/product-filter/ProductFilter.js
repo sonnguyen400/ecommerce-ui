@@ -1,5 +1,5 @@
 import { Row, Col, Select, Flex } from "antd";
-import { memo, useEffect, useState } from "react";
+import { memo, useState } from "react";
 function ProductFilter({ onFilter }) {
     const [params, setParams] = useState(new Map());
     return (<Row gutter={[12, 12]}>

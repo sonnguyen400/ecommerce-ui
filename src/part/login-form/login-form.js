@@ -1,7 +1,7 @@
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import APIBase from "../../api/ApiBase";
+import APIBase, { BaseURL } from "../../api/ApiBase";
 import clsx from "clsx";
 import { Error, PrefixIcon, Description } from "../../components";
 import google from "../../assets/image/google.png";
@@ -9,10 +9,11 @@ import facebook from "../../assets/image/facebook.png";
 import apple from "../../assets/image/apple.png";
 import github from "../../assets/image/github.png";
 import style from "./style.module.scss";
-import { Link } from "react-router-dom";
-import { useContext, } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect, } from "react";
 import { GlobalContext } from "../../context";
 import { Col, Row, Input, Button } from "antd";
+import useAuth from "../../secure/useAuth";
 const handleGoogleLogin = async () => {
     try {
         // Make a request to the backend server to initiate the Google OAuth2 flow
@@ -23,6 +24,8 @@ const handleGoogleLogin = async () => {
     }
 };
 function LoginForm({ className, success }) {
+    const navigate = useNavigate();
+    const [, user, hasRole, requestAuth] = useAuth();
     const globalContext = useContext(GlobalContext);
     const authObject = Yup.object().shape({
         username: Yup.string().required("Username can be blank"),
@@ -30,6 +33,11 @@ function LoginForm({ className, success }) {
             .min(6, "Password is too short")
             .required("Required"),
     });
+    useEffect(() => {
+        console.log(user)
+        if (hasRole("ADMIN")) navigate("/admin");
+        if (hasRole("USER")) navigate("/");
+    }, [user])
     const formik = useFormik({
         validateOnBlur: true,
         initialValues: {
@@ -46,6 +54,10 @@ function LoginForm({ className, success }) {
                 },
             })
                 .then((payload) => payload.data)
+                .then(data => {
+                    requestAuth();
+                    if (success) success();
+                })
                 .catch((error) => {
                     console.log(error)
                     globalContext.message.error(error.response?.data.message || "Username or Password is wrong")
@@ -105,24 +117,7 @@ function LoginForm({ className, success }) {
                             <Col span={6}>
                                 <Button type="text"
                                     icon={<PrefixIcon><img style={{ width: "100%" }} src={google} alt="Login with google" /></PrefixIcon>}
-                                    href="http://localhost:8085/oauth2/authorize/google" />
-                            </Col>
-
-                            <Col span={6}>
-                                <Button type="text"
-                                    icon={<PrefixIcon> <img style={{ width: "100%" }} src={facebook} alt="Login with facebook" /></PrefixIcon>}
-                                    href="http://localhost:8085/oauth2/authorize/google" />
-
-                            </Col>
-                            <Col span={6}>
-                                <Button type="text"
-                                    icon={<PrefixIcon> <img style={{ width: "100%" }} src={github} alt="Login with github" /></PrefixIcon>}
-                                    href="http://localhost:8085/oauth2/authorize/google" />
-                            </Col>
-                            <Col span={6}>
-                                <Button type="text"
-                                    icon={<PrefixIcon><img style={{ width: "100%" }} src={apple} alt="Login with apple" /></PrefixIcon>}
-                                    href="http://localhost:8085/oauth2/authorize/google" />
+                                    href={`${BaseURL}/oauth2/authorize/google`} />
                             </Col>
                         </Row>
                     </Col>

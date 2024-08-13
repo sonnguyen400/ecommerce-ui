@@ -1,6 +1,7 @@
 import axios from "axios";
+export const BaseURL = "http://gadgetsource.click";
 const APIBase = axios.create({
-    baseURL: "http://localhost:8085/",
+    baseURL: BaseURL,
     withCredentials: true,
     headers: {
         credentials: 'include'

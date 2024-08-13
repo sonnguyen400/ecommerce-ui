@@ -15,6 +15,7 @@
     "chart.js": "^4.4.3",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.11",
+    "ecommerce-ui": "file:",
     "formik": "^2.4.5",
     "lodash": "^4.17.21",
     "react": "^18.2.0",

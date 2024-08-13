@@ -11,6 +11,8 @@ import Currency from "../../../components/currency/Currency";
 import { GlobalContext } from "../../../context";
 import useAuth from "../../../secure/useAuth";
 import CommentForm from "../../../part/user/comment-form/CommentForm";
+import ProductPlaceHolder from '../../../assets/image/product_placeholder.png';
+import AvatarPlaceHolder from '../../../assets/image/avata_placeholderjpg.jpg';
 function ProductPage() {
     const navigate = useNavigate();
     const [state, user, hasRole] = useAuth();
@@ -91,9 +93,7 @@ function ProductPage() {
     function postComment(data) {
         APIBase.post(`api/v1/comment`, {
             ...data,
-            user: {
-                id: user.id
-            },
+            user: user,
             product: {
                 id: urlParams.get("id")
             }
@@ -106,12 +106,12 @@ function ProductPage() {
             <Col md={{ span: 10 }} span={24} order={1}>
                 <Card className={style.card}
                     cover={<div className={style.productImage}>
-                        <Image style={{ aspectRatio: "1/1", objectFit: "contain" }} src={product.picture} alt="" />
+                        <img style={{ aspectRatio: "1/1", objectFit: "cover", width: " 100%" }} src={product.picture || ProductPlaceHolder} alt={product.name} />
                     </div>}
                 >
-                    <Row>
+                    <Row className={style.pictureSlide} gutter={[16, 16]}>
                         {product.productItems.map((item, index) => {
-                            if (item.picture) return <Col className="p-2 rounded border-1 border-primary-600" lg={3} key={index}><Image className="w-100 h-100 ratio-1x1" src={item.picture} /></Col>
+                            if (item.picture) return <Col className="p-2 rounded border-1 border-primary-600" sm={6} lg={3} key={index}><Image className="w-100 h-100 ratio-1x1" src={item.picture} /></Col>
                         })}
                     </Row>
                 </Card>
@@ -147,7 +147,6 @@ function ProductPage() {
                 </Card>
             </Col>
             <Col md={{ span: 14 }} span={24} order={4} id="comment">
-
                 <Row gutter={[16, 16]}>
                     <Col span={24}>
                         <Card title="Comment">
@@ -158,7 +157,7 @@ function ProductPage() {
                         <Card title={<Row><span>Comment</span> <></></Row>}>
                             {comments.map(comment_ =>
                                 <>
-                                    <Card.Meta title={`${comment_.user.firstname} ${comment_.user.lastname}`} avatar={<Avatar src={comment_.user.picture} />} description={<Rate disabled value={comment_.rate} />} />
+                                    <Card.Meta title={`${comment_.user.firstname} ${comment_.user.lastname}`} avatar={<Avatar src={comment_.user.picture || AvatarPlaceHolder} />} description={<Rate disabled value={comment_.rate} />} />
                                     <div style={{ paddingTop: "6px" }}>{comment_.comment}</div>
                                     <Divider />
                                 </>

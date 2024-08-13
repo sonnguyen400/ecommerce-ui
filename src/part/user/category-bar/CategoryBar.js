@@ -4,6 +4,8 @@ import style from './style.module.scss';
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { Fragment } from "react";
+import styled from "styled-components";
+const Div = styled.div``;
 function CategoryBar({ className }) {
     const categories = [
         {
@@ -91,12 +93,13 @@ function CategoryBar({ className }) {
                 {
                     categories.map((category_, key) => {
                         let Wrap = category_.children ? Dropdown : Fragment;
+                        let Item = category_.href ? Link : Div;
                         return <Col key={key} span={8} md={{ span: 6 }} lg={{ span: 4 }} className={style.category}>
-                            <Wrap menu={category_.children && { items: category_.children }}>
-                                <Link to={category_.href} className={clsx(globalStyle.listItem, style.categoryItem)}>
+                            <Wrap {...category_.children ? { menu: { items: category_.children } } : {}}>
+                                <Item to={category_.href} className={clsx(globalStyle.listItem, style.categoryItem)}>
                                     <span className={globalStyle.icon}>{category_.icon}</span>
                                     <span>{category_.label}</span>
-                                </Link>
+                                </Item>
                             </Wrap>
                         </Col>
                     })

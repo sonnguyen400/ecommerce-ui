@@ -42,7 +42,6 @@ function UserCart() {
             APIBase.get(`api/v1/cart?userId=${user.id}&page=${page.index}`)
                 .then(payload => {
                     setData(data_ => [...data_, ...payload.data.content]);
-                    console.log(payload.data.totalPages - 1 == page)
                     if (payload.data.totalPages - 1 == page.index) {
                         setPage(page_ => {
                             page_.isEnd = true;
@@ -59,7 +58,6 @@ function UserCart() {
                 .catch(console.error)
                 .finally(() => {
                     setLoad(false)
-
                 })
         }
     }
@@ -107,7 +105,7 @@ function UserCart() {
                     return [...item_];
                 })
             })
-            .then(console.log(data))
+            .catch(console.log)
     }
     function handleDelete(id) {
         setData(item_ => {

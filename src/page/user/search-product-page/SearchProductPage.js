@@ -3,8 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import ProductFilter from "../../../part/user/product-filter/ProductFilter";
 import { useContext, useEffect, useState } from "react";
 import APIBase from "../../../api/ApiBase";
-import ProductCard from "../../../components/product-card/ProductCard";
 import { GlobalContext } from "../../../context";
+import { ProductCardv2 } from "../../../components";
 import style from './style.module.scss';
 function SearchProductPage() {
     const [urlParams, setUrlParams] = useSearchParams();
@@ -18,7 +18,7 @@ function SearchProductPage() {
     const globalContext = useContext(GlobalContext);
     useEffect(() => {
         var apiParam = new URLSearchParams(urlParams);
-        APIBase.get(`/api/v1/product?${apiParam.toString()}`)
+        APIBase.get(`/api/v2/product?${apiParam.toString()}`)
             .then(payload => payload.data)
             .then(setData)
             .catch(e => {
@@ -64,7 +64,7 @@ function SearchProductPage() {
             </Col>
             <Col span={24}>
                 <Row gutter={[16, 16]}>
-                    {data.content.map((product_, index) => <Col key={index} span={12} md={{ span: 6 }} lg={{ span: 4 }} ><ProductCard data={product_} /></Col>)}
+                    {data.content.map((product_, index) => <Col key={index} span={12} md={{ span: 6 }} lg={{ span: 4 }} ><ProductCardv2 data={product_} /></Col>)}
                 </Row>
             </Col>
             <Col span={24}>
