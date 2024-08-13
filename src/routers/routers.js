@@ -44,16 +44,14 @@ export const userRouter = [
     { 'path': "/admin", 'component': AdminDashboardPage, 'layout': SidebarLayout },
     { 'path': "/admin/order-manage", 'component': AdminOrderManagePage, 'layout': SidebarLayout },
     { 'path': "/admin/order", 'component': AdminOrderDetailPage, 'layout': SidebarLayout },
+    { 'path': "/admin/product-manage", 'component': AdminProductManagePage, 'layout': SidebarLayout },
 ]
 export const adminRouter = [
     { 'path': "/admin/product", 'component': ProductDetailPage, 'layout': SidebarLayout },
-    { 'path': "/admin/product-manage", 'component': AdminProductManagePage, 'layout': SidebarLayout },
     { 'path': "/admin/category", 'component': AdminCategoryManagePage, 'layout': SidebarLayout },
     { 'path': "/admin/category/:id", 'component': AdminCategoryDetailPage, 'layout': SidebarLayout },
     { 'path': "/admin/warehouse", 'component': AdminWarehouseManagePage, 'layout': SidebarLayout },
     { 'path': "/admin/warehouse/detail", 'component': AdminWareHouseDetailPage, 'layout': SidebarLayout },
-    { 'path': "/admin/order-manage", 'component': AdminOrderManagePage, 'layout': SidebarLayout },
-    { 'path': "/admin/order", 'component': AdminOrderDetailPage, 'layout': SidebarLayout },
     { 'path': "/admin/user/manage", 'component': AdminUserManagePage, 'layout': SidebarLayout },
     { 'path': "/admin/user", 'component': AdminUserDetailPage, 'layout': SidebarLayout }
 ]

@@ -2,14 +2,21 @@
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 import PrefixIcon from "../../../components/prefix-icon/PrefixIcon.js";
+import useAuth from "../../../secure/useAuth.js";
+import { memo, useEffect, useState } from "react";
 function Sidebar({ ...props }) {
+    const [, user, hasRole,] = useAuth();
+    const [state, setState] = useState(true);
+    // useEffect(() => {
+    //     setState(state => !state);
+    // }, [user])
     return (
         <Menu style={{ height: "100%" }}>
             <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-dashboard"></i></PrefixIcon>}>
                 <Link to="/admin">Dashboard</Link>
             </Menu.Item>
 
-            <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-category-alt"></i></PrefixIcon>}>
+            <Menu.Item disabled={!hasRole("ADMIN")} icon={<PrefixIcon><i className="fi fi-rr-category-alt"></i></PrefixIcon>}>
                 <Link to="/admin/category">
                     Category Management
                 </Link>
@@ -24,12 +31,12 @@ function Sidebar({ ...props }) {
                     Product Manage
                 </Link>
             </Menu.Item>
-            <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-warehouse-alt"></i></PrefixIcon>}>
+            <Menu.Item disabled={!hasRole("ADMIN")} icon={<PrefixIcon><i className="fi fi-rr-warehouse-alt"></i></PrefixIcon>}>
                 <Link to="/admin/warehouse">
                     Warehouse Manage
                 </Link>
             </Menu.Item>
-            <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-user-check"></i></PrefixIcon>}>
+            <Menu.Item disabled={!hasRole("ADMIN")} icon={<PrefixIcon><i className="fi fi-rr-user-check"></i></PrefixIcon>}>
                 <Link to="/admin/user/manage">
                     User Manage
                 </Link>
@@ -37,4 +44,4 @@ function Sidebar({ ...props }) {
         </Menu>);
 }
 
-export default Sidebar;
+export default memo(Sidebar);
