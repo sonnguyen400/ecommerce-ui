@@ -3,7 +3,6 @@ import UserFilter from "../../../part/admin/user-filter/UserFilter";
 import { useState, useEffect, useContext } from "react";
 import APIBase from "../../../api/ApiBase";
 import { Link } from "react-router-dom";
-import { GlobalContext } from "../../../context";
 import AccountStatusTag from "../../../part/account-status-tag/AccountStatusTag";
 function AdminUserManagePage() {
     const [api, setApi] = useState("api/v1/product")
@@ -88,7 +87,7 @@ function AdminUserManagePage() {
                 </Col>
                 <Col span={24}>
                     <Row justify="end" style={{ marginTop: "20px" }}>
-                        <Pagination total={data && data.totalPages} defaultCurrent={1} onChange={(page, size) => setPage({
+                        <Pagination total={data && data.totalElements} defaultCurrent={1} onChange={(page, size) => setPage({
                             page: page - 1,
                             size: size
                         })} />

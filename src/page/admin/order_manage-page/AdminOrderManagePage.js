@@ -27,6 +27,7 @@ function AdminOrderManagePage() {
             .then(payload => payload.data)
             .then(data => {
                 setData(data)
+
             }, [])
             .catch((e) => {
                 globalContext.message.error("Error occurred while loading data! Try again");
@@ -40,7 +41,7 @@ function AdminOrderManagePage() {
             size: size
         }));
     }
-
+    console.log(data.totalPages)
     function onFilter(value) {
         Object.keys(value).forEach(key => {
             if (!value[key]) delete value[key];
@@ -159,8 +160,7 @@ function AdminOrderManagePage() {
                                 shipmethod: value.shippingMethod?.name,
                                 total: value.total,
                                 status: <OrderStatusTag status={value.status[value.status.length - 1].status} />,
-                                action: <Link to={`/admin/order?id=${value.id}`}>Detail</Link>
-                                ,
+                                action: <Link to={`/admin/order?id=${value.id}`}>Detail</Link>,
                                 description: value.orderLines.map((orderLine, index) => ({
                                     pdname: orderLine.productItem.product.name,
                                     price: orderLine.productItem.price,
@@ -172,7 +172,7 @@ function AdminOrderManagePage() {
                     </Col>
                 </Row>
                 <Row justify="end">
-                    <Pagination onChange={(page, size) => { onPageChange([page, size]) }} defaultCurrent={1} total={data.totalPages} />
+                    <Pagination onChange={(page, size) => { onPageChange([page, size]) }} defaultCurrent={page} total={data.totalElements} />
                 </Row>
             </Card>
         </Col>

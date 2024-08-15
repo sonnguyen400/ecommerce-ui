@@ -76,7 +76,7 @@ function AdminProductManagePage() {
                                 )}
                             </Row>
                             <Row justify="end" style={{ padding: "8px 0px" }}>
-                                <Pagination onChange={(page, size) => setPage({ page: page - 1, size: size })} defaultCurrent={1} total={products && products.totalPages} />
+                                <Pagination onChange={(page, size) => setPage({ page: page - 1, size: size })} defaultCurrent={1} total={products && products.totalElements} />
                             </Row>
                         </Col>
                     </Card>
