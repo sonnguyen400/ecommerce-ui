@@ -9,13 +9,13 @@ function LoginPage() {
     const [state, user, hasRole] = useAuth();
     return (
         <Row justify="center" style={{ height: "100vh" }} align="middle">
-            <Col span={24} lg={{ span: 12 }}>
+            <Col span={24} lg={{ span: 6 }} md={{ span: 8 }}>
                 <Row justify="center" align="center" className={style.formContainer}>
                     <Card>
                         <Col>
                             <Col className={style.header}>
                                 <h2>Login</h2>
-                                <Description>
+                                <Description style={{ paddingTop: "8px" }}>
                                     Login to your account
                                 </Description>
                             </Col>
