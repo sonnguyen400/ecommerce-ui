@@ -15,7 +15,7 @@ function LoginPage() {
                         <Col>
                             <Col className={style.header}>
                                 <h2>Login</h2>
-                                <Description style={{ paddingTop: "8px" }}>
+                                <Description style={{ paddingBottom: "8px" }}>
                                     Login to your account
                                 </Description>
                             </Col>
