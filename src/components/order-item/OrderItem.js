@@ -8,6 +8,7 @@ import ProductItemSelect from '../../part/product-item-selection/ProductItemSele
 import APIBase from '../../api/ApiBase';
 import { memo } from 'react';
 import { GlobalContext } from '../../context';
+import Currency from '../currency/Currency';
 function OrderItem({ data, disabled, onChange, ...props }) {
     const [product, setProduct] = useState();
     const [item, setItem] = useState();
@@ -33,7 +34,7 @@ function OrderItem({ data, disabled, onChange, ...props }) {
         if (onChange) onChange(data);
     }
     function saveItem() {
-        if (item) {
+        if (item && isAvailable()) {
             data.productItem = null
             data.productItem = {
                 id: item.id
@@ -42,6 +43,12 @@ function OrderItem({ data, disabled, onChange, ...props }) {
         } else {
             globalContext.message.warning("This option isn't available! Select another");
         }
+    }
+    function isAvailable() {
+        return item.warehouses.reduce((pre, warehouseItem) => {
+            if (warehouseItem && warehouseItem.qty) return pre + warehouseItem.qty;
+            return pre;
+        }, 0) > 0
     }
     return (<div>
         {data && <Row {...props}>
@@ -56,7 +63,7 @@ function OrderItem({ data, disabled, onChange, ...props }) {
                                 <Link to={`/product?id=${data.productItem.product.id}`} className={clsx(style.productName)}>{data.productItem.product && data.productItem.product.name}</Link>
                             </Col>
                             <Col span={24}>
-                                <span className={clsx(style.price)}>{data.productItem && data.productItem.price}</span>
+                                <span className={clsx(style.price)}><Currency value={data.productItem && data.productItem.price} /></span>
                             </Col>
                             <Col span={24}>
                                 <button disabled={disabled} className={clsx(style.optionBtn)} onClick={() => changeVariation()}>
@@ -69,7 +76,7 @@ function OrderItem({ data, disabled, onChange, ...props }) {
                             </Col>
                             <Col span={24} lg={{ span: 24 }} className={style.total}>
                                 <div className={style.label}>Total</div>
-                                <div className={style.value}>{data.qty * data.productItem.price}</div>
+                                <div className={style.value}><Currency value={data.qty * data.productItem.price} /></div>
                             </Col>
                         </Row>
 

@@ -59,13 +59,13 @@ function UserOrderCheckOutPage() {
             user: {
                 id: user.id
             },
-            address: {
-                id: value.address
-            },
             payment: {
                 type: {
                     id: value.payment
                 }
+            },
+            address: {
+                id: value.address
             },
             shippingMethod: {
                 id: value.shipmethod
@@ -77,16 +77,16 @@ function UserOrderCheckOutPage() {
             .then(payload => payload.data)
             .then(data => {
                 globalContext.loader(false)
-                if (data.payment.type.id == 1) {
+                if (value.payment == 1) {
                     navigate(`/result`, {
                         state: {
                             status: "success",
-                            title: "Successfully Purchased Cloud Server ECS!",
+                            title: "Successfully Ordered",
                             subTitle: "If you have any question, please contact 0393497961 for more"
                         }
                     });
-                } else {
-                    navigate(`/purchase?id=${data.id}`);
+                } else if (value.payment == 2) {
+                    navigate(`/zalopay/purchase?id=${data.id}`);
                 }
             })
             .catch(e => {
@@ -147,6 +147,9 @@ function UserOrderCheckOutPage() {
                                     <Select options={[{
                                         label: "COD",
                                         value: 1
+                                    }, {
+                                        label: "ZaloPay",
+                                        value: 2
                                     }]} />
                                 </Form.Item>
                             </Card>

@@ -35,19 +35,14 @@ function AdminUserManagePage() {
     }, [api])
     const columns = [
         {
-            title: "Name", dataIndex: "name", key: 'name',
-            children: [
-                {
-                    title: "First Name",
-                    dataIndex: "firstname",
-                    key: "firstname",
-                },
-                {
-                    title: "Last Name",
-                    dataIndex: "lastname",
-                    key: "lastname",
-                }
-            ]
+            title: "First Name",
+            dataIndex: "firstname",
+            key: "firstname",
+        },
+        {
+            title: "Last Name",
+            dataIndex: "lastname",
+            key: "lastname",
         },
         { title: "Email", dataIndex: "email", key: 'email' },
         { title: "PhoneNumber", dataIndex: "phone", key: 'phone' },
@@ -70,20 +65,17 @@ function AdminUserManagePage() {
                         loading={loader}
                         pagination={false}
                         columns={columns}
-                        dataSource={data && data.content.map((user_, key) => {
-                            console.log(user_)
-                            return ({
-                                id: key,
-                                firstname: user_.firstname,
-                                lastname: user_.lastname,
-                                email: user_.email,
-                                phone: user_.phoneNumber,
-                                dob: user_.dateOfBirth,
-                                gender: user_.gender,
-                                status: <AccountStatusTag status={user_.account?.status} />,
-                                action: <Link to={`/admin/user?id=${user_.id}`}>Detail</Link>
-                            })
-                        })} />
+                        dataSource={data && data.content.map((user_, key) => ({
+                            id: key,
+                            firstname: user_.firstname,
+                            lastname: user_.lastname,
+                            email: user_.email,
+                            phone: user_.phoneNumber,
+                            dob: user_.dateOfBirth,
+                            gender: user_.gender,
+                            status: <AccountStatusTag status={user_.account?.status} />,
+                            action: <Link to={`/admin/user?id=${user_.id}`}>Detail</Link>
+                        }))} />
                 </Col>
                 <Col span={24}>
                     <Row justify="end" style={{ marginTop: "20px" }}>

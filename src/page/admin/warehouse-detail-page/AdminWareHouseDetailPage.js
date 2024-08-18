@@ -69,9 +69,10 @@ function AdminWareHouseDetailPage() {
                                 setFileList([file]);
                                 return false;
                             }} fileList={fileList} >
-                                <Button icon={<PrefixIcon><i className="fi fi-rr-file-upload"></i></PrefixIcon>} type="dashed">Upload</Button>
+                                <Button icon={<PrefixIcon><i className="fi fi-rr-file-upload"></i></PrefixIcon>} type="dashed">Select file</Button>
                             </Upload>
                             <Button loading={uploading} onClick={handleUploadFile}>Import</Button>
+                            <Button href={`${APIBase.getUri()}/api/v1/warehouse/importXLSX/sample`}>Download Sample</Button>
                         </Space>
                     </Row>
                 </Col>

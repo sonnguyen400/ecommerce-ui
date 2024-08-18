@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../../secure/useAuth";
 import { Spin } from "antd";
 import { debounce, throttle } from "lodash";
+import { Currency } from "../../../components";
 function UserCart() {
     const [state, user] = useAuth();
     const [page, setPage] = useState({
@@ -21,8 +22,7 @@ function UserCart() {
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
         const windowHeight = window.innerHeight;
         const docHeight = document.documentElement.scrollHeight;
-        // Kiểm tra nếu người dùng đã cuộn tới cuối trang
-        if (scrollTop + windowHeight >= docHeight) {
+        if (scrollTop + windowHeight >= docHeight - 100) {
             setLoad(true);
             fetch()
         }
@@ -30,7 +30,7 @@ function UserCart() {
 
     useEffect(() => {
         if (user) fetch();
-        const onScroll = debounce(scrollToLoad, 2000);
+        const onScroll = scrollToLoad;
         window.addEventListener("scroll", onScroll);
         return () => {
             window.removeEventListener("scroll", onScroll);
@@ -82,6 +82,7 @@ function UserCart() {
     }
 
     function handleItemChange(id, cartItem) {
+
         APIBase
             .put(`/api/v1/cart/${id}`, cartItem)
             .then(payload => {
@@ -131,9 +132,9 @@ function UserCart() {
         </Col>}
         <Col span={24} md={{ span: 12 }} lg={{ span: 10 }}>
             <Card title="Total">
-                <h4>{selectedItems.reduce((pre, item) => {
+                <h4><Currency value={selectedItems.reduce((pre, item) => {
                     return pre + item.qty * item.productItem.price;
-                }, 0)}</h4>
+                }, 0)} /></h4>
                 <Button onClick={() => {
                     navigate("/checkout", {
                         state: {

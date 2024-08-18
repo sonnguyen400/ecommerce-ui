@@ -1,4 +1,3 @@
-import { Card } from 'antd';
 import UserCart from '../../../part/user-cart/cart/UserCart';
 import Tabs from '../../../components/tabs/Tabs';
 import OrderList from '../../../part/user/order-list/OrderList';

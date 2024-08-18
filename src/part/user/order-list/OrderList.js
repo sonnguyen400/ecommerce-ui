@@ -2,12 +2,12 @@ import { Row, Col, Spin } from 'antd';
 import { useState, useEffect, useRef } from 'react';
 import APIBase from '../../../api/ApiBase';
 import UserOrder from '../user-order/UserOrder';
-import { debounce } from 'lodash';
 function OrderList({ state, user }) {
     const [data, setData] = useState([]);
     const [page, setPage] = useState({
         index: 0,
-        isEnd: false
+        isEnd: false,
+        loaded: false
     });
     const [load, setLoad] = useState(false);
     function scrollToLoad() {
@@ -17,25 +17,21 @@ function OrderList({ state, user }) {
         // Kiểm tra nếu người dùng đã cuộn tới cuối trang
         if (scrollTop + windowHeight >= docHeight) {
             setLoad(true);
-            fetchOrder(page.index);
+            fetchOrder(page);
         }
     }
     useEffect(() => {
         console.log(state)
-        setPage({
-            index: 0,
-            isEnd: false
-        })
         setData([])
-        fetchOrder(0);
-        window.addEventListener("scroll", debounce(scrollToLoad, 5000));
+        fetchOrder(page);
+        window.addEventListener("scroll", scrollToLoad);
         return () => {
             window.removeEventListener("scroll", scrollToLoad);
         }
     }, [state])
     function fetchOrder(page) {
-        if (!page.isEnd) {
-            APIBase.get(`/api/v1/order?status=${state}&userId=${user.id}&page=${page}`)
+        if ((!page.isEnd) && (!page.loaded)) {
+            APIBase.get(`/api/v1/order?status=${state}&userId=${user.id}&page=${page.index}`)
                 .then(payload => {
                     setData(data_ => {
                         return [...data_, ...payload.data.content];
@@ -48,6 +44,7 @@ function OrderList({ state, user }) {
                     } else {
                         setPage(page_ => {
                             page_.index = page_.index + 1;
+                            page_.loaded = false;
                             return page_;
                         })
                     }
@@ -65,7 +62,7 @@ function OrderList({ state, user }) {
             {data.map((item, index) => <UserOrder key={index} data={item} />)}
         </Col>
         {load && <Col span={24}>
-            <Row><Spin /></Row>
+            <Row justify="center" style={{ padding: "10px" }}><Spin /></Row>
         </Col>}
     </Row>);
 }

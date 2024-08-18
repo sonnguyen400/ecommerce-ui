@@ -15,7 +15,7 @@ function OrderStatusTag({ status }) {
             return <Tag color="red">CANCEL</Tag>;
         case 7:
             return <Tag color="pink">RETURN</Tag>
-        case 10:
+        case 0:
             return <Tag color="lime">PAID</Tag>
         default:
             return <Tag color="lime">UNKNOWN</Tag>

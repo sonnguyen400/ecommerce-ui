@@ -92,10 +92,21 @@ function UserOrderDetailPage() {
                     </Card>
                 </Col>
                 <Col span={24}>
+                    <Card title="Note">
+                        {data && data.note}
+                    </Card>
+                </Col>
+                <Col span={24}>
+                    <Card title="Payment">
+                        <div>Method: {data && data.payment.type.name}</div>
+                    </Card>
+                </Col>
+                <Col span={24}>
                     <Card title="Delivery Method">
                         {data && data.shippingMethod.name}
                     </Card>
                 </Col>
+
                 {data && data.status[data.status.length - 1]?.status <= 2 &&
                     <Col span={24}>
                         <Button block danger onClick={() => setModal(true)}>Cancel</Button>

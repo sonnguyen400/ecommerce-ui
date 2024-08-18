@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import APIBase from "../../../api/ApiBase";
 import { GlobalContext } from "../../../context";
-import { Description } from "../../../components";
+import { Currency, Description } from "../../../components";
 import OrderStatusTag from "../../../part/admin/order-status-tag/OrderStatusTag";
 
 function AdminOrderDetailPage() {
@@ -106,7 +106,7 @@ function AdminOrderDetailPage() {
                                                     <Row style={{ paddingRight: "16px" }}>{item.productItem.product.name}</Row>
                                                     <Tag color="blue">{item.productItem.options.map(item_ => item_.value).join(",")}</Tag>
                                                     <Row><Description>Quantity: {item.qty}</Description></Row>
-                                                    <Row justify="end"><Description>Total {item.total}</Description></Row>
+                                                    <Row justify="end"><Description>Total <Currency value={item.total} /></Description></Row>
                                                 </Col>
                                                 <Divider />
                                             </Row>

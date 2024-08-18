@@ -40,7 +40,7 @@
     padding: 16px;
 
     @include mobile {
-        padding: 0px;
+        padding: 4px;
     }
 
     :global .ant-card-body {

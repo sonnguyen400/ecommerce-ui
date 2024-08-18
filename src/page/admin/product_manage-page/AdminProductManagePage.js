@@ -5,7 +5,7 @@ import APIBase from "../../../api/ApiBase";
 import { GlobalContext } from "../../../context";
 import { Link } from "react-router-dom";
 import PrefixIcon from "../../../components/prefix-icon/PrefixIcon.js";
-var apiTimeout = undefined;
+import PlaceHolder from "../../../assets/image/product_placeholder.png";
 function AdminProductManagePage() {
     const [api, setApi] = useState("api/v1/product")
     const [page, setPage] = useState({ page: 0, size: 10 })
@@ -40,21 +40,14 @@ function AdminProductManagePage() {
         }
     }, [filter, page])
     useEffect(() => {
-        if (!apiTimeout) {
-            apiTimeout = setTimeout(() => {
-                APIBase.get(`api/v1/product?${api}`).then(payload => {
-                    setProducts(payload.data)
-                    setLoader(state => !state)
-                }).catch(e => {
-                    globalContext.message.error("Error");
-                })
-                apiTimeout = null;
-            }, 1000)
-        } else {
-            clearTimeout(apiTimeout);
-            apiTimeout = undefined;
-        }
+        APIBase.get(`api/v1/product?${api}`).then(payload => {
+            setProducts(payload.data)
+            setLoader(state => !state)
+        }).catch(e => {
+            globalContext.message.error("Error");
+        })
     }, [api])
+
     return (
         <Card title="Product Manage">
             <Row>
@@ -68,7 +61,7 @@ function AdminProductManagePage() {
                                 {products && products.content && products.content.map((product_, index) =>
                                     <Col key={index} span={12} lg={{ span: 4 }}>
                                         <Link to={`/admin/product?id=${product_.id}`}>
-                                            <Card cover={<img alt={product_.name} src={product_.picture} />} title={product_.name} hoverable={true}>
+                                            <Card cover={<img alt={product_.name} src={product_.picture || PlaceHolder} />} title={product_.name} hoverable={true}>
                                                 <p style={{ maxLines: "3", overflow: "hidden", textOverflow: "ellipsis", maxHeight: "40px" }}>{product_.description}</p>
                                             </Card>
                                         </Link>

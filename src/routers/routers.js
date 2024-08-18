@@ -4,11 +4,9 @@ import LoginPage from "../page/Login/LoginPage.js";
 import Home from "../page/user/home/Home.js";
 import Personal from "../page/user/personal/Personal.js";
 import UserAddressPage from "../page/user/user-address-page/UserAddressPage.js";
-import PaymentMethods from "../page/user/payment-methods/PaymentMethods.js";
 import Register from "../page/user/register/Register.js";
 import UserCartPage from "../page/user/user-cart/UserCartPage.js";
 import ProductPage from "../page/user/product-page/ProductPage.js";
-import UserOrderPurchase from "../page/user/order-purchase/UserOrderPurchase.js";
 import AdminCategoryManagePage from "../page/admin/category_manage-page/AdminCategoryManagePage.js";
 import AdminCategoryDetailPage from "../page/admin/category-detail-page/AdminCategoryDetailPage.js";
 import AdminOrderManagePage from "../page/admin/order_manage-page/AdminOrderManagePage.js";
@@ -24,6 +22,7 @@ import SearchProductPage from "../page/user/search-product-page/SearchProductPag
 import UserOrderDetailPage from "../page/user/user-order-detail-page/UserOrderDetailsPage.js";
 import UserResultPage from "../page/user/result/UserResultPage.js";
 import UserOrderCheckOutPage from "../page/user/user-order-checkout-page/UserOrderCheckoutPage.js";
+import ZaloPayProcess from "../page/user/zalopay-result-page/index.js";
 export const publicRouter = [
     { 'path': "/login", 'component': LoginPage },
     { 'path': "/register", 'component': Register },
@@ -38,7 +37,7 @@ export const userRouter = [
     { 'path': "/cart", 'component': UserCartPage, 'layout': HeadOnly },
     { 'path': "/checkout", 'component': UserOrderCheckOutPage, 'layout': HeadOnly },
     { 'path': "/order", 'component': UserOrderDetailPage, 'layout': HeadOnly },
-    { 'path': "/purchase", 'component': UserOrderPurchase, 'layout': HeadOnly },
+    { 'path': "/zalopay/purchase", 'component': ZaloPayProcess, 'layout': HeadOnly },
 
 
     { 'path': "/admin", 'component': AdminDashboardPage, 'layout': SidebarLayout },
