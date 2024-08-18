@@ -136,7 +136,7 @@ function RegisterForm({ onSubmit, ...props }) {
                         prefix={<PrefixIcon><i className="fi fi-rr-lock"></i></PrefixIcon>}
                         size="large"
                         status={(formik.errors.user && formik.errors.password) ? "error" : ""}
-                        type="text"
+                        type="password"
                         name="password"
                         placeholder="Password"
                         onChange={formik.handleChange}
