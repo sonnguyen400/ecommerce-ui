@@ -55,7 +55,7 @@ function AdminProductManagePage() {
                     <ProductFilter onFilter={onFilter} />
                 </Col>
                 <Col span={20}>
-                    <Card title={<Row justify="space-between"><span>Product List</span><a target="_blank" href={`http://localhost:8085/api/v1/product/xlsx?${api}`}><Button style={{ backgroundColor: "#0f7a40" }} type="primary" icon={<PrefixIcon><i style={{ color: "white" }} class="fi fi-sr-file-excel"></i></PrefixIcon>}>Export</Button></a></Row>}>
+                    <Card title={<Row justify="space-between"><span>Product List</span><a target="_blank" href={`${APIBase.getUri()}/api/v1/product/xlsx?${api}`}><Button style={{ backgroundColor: "#0f7a40" }} type="primary" icon={<PrefixIcon><i style={{ color: "white" }} class="fi fi-sr-file-excel"></i></PrefixIcon>}>Export</Button></a></Row>}>
                         <Col span={24}>
                             <Row gutter={[12, 12]}>
                                 {products && products.content && products.content.map((product_, index) =>

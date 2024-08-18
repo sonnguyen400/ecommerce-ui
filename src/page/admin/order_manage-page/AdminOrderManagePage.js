@@ -138,7 +138,7 @@ function AdminOrderManagePage() {
             </Card>
         </Col>
         <Col span={20}>
-            <Card title={<Row justify="space-between"><Col>Orders</Col><a target="_blank" href={`http://localhost:8085/api/v1/order/xlsx?${api}`}><Button style={{ backgroundColor: "#0f7a40" }} type="primary" icon={<PrefixIcon><i style={{ color: "white" }} class="fi fi-sr-file-excel"></i></PrefixIcon>}>Export</Button></a></Row>}>
+            <Card title={<Row justify="space-between"><Col>Orders</Col><a target="_blank" href={`${APIBase.getUri()}/api/v1/order/xlsx?${api}`}><Button style={{ backgroundColor: "#0f7a40" }} type="primary" icon={<PrefixIcon><i style={{ color: "white" }} class="fi fi-sr-file-excel"></i></PrefixIcon>}>Export</Button></a></Row>}>
                 <Row justify="end">
                     <Col span={24}>
 
