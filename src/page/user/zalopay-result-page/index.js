@@ -46,7 +46,7 @@ function ZaloPayProcess() {
                     <Flex justify="center" >  <QRCode value={data && data.qr_code} /></Flex>
                 </Col>
                 <Col span={24}>
-                    <Flex justify="center"><Row><Descriptions title="QR COde will be expired after" /><Countdown value={Date.now() + 1000 * 60 * 15} format="HH:mm:ss" /></Row></Flex>
+                    <Flex justify="center"><Descriptions title="QR Code will be expired after" /><Countdown value={Date.now() + 1000 * 60 * 15} format="HH:mm:ss" /></Flex>
                 </Col>
             </>}
     </Row>;
