@@ -19,12 +19,14 @@ function LoginPage() {
                                     Login to your account
                                 </Description>
                             </Col>
-                            <LoginForm
-                                success={() => {
-                                    if (hasRole("ADMIN")) navigate("/admin");
-                                    if (hasRole("USER")) navigate("/");
-                                }}
-                            />
+                            <div style={{ paddingTop: "20px" }}>
+                                <LoginForm
+                                    success={() => {
+                                        if (hasRole("ADMIN")) navigate("/admin");
+                                        if (hasRole("USER")) navigate("/");
+                                    }}
+                                />
+                            </div>
                         </Col>
                     </Card>
                 </Row>
