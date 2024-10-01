@@ -137,7 +137,7 @@ function AdminDashboardPage() {
         </Col>
         <Col span={16}>
             <Card title={<Row justify="space-between">
-                <span>Amount of Orders</span>
+                <span>Orders</span>
                 <Space>
                     <DatePicker.RangePicker picker="date" onChange={(from, to) => fetchOrderPerDayStatistic(to)} />
                 </Space>
@@ -188,7 +188,7 @@ function AdminDashboardPage() {
                     </Card>
                 </Col>
                 <Col span={24}>
-                    <Card title="Ubiquitous" className={style.ubiquitousPd}>
+                    <Card title="Customer" className={style.ubiquitousPd}>
                         <Col span={24}>
                             {orderStatistics && orderStatistics.length > 0 && orderStatistics[chartIdx].products.map((item_, index) => <Row className={style.product} key={index}>
                                 <Col span={6}>
@@ -293,7 +293,7 @@ function AdminDashboardPage() {
                                 description={
                                     <>
                                         <Row><span>Total Orders:{user_.totalOrders}</span></Row>
-                                        <Row><span>Total amount: {user_.totalAmount}</span></Row>
+                                        <Row><span>Total Amount: {user_.totalAmount}</span></Row>
                                     </>
                                 }
                                 avatar={<Avatar src={user_.picture} />}

@@ -28,17 +28,17 @@ function Sidebar({ ...props }) {
             </Menu.Item>
             <Menu.Item icon={<PrefixIcon><i className="fi fi-rr-box-open-full"></i></PrefixIcon>}>
                 <Link to="/admin/product-manage">
-                    Product Manage
+                    Product Management
                 </Link>
             </Menu.Item>
             <Menu.Item disabled={!hasRole("ADMIN")} icon={<PrefixIcon><i className="fi fi-rr-warehouse-alt"></i></PrefixIcon>}>
                 <Link to="/admin/warehouse">
-                    Warehouse Manage
+                    Warehouse Management
                 </Link>
             </Menu.Item>
             <Menu.Item disabled={!hasRole("ADMIN")} icon={<PrefixIcon><i className="fi fi-rr-user-check"></i></PrefixIcon>}>
                 <Link to="/admin/user/manage">
-                    User Manage
+                    User Management
                 </Link>
             </Menu.Item>
         </Menu>);

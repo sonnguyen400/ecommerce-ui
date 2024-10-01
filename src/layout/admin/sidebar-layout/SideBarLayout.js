@@ -24,10 +24,8 @@ function SidebarLayout({ children }) {
     const [collapsed, setCollapsed] = useState(false);
     return (
         <>
-            {
-                hasRole("ADMIN") || <Alert type='warning' message="You are currently accessing our resources under the role of standard user! Therefore, some functions may not work correctly or even be unable to work due to policy. Sorry for this uncomfortable, this is my effort to prevent unexpected attacks outside. <br>
+            <Alert type='warning' message="You are currently accessing our resources under the role of standard user! Therefore, some functions may not work correctly or even be unable to work due to policy. Sorry for this uncomfortable, this is my effort to prevent unexpected attacks outside.
                 For more, please contact sonnguyen9616@gmail.com " />
-            }
             <Layout>
                 <Layout.Sider trigger={null} collapsible collapsed={collapsed}>
                     <Trigger><span onClick={() => setCollapsed(state => !state)}><i className="fi fi-rr-menu-burger"></i></span></Trigger>
